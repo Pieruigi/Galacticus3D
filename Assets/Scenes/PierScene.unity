@@ -277,13 +277,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 919433667, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
+      propertyPath: m_Constraints
+      value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 919433667, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919433667, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919433672, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
       propertyPath: force
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 919433672, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
       propertyPath: acceleration
-      value: 3
+      value: 13.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919433672, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
+      propertyPath: deceleration
+      value: 30.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919433672, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
+      propertyPath: stability
+      value: 0.333
+      objectReference: {fileID: 0}
+    - target: {fileID: 919433672, guid: fba0a1bf2519bf7469d512a9e97e22c1, type: 3}
+      propertyPath: maxSpeed
+      value: 8.3
       objectReference: {fileID: 0}
     - target: {fileID: 8398005334781297443, guid: fba0a1bf2519bf7469d512a9e97e22c1,
         type: 3}
@@ -303,7 +327,7 @@ PrefabInstance:
     - target: {fileID: 8398005334781297447, guid: fba0a1bf2519bf7469d512a9e97e22c1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.3379
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8398005334781297447, guid: fba0a1bf2519bf7469d512a9e97e22c1,
         type: 3}
@@ -577,7 +601,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774315833}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c0ef6a4694ddcc54497975a4b2284ba2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -856,7 +880,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008841258}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c0ef6a4694ddcc54497975a4b2284ba2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1191,7 +1215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4faf310ffa4b26944a562d335e79dc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: {x: 0, y: 18, z: 0.34}
+  distance: {x: 0, y: 45, z: 0.34}
 --- !u!1 &1240985595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,7 +1721,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527018505}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c0ef6a4694ddcc54497975a4b2284ba2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2255,7 +2279,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1825867455}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c0ef6a4694ddcc54497975a4b2284ba2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -2876,7 +2900,7 @@ PrefabInstance:
     - target: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: m_Name
-      value: ShipWithCC
+      value: MFalcon
       objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388255, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -2932,41 +2956,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: turningSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: maxSpeed
-      value: 6.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: acceleration
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: deceleration
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: stability
-      value: 0.378
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: fireRate
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734150969727017503, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: m_MinMoveDistance
-      value: 0.0001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}

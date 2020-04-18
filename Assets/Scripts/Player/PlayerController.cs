@@ -1,84 +1,219 @@
-﻿//#define RIGIDBODY
+﻿#define RIGIDBODY
 #if RIGIDBODY
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace OMTB
 {
-    [SerializeField]
-    float force = 10;
-
-    [SerializeField]
-    float turningSpeed;
-
-    [SerializeField]
-    float maxVelocity = 5;
-
-    float maxVelocitySqr;
-
-    Rigidbody rb;
-    Vector3 targetDirection;
-
-
-    bool isGamepadConnected = false;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerController : MonoBehaviour
     {
-        maxVelocitySqr = maxVelocity * maxVelocity;
-        rb = GetComponent<Rigidbody>();
-    }
+        [SerializeField]
+        [Range(1f, 20f)]
+        float turningSpeed;
 
-    private void Update()
-    {
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed*Time.deltaTime, 0.0f);
+        [SerializeField]
+        [Range(1f, 30f)]
+        float maxSpeed;
 
-        // Draw a ray pointing at our target in
-        Debug.DrawRay(transform.position, newDirection, Color.red);
+        [SerializeField]
+        [Range(1f, 30f)]
+        float acceleration;
 
-        // Calculate a rotation a step closer to the target and applies rotation to this object
-        transform.rotation = Quaternion.LookRotation(newDirection);
-    }
+        [SerializeField]
+        [Range(10f, 200f)]
+        float deceleration;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        // Check input
-        Vector2 axis = new Vector2( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        float mag = axis.magnitude;
-        mag = Mathf.Clamp01(mag);
-        if (mag != 0)
+        [SerializeField]
+        [Range(0.1f, 1f)]
+        float stability; // Lateral velocity
+
+        [Header("****Move to Weapon class")]
+        [SerializeField] // Movo to weapon
+        [Range(2f, 8f)]
+        float fireRate;
+        System.DateTime lastShootTime;
+
+        float maxSpeedSqr;
+        Vector3 targetDirection;
+
+        [SerializeField]
+        bool isGamepadConnected = false;
+        [SerializeField]
+        bool mouseHasGamepadBehavior = true;
+
+        Rigidbody rb;
+
+        Shooter shooter;
+        Vector3 currentSpeed;
+        bool isAiming = false;
+
+        // Start is called before the first frame update
+        void Start()
         {
+            maxSpeedSqr = maxSpeed * maxSpeed;
+            rb = GetComponent<Rigidbody>();
+            shooter = GetComponent<Shooter>();
+
             
-            rb.AddForce(transform.forward * force * mag, ForceMode.Force);
-
-            // Check direction
-            targetDirection = new Vector3(axis.x, 0, axis.y).normalized;
         }
 
-        // Using mouse to set target direction ????
-        if (!isGamepadConnected)
+
+        // Update is called once per frame
+        void Update()
         {
-            Vector3 playerPos = Camera.main.WorldToScreenPoint(transform.position);
-            playerPos.z = 0;
-            Debug.Log("ScreenPoint:" + playerPos);
-            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-            Debug.Log("MousePos:" + mousePos);
-            Vector3 dir = (mousePos - playerPos).normalized;
-            dir.z = dir.y;
-            dir.y = 0;
-            // Check direction
-            targetDirection = dir;
+            Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            float mag = axis.magnitude;
+            mag = Mathf.Clamp01(mag);
+            //currentSpeed = characterController.velocity.magnitude;
+            float currSpeedMag = currentSpeed.magnitude;
+            if (mag != 0) // Accelerate
+            {
+                // Set velocity
+                currSpeedMag += acceleration * Time.deltaTime;
+
+                if (currSpeedMag > maxSpeed)
+                    currSpeedMag = maxSpeed;
+
+                // Check direction
+                targetDirection = new Vector3(axis.x, 0, axis.y).normalized;
+
+
+            }
+            else // Decelerate
+            {
+                currSpeedMag -= deceleration * Time.deltaTime;
+
+                if (currSpeedMag < 0)
+                    currSpeedMag = 0;
+
+            }
+
+
+            isAiming = false;
+            // If I'm not using the gamepad the direction will be controlled via mouse and aiming is true
+            if (!isGamepadConnected)
+            {
+                if (!mouseHasGamepadBehavior)
+                {
+                    Vector3 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+                    playerPos.z = 0;
+
+                    Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+
+                    Vector3 dir = (mousePos - playerPos).normalized;
+                    dir.z = dir.y;
+                    dir.y = 0;
+                    // Check direction
+                    targetDirection = dir;
+                }
+
+
+
+                if (Input.GetMouseButton(0))
+                {
+                    if (mouseHasGamepadBehavior)
+                    {
+                        Vector3 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+                        playerPos.z = 0;
+
+                        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+
+                        Vector3 dir = (mousePos - playerPos).normalized;
+                        dir.z = dir.y;
+                        dir.y = 0;
+                        // Check direction
+                        targetDirection = dir;
+                    }
+                    
+                    isAiming = true;
+                    if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
+                    {
+                        lastShootTime = System.DateTime.UtcNow;
+                        shooter.Shoot();
+                    }
+                }
+                
+            }
+            else // Check if I'm aiming with the right gamepad stick
+            {
+
+                Vector2 aimAxis = new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical"));
+                if (aimAxis != Vector2.zero)
+                {
+                    isAiming = true;
+
+                    targetDirection.x = aimAxis.x;
+                    targetDirection.z = aimAxis.y;
+
+                    if((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
+                    {
+                        lastShootTime = System.DateTime.UtcNow;
+                        shooter.Shoot();
+                    }
+                    
+
+                }
+
+            }
+
+
+            
+
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
+
+            Vector3 newVelocityDirection;
+            if (!isAiming)
+                newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
+            else // Strafe
+                newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
+
+            // Draw a ray pointing at our target in
+            Debug.DrawRay(transform.position, newDirection, Color.red);
+
+            // Calculate a rotation a step closer to the target and applies rotation to this object
+            transform.rotation = Quaternion.LookRotation(newDirection);
+
+            // Move
+            Debug.Log("CurrentSpeed:" + currentSpeed);
+            currentSpeed = newVelocityDirection.normalized * currSpeedMag;
+            //characterController.Move(newVelocityDirection.normalized * currentSpeed * Time.deltaTime);
+            //rigidbody.MovePosition(rigidbody.position + currentSpeed * Time.deltaTime);
+
+
+            //Debug.Log("Current speed:" + currentSpeed);
         }
 
-        if (rb.velocity.sqrMagnitude > maxVelocitySqr)
-            rb.velocity = rb.velocity.normalized * maxVelocity;
+        private void FixedUpdate()
+        {
+            rb.AddForce(currentSpeed * 10, ForceMode.Force);
+        }
 
-        Debug.Log("Velocity:" + rb.velocity.magnitude);
+        //private void OnControllerColliderHit(ControllerColliderHit hit)
+        //{
+
+        //    Bouncer bouncer = hit.gameObject.GetComponent<Bouncer>();
+        //    Debug.Log("Collision");
+        //    if (bouncer)
+        //    {
+        //        // Add impulse
+        //        Vector3 impulse = hit.normal;
+        //        impulse.y = 0;
+        //        impulse = impulse.normalized * bouncer.Force;
+        //        currentSpeed += impulse; // Use external force variable
+        //        Debug.Log("Impulse:" + impulse);
+
+        //    }
+        //}
+
+        
+
     }
+
+    
 }
+
+
 #endif
 
 #if !RIGIDBODY
@@ -130,6 +265,7 @@ namespace OMTB
         CharacterController characterController;
 
         Shooter shooter;
+        Vector3 currentSpeed;
 
         // Start is called before the first frame update
         void Start()
@@ -137,6 +273,8 @@ namespace OMTB
             maxSpeedSqr = maxSpeed * maxSpeed;
             characterController = GetComponent<CharacterController>();
             shooter = GetComponent<Shooter>();
+
+            
         }
 
 
@@ -146,14 +284,15 @@ namespace OMTB
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             float mag = axis.magnitude;
             mag = Mathf.Clamp01(mag);
-            float currentSpeed = characterController.velocity.magnitude;
+            //currentSpeed = characterController.velocity.magnitude;
+            float currSpeedMag = currentSpeed.magnitude;
             if (mag != 0) // Accelerate
             {
                 // Set velocity
-                currentSpeed += acceleration * Time.deltaTime;
+                currSpeedMag += acceleration * Time.deltaTime;
 
-                if (currentSpeed > maxSpeed)
-                    currentSpeed = maxSpeed;
+                if (currSpeedMag > maxSpeed)
+                    currSpeedMag = maxSpeed;
 
                 // Check direction
                 targetDirection = new Vector3(axis.x, 0, axis.y).normalized;
@@ -162,10 +301,10 @@ namespace OMTB
             }
             else // Decelerate
             {
-                currentSpeed -= deceleration * Time.deltaTime;
+                currSpeedMag -= deceleration * Time.deltaTime;
 
-                if (currentSpeed < 0)
-                    currentSpeed = 0;
+                if (currSpeedMag < 0)
+                    currSpeedMag = 0;
 
             }
 
@@ -238,6 +377,7 @@ namespace OMTB
             }
 
 
+            
 
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
 
@@ -254,17 +394,35 @@ namespace OMTB
             transform.rotation = Quaternion.LookRotation(newDirection);
 
             // Move
-            Debug.Log("CurrentSpeed:" + currentSpeed);
-            characterController.Move(newVelocityDirection.normalized * currentSpeed * Time.deltaTime);
+            //Debug.Log("CurrentSpeed:" + currentSpeed);
+            currentSpeed = newVelocityDirection.normalized * currSpeedMag;
+            //characterController.Move(newVelocityDirection.normalized * currentSpeed * Time.deltaTime);
+            characterController.Move(currentSpeed * Time.deltaTime);
 
 
             //Debug.Log("Current speed:" + currentSpeed);
+        }
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+
+            Bouncer bouncer = hit.gameObject.GetComponent<Bouncer>();
+            Debug.Log("Collision");
+            if (bouncer)
+            {
+                // Add impulse
+                Vector3 impulse = hit.normal;
+                impulse.y = 0;
+                impulse = impulse.normalized * bouncer.Force;
+                currentSpeed += impulse; // Use external force variable
+                Debug.Log("Impulse:" + impulse);
+
+            }
         }
 
 
     }
 
-
+    
 }
 
 
