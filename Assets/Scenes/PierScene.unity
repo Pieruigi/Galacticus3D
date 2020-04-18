@@ -2963,5 +2963,10 @@ PrefabInstance:
       propertyPath: fireRate
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5734150969727017503, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+        type: 3}
+      propertyPath: m_MinMoveDistance
+      value: 0.0001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}

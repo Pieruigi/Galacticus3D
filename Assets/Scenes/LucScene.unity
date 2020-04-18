@@ -1271,7 +1271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207428219}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 17.336678, z: 0}
+  m_LocalPosition: {x: 0, y: 17.336678, z: 0.04}
   m_LocalScale: {x: 0.34, y: 0.98538995, z: 0.20718}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3608,17 +3608,17 @@ PrefabInstance:
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: turningSpeed
-      value: 5.16
+      value: 6.05
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: maxSpeed
-      value: 7.68
+      value: 8.37
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: acceleration
-      value: 9.74
+      value: 6.7
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -3628,17 +3628,17 @@ PrefabInstance:
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: stability
-      value: 0.622
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: fireRate
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: mouseHasGamepadBehavior
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4731764698593183443, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -3649,6 +3649,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 1.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734150969727017503, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+        type: 3}
+      propertyPath: m_MinMoveDistance
+      value: 0.0001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}

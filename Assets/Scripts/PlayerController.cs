@@ -243,9 +243,9 @@ namespace OMTB
 
             Vector3 newVelocityDirection;
             if (!isAiming)
-                newVelocityDirection = Vector3.RotateTowards(characterController.velocity == Vector3.zero ? transform.forward : characterController.velocity.normalized, targetDirection, turningSpeed * stability * Time.deltaTime, .0f);
+                newVelocityDirection = Vector3.RotateTowards(characterController.velocity.sqrMagnitude == 0 ? transform.forward : characterController.velocity.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
             else
-                newVelocityDirection = Vector3.RotateTowards(characterController.velocity == Vector3.zero ? new Vector3(axis.x, 0, axis.y) : characterController.velocity.normalized, new Vector3(axis.x, 0, axis.y), turningSpeed * stability * Time.deltaTime, .0f);
+                newVelocityDirection = Vector3.RotateTowards(characterController.velocity.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : characterController.velocity.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
 
             // Draw a ray pointing at our target in
             Debug.DrawRay(transform.position, newDirection, Color.red);
@@ -254,8 +254,9 @@ namespace OMTB
             transform.rotation = Quaternion.LookRotation(newDirection);
 
             // Move
+            Debug.Log("VelocityMag:" + newVelocityDirection.magnitude);
             Debug.Log("CurrentSpeed:" + currentSpeed);
-            characterController.Move(newVelocityDirection * currentSpeed * Time.deltaTime);
+            characterController.Move(newVelocityDirection.normalized * currentSpeed * Time.deltaTime);
 
 
             //Debug.Log("Current speed:" + currentSpeed);
