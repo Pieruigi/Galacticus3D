@@ -3,7 +3,12 @@ guid: 29aedb33af27d6d4d9538a3bd26f09e8
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MATMillenium
+    second: {fileID: 2100000, guid: 229ab3add1e6a764db0e736171cede06, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

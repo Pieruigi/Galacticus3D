@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
-  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientSkyColor: {r: 0.0055624777, g: 0.08232471, b: 0.23584908, a: 1}
+  m_AmbientEquatorColor: {r: 0, g: 0.26037732, b: 0.4339623, a: 1}
+  m_AmbientGroundColor: {r: 0.3584906, g: 0.2677406, b: 0.08624065, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 99dbb3f3abc3c4845a9b650ff678e7c1, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.089453295, g: 0.11913038, b: 0.2385456, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -380,7 +380,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.63403344, g: 0.9811321, b: 0.92504317, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -3041,32 +3041,37 @@ PrefabInstance:
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: turningSpeed
-      value: 8
+      value: 5.16
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: maxSpeed
-      value: 6.6
+      value: 7.68
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: acceleration
-      value: 11
+      value: 9.74
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: deceleration
-      value: 9.41
+      value: 6.89
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: stability
-      value: 1
+      value: 0.622
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: fireRate
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+        type: 3}
+      propertyPath: mouseHasGamepadBehavior
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4731764698593183443, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
