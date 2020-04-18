@@ -94,23 +94,23 @@ namespace OMTB
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
-        [Range(3f, 8f)]
+        [Range(1f, 20f)]
         float turningSpeed;
 
         [SerializeField]
-        [Range(4f, 12f)]
+        [Range(1f, 30f)]
         float maxSpeed;
 
         [SerializeField]
-        [Range(6f, 14f)]
+        [Range(1f, 30f)]
         float acceleration;
 
         [SerializeField]
-        [Range(4f, 10f)]
+        [Range(1f, 80f)]
         float deceleration;
 
         [SerializeField]
-        [Range(0.25f, 1f)]
+        [Range(0.1f, 0.9f)]
         float stability; // Lateral velocity
 
         [Header("****Move to Weapon class")]
@@ -244,7 +244,7 @@ namespace OMTB
             Vector3 newVelocityDirection;
             if (!isAiming)
                 newVelocityDirection = Vector3.RotateTowards(characterController.velocity.sqrMagnitude == 0 ? transform.forward : characterController.velocity.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
-            else
+            else // Strafe
                 newVelocityDirection = Vector3.RotateTowards(characterController.velocity.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : characterController.velocity.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
 
             // Draw a ray pointing at our target in
@@ -254,7 +254,6 @@ namespace OMTB
             transform.rotation = Quaternion.LookRotation(newDirection);
 
             // Move
-            Debug.Log("VelocityMag:" + newVelocityDirection.magnitude);
             Debug.Log("CurrentSpeed:" + currentSpeed);
             characterController.Move(newVelocityDirection.normalized * currentSpeed * Time.deltaTime);
 
