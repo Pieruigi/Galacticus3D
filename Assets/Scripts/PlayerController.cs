@@ -110,7 +110,7 @@ namespace OMTB
         float deceleration;
 
         [SerializeField]
-        [Range(0.25f, 0.5f)]
+        [Range(0.25f, 1f)]
         float stability; // Lateral velocity
 
         [Header("****Move to Weapon class")]
@@ -122,7 +122,9 @@ namespace OMTB
         float maxSpeedSqr;
         Vector3 targetDirection;
 
+        [SerializeField]
         bool isGamepadConnected = false;
+        [SerializeField]
         bool mouseHasGamepadBehavior = true;
 
         CharacterController characterController;
