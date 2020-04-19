@@ -1,4 +1,5 @@
 ﻿#define RIGIDBODY
+//#define USE_TORQUE
 #if RIGIDBODY
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,15 @@ namespace OMTB
         [SerializeField]
         [Range(1f, 30f)]
         float maxSpeed;
+        public float MaxSpeed
+        {
+            get { return maxSpeed; }
+        }
+
+        public float SqrMaxSpeed
+        {
+            get { return maxSpeed * maxSpeed; }
+        }
 
         [SerializeField]
         [Range(1f, 30f)]
@@ -24,9 +34,11 @@ namespace OMTB
         [Range(10f, 200f)]
         float deceleration;
 
+
         [SerializeField]
         [Range(0.1f, 1f)]
         float stability; // Lateral velocity
+
 
         [Header("****Move to Weapon class")]
         [SerializeField] // Movo to weapon
@@ -46,7 +58,15 @@ namespace OMTB
 
         Shooter shooter;
         Vector3 currentSpeed;
+        public Vector3 CurrentSpeed
+        {
+            get { return currentSpeed; }
+        }
+
+
+
         bool isAiming = false;
+
 
         // Start is called before the first frame update
         void Start()
@@ -54,14 +74,13 @@ namespace OMTB
             maxSpeedSqr = maxSpeed * maxSpeed;
             rb = GetComponent<Rigidbody>();
             shooter = GetComponent<Shooter>();
-
-            
         }
 
 
         // Update is called once per frame
         void Update()
         {
+   
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             float mag = axis.magnitude;
             mag = Mathf.Clamp01(mag);
@@ -77,8 +96,6 @@ namespace OMTB
 
                 // Check direction
                 targetDirection = new Vector3(axis.x, 0, axis.y).normalized;
-
-
             }
             else // Decelerate
             {
@@ -106,6 +123,7 @@ namespace OMTB
                     dir.y = 0;
                     // Check direction
                     targetDirection = dir;
+
                 }
 
 
@@ -114,6 +132,7 @@ namespace OMTB
                 {
                     if (mouseHasGamepadBehavior)
                     {
+
                         Vector3 playerPos = Camera.main.WorldToScreenPoint(transform.position);
                         playerPos.z = 0;
 
@@ -125,7 +144,7 @@ namespace OMTB
                         // Check direction
                         targetDirection = dir;
                     }
-                    
+
                     isAiming = true;
                     if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
                     {
@@ -146,7 +165,7 @@ namespace OMTB
                     targetDirection.x = aimAxis.x;
                     targetDirection.z = aimAxis.y;
 
-                    if((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
+                    if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
                     {
                         lastShootTime = System.DateTime.UtcNow;
                         shooter.Shoot();
@@ -160,53 +179,43 @@ namespace OMTB
 
             
 
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
+            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
 
-            Vector3 newVelocityDirection;
-            if (!isAiming)
-                newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
-            else // Strafe
-                newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
-
-            // Draw a ray pointing at our target in
-            Debug.DrawRay(transform.position, newDirection, Color.red);
+            //Vector3 newVelocityDirection;
+            //if (!isAiming)
+            //    newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
+            //else // Strafe
+            //    newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
-            transform.rotation = Quaternion.LookRotation(newDirection);
+            Vector3 tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
+            transform.rotation = Quaternion.LookRotation(tmp);
 
             // Move
-            Debug.Log("CurrentSpeed:" + currentSpeed);
-            currentSpeed = newVelocityDirection.normalized * currSpeedMag;
-            //characterController.Move(newVelocityDirection.normalized * currentSpeed * Time.deltaTime);
-            //rigidbody.MovePosition(rigidbody.position + currentSpeed * Time.deltaTime);
+            if (!isAiming)
+                tmp = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
+            else // Strafe
+                tmp = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
 
+            currentSpeed = tmp.normalized * currSpeedMag;
+            rb.MovePosition(rb.position + currentSpeed * Time.deltaTime);
 
-            //Debug.Log("Current speed:" + currentSpeed);
         }
 
-        private void FixedUpdate()
+
+        private void OnCollisionEnter(Collision collision)
         {
-            rb.AddForce(currentSpeed * 10, ForceMode.Force);
+            if ("Wall".Equals(collision.gameObject.tag))
+            {
+                Vector3 force1 = collision.contacts[0].normal * 250f * Vector3.Dot(currentSpeed, -collision.contacts[0].normal);
+                Vector3 force2 = collision.contacts[0].normal * 1500f;
+
+                rb.AddForce(force1, ForceMode.Impulse);
+                rb.AddForce(force2, ForceMode.Impulse);
+                return;
+            }
         }
 
-        //private void OnControllerColliderHit(ControllerColliderHit hit)
-        //{
-
-        //    Bouncer bouncer = hit.gameObject.GetComponent<Bouncer>();
-        //    Debug.Log("Collision");
-        //    if (bouncer)
-        //    {
-        //        // Add impulse
-        //        Vector3 impulse = hit.normal;
-        //        impulse.y = 0;
-        //        impulse = impulse.normalized * bouncer.Force;
-        //        currentSpeed += impulse; // Use external force variable
-        //        Debug.Log("Impulse:" + impulse);
-
-        //    }
-        //}
-
-        
 
     }
 
