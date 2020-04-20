@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace OMTB
 {
@@ -63,7 +64,10 @@ namespace OMTB
             get { return currentSpeed; }
         }
 
-
+        bool notSteering = false;
+        DateTime notSteeringLastTime;
+        float notSteeringTime = 0;
+        float notSteeringTimeBase = 1;
 
         bool isAiming = false;
 
@@ -80,11 +84,19 @@ namespace OMTB
         // Update is called once per frame
         void Update()
         {
-   
+            if (notSteering)
+            {
+                if ((DateTime.UtcNow - notSteeringLastTime).TotalSeconds > notSteeringTime)
+                    notSteering = false;
+                else
+                    return;
+            }
+                
+
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             float mag = axis.magnitude;
             mag = Mathf.Clamp01(mag);
-            //currentSpeed = characterController.velocity.magnitude;
+            
             float currSpeedMag = currentSpeed.magnitude;
             if (mag != 0) // Accelerate
             {
@@ -177,15 +189,6 @@ namespace OMTB
             }
 
 
-            
-
-            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
-
-            //Vector3 newVelocityDirection;
-            //if (!isAiming)
-            //    newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
-            //else // Strafe
-            //    newVelocityDirection = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
             Vector3 tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
@@ -207,11 +210,30 @@ namespace OMTB
         {
             if ("Wall".Equals(collision.gameObject.tag))
             {
-                Vector3 force1 = collision.contacts[0].normal * 250f * Vector3.Dot(currentSpeed, -collision.contacts[0].normal);
+                Vector3 totSpeed = currentSpeed + rb.velocity;
+                Debug.Log("TotSpeed:" + totSpeed);
+
+                float dot = Vector3.Dot(totSpeed, -collision.contacts[0].normal);
+                Vector3 bounceDir;
+                
+                bounceDir = (collision.contacts[0].normal + totSpeed.normalized).normalized;
+                if (bounceDir == Vector3.zero)
+                    bounceDir = -totSpeed.normalized;
+                
+                Vector3 force1 = bounceDir * 250f * dot;
                 Vector3 force2 = collision.contacts[0].normal * 1500f;
 
                 rb.AddForce(force1, ForceMode.Impulse);
                 rb.AddForce(force2, ForceMode.Impulse);
+
+                float signedAngle = Vector3.SignedAngle(totSpeed, collision.contacts[0].normal, Vector3.up);
+
+                rb.AddTorque(transform.up * -200 * totSpeed.magnitude * Mathf.Sign(signedAngle), ForceMode.Impulse);
+
+                notSteering = true;
+                notSteeringLastTime = DateTime.UtcNow;
+                notSteeringTime = totSpeed.magnitude / 100f + notSteeringTimeBase;
+                currentSpeed = Vector3.zero;
                 return;
             }
         }

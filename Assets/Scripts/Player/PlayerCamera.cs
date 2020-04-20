@@ -39,7 +39,7 @@ namespace OMTB
         {
 
             transform.position = target.position + distance;
-
+            
             float dist = Mathf.SmoothStep(0, 1, playerController.CurrentSpeed.magnitude / playerController.MaxSpeed);
 
             //transform.position += Vector3.up * dist * distMax;
