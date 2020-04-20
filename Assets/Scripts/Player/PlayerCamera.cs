@@ -10,24 +10,21 @@ namespace OMTB
         [SerializeField]
         Vector3 distance;
 
-        float lookAtMaxDistance = 5;
+        float distMax = 10;
+
+        Vector3 currDisp;
 
         Transform target;
         PlayerController playerController;
 
-        float speed = 50f;
-        Vector3 eulerDefault;
-
-        float lastSpeed = 0;
-        
 
         // Start is called before the first frame update
         void Start()
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
             playerController = target.GetComponent<PlayerController>();
-            eulerDefault = transform.eulerAngles;
-            
+            transform.position = target.position + distance;
+            transform.rotation = Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.forward);
         }
 
         // Update is called once per frame
@@ -36,23 +33,22 @@ namespace OMTB
 
         }
 
+
+
         private void LateUpdate()
         {
-            
+
             transform.position = target.position + distance;
 
-            
+            float dist = Mathf.SmoothStep(0, 1, playerController.CurrentSpeed.magnitude / playerController.MaxSpeed);
 
-            float dist = Mathf.Lerp(0, lookAtMaxDistance, playerController.CurrentSpeed.magnitude / playerController.MaxSpeed);
-            Quaternion def = Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.forward);
-            Quaternion tgt = Quaternion.LookRotation((target.position + target.forward*lookAtMaxDistance - transform.position).normalized, Vector3.forward);
-            Quaternion curr = Quaternion.Slerp(def, tgt, playerController.CurrentSpeed.sqrMagnitude / playerController.SqrMaxSpeed);
+            //transform.position += Vector3.up * dist * distMax;
 
-            Camera.main.transform.rotation = curr;
-
-
-
+            currDisp = Vector3.MoveTowards(currDisp, Vector3.up * dist * distMax, 4 * Time.deltaTime);
+            transform.position += currDisp;
         }
+
+
     }
 
 }
