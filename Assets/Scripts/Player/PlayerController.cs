@@ -70,6 +70,7 @@ namespace OMTB
         float notSteeringTimeBase = 1;
 
         bool isAiming = false;
+        public bool IsAiming { get { return isAiming; } }
 
 
         // Start is called before the first frame update

@@ -15092,6 +15092,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81b6a43ea628a6645981a8eef18ce59f, type: 3}
+--- !u!1 &515749060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4431441406028521328, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3828393624453573401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &515749062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515749060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2e8a1c129621442aca6a6105e327cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &531684346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36895,23 +36913,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
-      propertyPath: mouseHasGamepadBehavior
+      propertyPath: isGamepadConnected
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: maxSpeed
-      value: 14.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: acceleration
-      value: 16.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: deceleration
-      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -36920,18 +36923,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
-      propertyPath: fireRate
-      value: 5.03
+      propertyPath: maxSpeed
+      value: 24.3
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
-      propertyPath: turningSpeed
-      value: 6.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5734150969727017503, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1.83
+      propertyPath: deceleration
+      value: 39
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
