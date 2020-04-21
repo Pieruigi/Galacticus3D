@@ -15,7 +15,7 @@ namespace OMTB
         float turningSpeed;
 
         [SerializeField]
-        [Range(1f, 30f)]
+        [Range(1f, 50f)]
         float maxSpeed;
         public float MaxSpeed
         {
@@ -28,13 +28,18 @@ namespace OMTB
         }
 
         [SerializeField]
-        [Range(1f, 30f)]
+        [Range(0f, 1f)]
+        float aimMaxSpeedMultiplier;
+
+        [SerializeField]
+        [Range(1f, 100f)]
         float acceleration;
 
         [SerializeField]
-        [Range(10f, 200f)]
+        [Range(1f, 100f)]
         float deceleration;
 
+   
 
         [SerializeField]
         [Range(0.1f, 1f)]
@@ -48,7 +53,7 @@ namespace OMTB
         System.DateTime lastShootTime;
 
         float maxSpeedSqr;
-        Vector3 targetDirection;
+        //Vector3 targetDirection;
 
         [SerializeField]
         bool isGamepadConnected = false;
@@ -58,16 +63,17 @@ namespace OMTB
         Rigidbody rb;
 
         Shooter shooter;
-        Vector3 currentSpeed;
-        public Vector3 CurrentSpeed
+        Vector3 currentVelocity;
+        public Vector3 CurrentVelocity
         {
-            get { return currentSpeed; }
+            get { return currentVelocity; }
         }
 
         bool notSteering = false;
         DateTime notSteeringLastTime;
         float notSteeringTime = 0;
         float notSteeringTimeBase = 1;
+        float aimLerpSpeed = 20;
 
         bool isAiming = false;
         public bool IsAiming { get { return isAiming; } }
@@ -81,8 +87,6 @@ namespace OMTB
             shooter = GetComponent<Shooter>();
         }
 
-
-        // Update is called once per frame
         void Update()
         {
             if (notSteering)
@@ -92,33 +96,38 @@ namespace OMTB
                 else
                     return;
             }
-                
+
+            Vector3 oldVelocity = currentVelocity;
+            float oldMag = oldVelocity.magnitude;
+            float currMag = oldMag; // The current speed
+            float targetMag = 0; // The speed we want to reach
 
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            
             float mag = axis.magnitude;
             mag = Mathf.Clamp01(mag);
+
             
-            float currSpeedMag = currentSpeed.magnitude;
-            if (mag != 0) // Accelerate
+            targetMag = Mathf.Lerp(0, CheckAimingInput() ? maxSpeed * aimMaxSpeedMultiplier : maxSpeed, mag); // The target magnitude
+            
+
+            if (targetMag > oldMag) // Accelerate
             {
-                // Set velocity
-                currSpeedMag += acceleration * Time.deltaTime;
-
-                if (currSpeedMag > maxSpeed)
-                    currSpeedMag = maxSpeed;
-
-                // Check direction
-                targetDirection = new Vector3(axis.x, 0, axis.y).normalized;
+                currMag = oldMag + acceleration * Time.deltaTime;
+                if (currMag > targetMag)
+                    currMag = targetMag;
             }
-            else // Decelerate
+            else if(targetMag < oldMag)
             {
-                currSpeedMag -= deceleration * Time.deltaTime;
-
-                if (currSpeedMag < 0)
-                    currSpeedMag = 0;
-
+                currMag = oldMag - deceleration * Time.deltaTime;
+                if (currMag < targetMag)
+                    currMag = targetMag;
             }
 
+       
+            Vector3 targetDirection = new Vector3(axis.x, 0, axis.y).normalized;
+                
+     
 
             isAiming = false;
             // If I'm not using the gamepad the direction will be controlled via mouse and aiming is true
@@ -165,7 +174,7 @@ namespace OMTB
                         shooter.Shoot();
                     }
                 }
-                
+
             }
             else // Check if I'm aiming with the right gamepad stick
             {
@@ -183,50 +192,73 @@ namespace OMTB
                         lastShootTime = System.DateTime.UtcNow;
                         shooter.Shoot();
                     }
-                    
+
 
                 }
 
             }
-            Debug.Log("TargetDir:" + targetDirection);
 
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
-            Vector3 tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
-            transform.rotation = Quaternion.LookRotation(tmp);
+            Vector3 tmp = Vector3.zero;
+            if (targetDirection != Vector3.zero)
+            {
+                tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
+                transform.rotation = Quaternion.LookRotation(tmp);
+            }
 
             tmp = Vector3.zero;
             // Move
             if (!isAiming)
             {
-                tmp = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
+                tmp = Vector3.RotateTowards(oldVelocity.sqrMagnitude == 0 ? transform.forward : oldVelocity.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
                 Debug.Log("tmpDir:" + tmp);
-                currentSpeed = tmp.normalized * currSpeedMag;
+                currentVelocity = tmp.normalized * currMag;
             }
-                
-            else // Strafe
+            else
             {
-                Debug.Log("Axis:" + new Vector3(axis.x, 0, axis.y).normalized);
-                Debug.Log("CurrentSpeed.Norm:" + currentSpeed.normalized);
-                tmp = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
-                //tmp = Vector3.MoveTowards(currentSpeed, new Vector3(axis.x, 0, axis.y)*currSpeedMag, (acceleration + deceleration) / 2f * Time.deltaTime);
-                //currentSpeed = tmp;
-                currentSpeed = tmp.normalized * currSpeedMag;
+                tmp = Vector3.MoveTowards(oldVelocity, new Vector3(axis.x, 0, axis.y).normalized * currMag, aimLerpSpeed * Time.deltaTime);
+                currentVelocity = tmp;
             }
 
+            rb.MovePosition(rb.position + currentVelocity * Time.deltaTime);
+        }
 
 
+        bool CheckAimingInput()
+        {
             
-            rb.MovePosition(rb.position + currentSpeed * Time.deltaTime);
+            // If I'm not using the gamepad the direction will be controlled via mouse and aiming is true
+            if (!isGamepadConnected)
+            {
+            
+                if (Input.GetMouseButton(0))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            else // Check if I'm aiming with the right gamepad stick
+            {
+
+                Vector2 aimAxis = new Vector2(Input.GetAxis("AimHorizontal"), Input.GetAxis("AimVertical"));
+                if (aimAxis != Vector2.zero)
+                {
+                    return true;
+                }
+                return false;
+            }
 
         }
 
+     
 
         private void OnCollisionEnter(Collision collision)
         {
             if ("Wall".Equals(collision.gameObject.tag))
             {
-                Vector3 totSpeed = currentSpeed + rb.velocity;
+                Vector3 totSpeed = currentVelocity + rb.velocity;
                 Debug.Log("TotSpeed:" + totSpeed);
 
                 float dot = Vector3.Dot(totSpeed, -collision.contacts[0].normal);
@@ -249,7 +281,7 @@ namespace OMTB
                 notSteering = true;
                 notSteeringLastTime = DateTime.UtcNow;
                 notSteeringTime = totSpeed.magnitude / 100f + notSteeringTimeBase;
-                currentSpeed = Vector3.zero;
+                currentVelocity = Vector3.zero;
                 return;
             }
         }

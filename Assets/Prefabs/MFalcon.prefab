@@ -4883,9 +4883,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turningSpeed: 4.4
   maxSpeed: 27.3
-  acceleration: 21.7
-  deceleration: 98
-  stability: 1
+  aimMaxSpeedMultiplier: 0.66
+  acceleration: 61
+  deceleration: 48
+  stability: 0.66
   fireRate: 5.03
   isGamepadConnected: 0
   mouseHasGamepadBehavior: 1
