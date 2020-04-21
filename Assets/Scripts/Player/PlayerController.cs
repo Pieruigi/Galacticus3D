@@ -188,20 +188,35 @@ namespace OMTB
                 }
 
             }
-
+            Debug.Log("TargetDir:" + targetDirection);
 
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
             Vector3 tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(tmp);
 
+            tmp = Vector3.zero;
             // Move
             if (!isAiming)
+            {
                 tmp = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? transform.forward : currentSpeed.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
+                Debug.Log("tmpDir:" + tmp);
+                currentSpeed = tmp.normalized * currSpeedMag;
+            }
+                
             else // Strafe
+            {
+                Debug.Log("Axis:" + new Vector3(axis.x, 0, axis.y).normalized);
+                Debug.Log("CurrentSpeed.Norm:" + currentSpeed.normalized);
                 tmp = Vector3.RotateTowards(currentSpeed.sqrMagnitude == 0 ? new Vector3(axis.x, 0, axis.y).normalized : currentSpeed.normalized, new Vector3(axis.x, 0, axis.y).normalized, turningSpeed * stability * Time.deltaTime, .0f);
+                //tmp = Vector3.MoveTowards(currentSpeed, new Vector3(axis.x, 0, axis.y)*currSpeedMag, (acceleration + deceleration) / 2f * Time.deltaTime);
+                //currentSpeed = tmp;
+                currentSpeed = tmp.normalized * currSpeedMag;
+            }
 
-            currentSpeed = tmp.normalized * currSpeedMag;
+
+
+            
             rb.MovePosition(rb.position + currentSpeed * Time.deltaTime);
 
         }
