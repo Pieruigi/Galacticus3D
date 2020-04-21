@@ -4881,10 +4881,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131497a0c0c22114b8eff6f5d96faea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turningSpeed: 7.5
-  maxSpeed: 14.5
-  acceleration: 16.4
-  deceleration: 41
+  turningSpeed: 4.4
+  maxSpeed: 27.3
+  acceleration: 21.7
+  deceleration: 98
   stability: 1
   fireRate: 5.03
   isGamepadConnected: 0
@@ -4912,9 +4912,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3828393623601388251}
   serializedVersion: 2
-  m_Mass: 2
+  m_Mass: 100
   m_Drag: 2
-  m_AngularDrag: 0.5
+  m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -4927,7 +4927,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3828393623601388251}
-  m_Material: {fileID: 13400000, guid: d64d6c073c2c6fe44b82a6b554b15482, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5258,6 +5258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3701192458173171454}
+  - component: {fileID: 115884301}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -5286,6 +5287,18 @@ Transform:
   m_Father: {fileID: 3828393623601388255}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &115884301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4431441406028521328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2e8a1c129621442aca6a6105e327cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4731764698593183443
 GameObject:
   m_ObjectHideFlags: 0
