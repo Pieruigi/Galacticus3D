@@ -166,7 +166,6 @@ namespace Pathfinding {
 
 		/// <summary>\copydoc Pathfinding::IAstarAI::Teleport</summary>
 		public override void Teleport (Vector3 newPosition, bool clearPath = true) {
-			if (clearPath) interpolator.SetPath(null);
 			reachedEndOfPath = false;
 			base.Teleport(newPosition, clearPath);
 		}
@@ -188,7 +187,7 @@ namespace Pathfinding {
 				if (orientation != OrientationMode.YAxisForward) {
 					// Check if the destination is above the head of the character or far below the feet of it
 					float yDifference;
-					movementPlane.ToPlane(destination, out yDifference);
+					movementPlane.ToPlane(destination - position, out yDifference);
 					var h = tr.localScale.y * height;
 					if (yDifference > h || yDifference < -h*0.5) return false;
 				}
@@ -237,6 +236,19 @@ namespace Pathfinding {
 		bool IAstarAI.canMove { get { return canMove; } set { canMove = value; } }
 
 		#endregion
+
+		/// <summary>\copydoc Pathfinding::IAstarAI::GetRemainingPath</summary>
+		public void GetRemainingPath (List<Vector3> buffer, out bool stale) {
+			buffer.Clear();
+			buffer.Add(position);
+			if (!interpolator.valid) {
+				stale = true;
+				return;
+			}
+
+			stale = false;
+			interpolator.GetRemainingPath(buffer);
+		}
 
 		protected override void OnDisable () {
 			base.OnDisable();
@@ -291,7 +303,7 @@ namespace Pathfinding {
 			if (path.vectorPath.Count == 1) path.vectorPath.Add(path.vectorPath[0]);
 			interpolator.SetPath(path.vectorPath);
 
-			var graph = AstarData.GetGraph(path.path[0]) as ITransformedGraph;
+			var graph = path.path.Count > 0 ? AstarData.GetGraph(path.path[0]) as ITransformedGraph : null;
 			movementPlane = graph != null ? graph.transform : (orientation == OrientationMode.YAxisForward ? new GraphTransform(Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(-90, 270, 90), Vector3.one)) : GraphTransform.identityTransform);
 
 			// Reset some variables
@@ -315,6 +327,12 @@ namespace Pathfinding {
 				reachedEndOfPath = true;
 				OnTargetReached();
 			}
+		}
+
+		protected override void ClearPath () {
+			CancelCurrentPathRequest();
+			interpolator.SetPath(null);
+			reachedEndOfPath = false;
 		}
 
 		/// <summary>Called during either Update or FixedUpdate depending on if rigidbodies are used for movement or not</summary>
@@ -354,7 +372,7 @@ namespace Pathfinding {
 				// How fast to move depending on the distance to the destination.
 				// Move slower as the character gets closer to the destination.
 				// This is always a value between 0 and 1.
-				slowdown = distanceToEnd < slowdownDistance ? Mathf.Sqrt(distanceToEnd / slowdownDistance) : 1;
+				slowdown = distanceToEnd < slowdownDistance? Mathf.Sqrt (distanceToEnd / slowdownDistance) : 1;
 
 				if (reachedEndOfPath && whenCloseToDestination == CloseToDestinationMode.Stop) {
 					// Slow down as quickly as possible
@@ -372,19 +390,6 @@ namespace Pathfinding {
 
 			ApplyGravity(deltaTime);
 
-			if (rvoController != null && rvoController.enabled) {
-				// Send a message to the RVOController that we want to move
-				// with this velocity. In the next simulation step, this
-				// velocity will be processed and it will be fed back to the
-				// rvo controller and finally it will be used by this script
-				// when calling the CalculateMovementDelta method below
-
-				// Make sure that we don't move further than to the end point
-				// of the path. If the RVO simulation FPS is low and we did
-				// not do this, the agent might overshoot the target a lot.
-				var rvoTarget = currentPosition + movementPlane.ToWorld(Vector2.ClampMagnitude(velocity2D, distanceToEnd), 0f);
-				rvoController.SetTarget(rvoTarget, velocity2D.magnitude, maxSpeed);
-			}
 
 			// Set how much the agent wants to move during this frame
 			var delta2D = lastDeltaPosition = CalculateDeltaToMoveThisFrame(movementPlane.ToPlane(currentPosition), distanceToEnd, deltaTime);
@@ -395,16 +400,7 @@ namespace Pathfinding {
 		protected virtual void CalculateNextRotation (float slowdown, out Quaternion nextRotation) {
 			if (lastDeltaTime > 0.00001f && enableRotation) {
 				Vector2 desiredRotationDirection;
-				if (rvoController != null && rvoController.enabled) {
-					// When using local avoidance, use the actual velocity we are moving with if that velocity
-					// is high enough, otherwise fall back to the velocity that we want to move with (velocity2D).
-					// The local avoidance velocity can be very jittery when the character is close to standing still
-					// as it constantly makes small corrections. We do not want the rotation of the character to be jittery.
-					var actualVelocity = lastDeltaPosition/lastDeltaTime;
-					desiredRotationDirection = Vector2.Lerp(velocity2D, actualVelocity, 4 * actualVelocity.magnitude / (maxSpeed + 0.0001f));
-				} else {
-					desiredRotationDirection = velocity2D;
-				}
+				desiredRotationDirection = velocity2D;
 
 				// Rotate towards the direction we are moving in.
 				// Don't rotate when we are very close to the target.
@@ -433,12 +429,6 @@ namespace Pathfinding {
 					// so that the velocity only goes along the direction of the wall, not into it
 					velocity2D -= difference * Vector2.Dot(difference, velocity2D) / sqrDifference;
 
-					// Make sure the RVO system knows that there was a collision here
-					// Otherwise other agents may think this agent continued
-					// to move forwards and avoidance quality may suffer
-					if (rvoController != null && rvoController.enabled) {
-						rvoController.SetCollisionNormal(difference);
-					}
 					positionChanged = true;
 					// Return the new position, but ignore any changes in the y coordinate from the ClampToNavmesh method as the y coordinates in the navmesh are rarely very accurate
 					return position + movementPlane.ToWorld(difference);
@@ -449,7 +439,7 @@ namespace Pathfinding {
 			return position;
 		}
 
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 		[System.NonSerialized]
 		int gizmoHash = 0;
 
@@ -485,7 +475,7 @@ namespace Pathfinding {
 				Draw.Gizmos.CircleXZ(Vector3.zero, endReachedDistance, Color.Lerp(GizmoColor, Color.red, 0.8f) * new Color(1, 1, 1, alpha));
 			}
 		}
-	#endif
+#endif
 
 		protected override int OnUpgradeSerializedData (int version, bool unityThread) {
 			base.OnUpgradeSerializedData(version, unityThread);

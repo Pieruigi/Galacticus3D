@@ -1,35 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Interfaces;
 
 namespace OMTB
 {
     public class Roller : MonoBehaviour
     {
-        
-        float maxAngularSpeed = 40;
-        //float maxSideSpeed = 0.3f;
-
+        [SerializeField]
         float maxRoll = 60;
+
+        [SerializeField]
         float rollSpeed = 90;
 
-        float angularSpeedWeight = 0.7f;
 
-        //Vector3 lastPos;
+        [SerializeField]
+        GameObject target;
+
+        float maxAngularSpeed;
+        float maxSideSpeed;
+
+        Vector3 lastPos;
         Vector3 lastFwd;
 
-        //float currAngularSpeed = 0;
-        //float currSideSpeed = 0;
+        IRolleable rolleable;
 
-        
+        private void Awake()
+        {
+            rolleable = target.GetComponent<IRolleable>();
+            maxAngularSpeed = rolleable.GetMaxAngularSpeed();
+            maxSideSpeed = rolleable.GetMaxSideSpeed();
+        }
 
         // Start is called before the first frame update
         void Start()
         {
-            //lastPos = transform.position;
+            lastPos = transform.position;
             lastFwd = transform.forward;
 
-            
+                
             
         }
 
@@ -47,39 +56,40 @@ namespace OMTB
             
             float angle = 0;
             float angularSpeed = 0;
-            //float sideSpeed = 0;
-            float angularComp = 0;
-            //float sideComp = 0;
-
-            if (transform.forward != lastFwd) // Ship has some angular speed
+            float sideSpeed = 0;
+            
+            if (!rolleable.IsAiming())
             {
-                angularSpeed = Vector3.SignedAngle(transform.forward, lastFwd, Vector3.up) / Time.deltaTime;
-                angularSpeed = Mathf.Clamp(angularSpeed, -maxAngularSpeed, maxAngularSpeed);
+                if (transform.forward != lastFwd) // Ship has some angular speed
+                {
+                    angularSpeed = Vector3.SignedAngle(transform.forward, lastFwd, Vector3.up) / Time.deltaTime;
+                    angularSpeed = Mathf.Clamp(angularSpeed, -maxAngularSpeed, maxAngularSpeed);
+                }
+
+
+                // Compute angle depending on the angular speed
+                angle = Mathf.LerpAngle(0, Mathf.Sign(angularSpeed) * maxRoll /* * angularSpeedWeight*/, Mathf.Abs(angularSpeed) / maxAngularSpeed);
+
+                
+            }
+            else
+            {
+                if (lastPos != transform.position)
+                {
+                    float xDisp = -Vector3.Dot((transform.position - lastPos), transform.right);
+
+                    sideSpeed = xDisp / Time.deltaTime;
+                    Debug.Log("SideSpeed:" + +sideSpeed);
+                    sideSpeed = Mathf.Clamp(sideSpeed, -maxSideSpeed, maxSideSpeed);
+
+                }
+
+                // Compute angle depending on the angular speed
+                angle = Mathf.LerpAngle(0, Mathf.Sign(sideSpeed) * maxRoll , Mathf.Abs(sideSpeed) / maxSideSpeed);
+                
             }
 
 
-            // Compute angle depending on the angular speed
-            angularComp = Mathf.LerpAngle(0, Mathf.Sign(angularSpeed) * maxRoll /* * angularSpeedWeight*/, Mathf.Abs(angularSpeed) / maxAngularSpeed);
-        
-
-            ////if(angularComp == 0 && transform.localEulerAngles.z == 0)
-            ////{
-            //    if (lastPos != transform.position)
-            //    {
-            //        float xDisp = -Vector3.Dot((transform.position - lastPos), transform.right);
-
-            //        sideSpeed = xDisp / Time.deltaTime;
-            //    Debug.Log("SideSpeed:" + +sideSpeed);
-            //        sideSpeed = Mathf.Clamp(sideSpeed, -maxSideSpeed, maxSideSpeed);
-
-            //    }
-                
-            ////}
-            
-           // sideComp = Mathf.LerpAngle(0, Mathf.Sign(sideSpeed) * maxRoll /** (1 - angularSpeedWeight)*/, Mathf.Abs(sideSpeed) / maxSideSpeed);
-
-
-            angle = angularComp;// + sideComp;
             angle = Mathf.Clamp(angle, -maxRoll, maxRoll);
 
             Quaternion targetRot = Quaternion.Euler(0, 0, angle);
@@ -87,10 +97,8 @@ namespace OMTB
 
 
 
-
-
             lastFwd = transform.forward;
-            //lastPos = transform.position;
+            lastPos = transform.position;
 
 
 

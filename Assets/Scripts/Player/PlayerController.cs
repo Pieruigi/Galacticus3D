@@ -5,11 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using OMTB.Interfaces;
 
 namespace OMTB
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IRolleable
     {
+        [Header("Movement")]
         [SerializeField]
         [Range(1f, 20f)]
         float turningSpeed;
@@ -46,23 +48,29 @@ namespace OMTB
         float stability; // Lateral velocity
 
 
-        [Header("****Move to Weapon class")]
-        [SerializeField] // Movo to weapon
-        [Range(2f, 8f)]
-        float fireRate;
-        System.DateTime lastShootTime;
+        //[Header("****Move to Weapon class")]
+        //[SerializeField] // Movo to weapon
+        //[Range(2f, 8f)]
+        //float fireRate;
+        //System.DateTime lastShootTime;
 
-        float maxSpeedSqr;
+        //float maxSpeedSqr;
         //Vector3 targetDirection;
 
+        
+        [Header("Controller Type")]
         [SerializeField]
         bool isGamepadConnected = false;
         [SerializeField]
         bool mouseHasGamepadBehavior = true;
 
+        [Header("Combat")]
+        [SerializeField]
+        Weapon weapon;
+
         Rigidbody rb;
 
-        Shooter shooter;
+        //Shooter shooter;
         Vector3 currentVelocity;
         public Vector3 CurrentVelocity
         {
@@ -82,9 +90,9 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-            maxSpeedSqr = maxSpeed * maxSpeed;
+            //maxSpeedSqr = maxSpeed * maxSpeed;
             rb = GetComponent<Rigidbody>();
-            shooter = GetComponent<Shooter>();
+            //shooter = GetComponent<Shooter>();
         }
 
         void Update()
@@ -168,11 +176,13 @@ namespace OMTB
                     }
 
                     isAiming = true;
-                    if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
-                    {
-                        lastShootTime = System.DateTime.UtcNow;
-                        shooter.Shoot();
-                    }
+
+                    weapon.Fire();
+                    //if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
+                    //{
+                    //    lastShootTime = System.DateTime.UtcNow;
+                    //    shooter.Shoot();
+                    //}
                 }
 
             }
@@ -187,11 +197,12 @@ namespace OMTB
                     targetDirection.x = aimAxis.x;
                     targetDirection.z = aimAxis.y;
 
-                    if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
-                    {
-                        lastShootTime = System.DateTime.UtcNow;
-                        shooter.Shoot();
-                    }
+                    weapon.Fire();
+                    //if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
+                    //{
+                    //    lastShootTime = System.DateTime.UtcNow;
+                    //    shooter.Shoot();
+                    //}
 
 
                 }
@@ -286,7 +297,20 @@ namespace OMTB
             }
         }
 
+        public float GetMaxAngularSpeed()
+        {
+            return turningSpeed;
+        }
 
+        public float GetMaxSideSpeed()
+        {
+            return maxSpeed * aimMaxSpeedMultiplier;
+        }
+
+        bool IRolleable.IsAiming()
+        {
+            return isAiming;
+        }
     }
 
     
