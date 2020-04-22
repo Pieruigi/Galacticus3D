@@ -36833,10 +36833,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 115884301, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
-      propertyPath: useRigidbody
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: m_Name
