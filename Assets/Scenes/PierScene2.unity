@@ -36757,43 +36757,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdf8083db7924dd468001565e19849f5, type: 3}
---- !u!1 &2122499743 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 3828393624453573401}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2122499744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122499743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2fc2827280e67348968111b11930e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage:
-    amount: 10
-    rangeMin: 0
-    rangeMax: 0
-  range: 20
-  rate: 6
-  shooter: {fileID: 2122499747}
---- !u!114 &2122499747 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 919433667, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 3828393624453573401}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122499743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1d8fa3d307fbf649978eee61e68c86a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1609570399137722805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36871,11 +36834,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 115884301, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 2122499743}
-    - target: {fileID: 2054822946, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
-      propertyPath: m_IsActive
+      propertyPath: useRigidbody
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
@@ -36938,10 +36897,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
-        type: 3}
-      propertyPath: weapon
-      value: 
-      objectReference: {fileID: 2122499744}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}

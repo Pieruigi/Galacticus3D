@@ -223,7 +223,6 @@ namespace OMTB
             if (!isAiming)
             {
                 tmp = Vector3.RotateTowards(oldVelocity.sqrMagnitude == 0 ? transform.forward : oldVelocity.normalized, targetDirection.normalized, turningSpeed * stability * Time.deltaTime, .0f);
-                Debug.Log("tmpDir:" + tmp);
                 currentVelocity = tmp.normalized * currMag;
             }
             else
@@ -232,9 +231,14 @@ namespace OMTB
                 currentVelocity = tmp;
             }
 
-            rb.MovePosition(rb.position + currentVelocity * Time.deltaTime);
+            //rb.MovePosition(rb.position + currentVelocity * Time.deltaTime);
         }
 
+
+        void FixedUpdate()
+        {
+            rb.MovePosition(rb.position + currentVelocity * Time.deltaTime);
+        }
 
         bool CheckAimingInput()
         {

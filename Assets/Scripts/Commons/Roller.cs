@@ -13,9 +13,11 @@ namespace OMTB
         [SerializeField]
         float rollSpeed = 90;
 
-
         [SerializeField]
         GameObject target;
+
+        [SerializeField]
+        bool useRigidbody;
 
         float maxAngularSpeed;
         float maxSideSpeed;
@@ -24,12 +26,17 @@ namespace OMTB
         Vector3 lastFwd;
 
         IRolleable rolleable;
+        Rigidbody rb;
 
         private void Awake()
         {
             rolleable = target.GetComponent<IRolleable>();
             maxAngularSpeed = rolleable.GetMaxAngularSpeed();
             maxSideSpeed = rolleable.GetMaxSideSpeed();
+            Debug.Log("maxSideSpeed:" + maxSideSpeed);
+
+            if (useRigidbody)
+                rb = target.GetComponent<Rigidbody>();
         }
 
         // Start is called before the first frame update
@@ -50,6 +57,18 @@ namespace OMTB
 
         private void LateUpdate()
         {
+            if (!useRigidbody)
+                Roll();
+        }
+
+        private void FixedUpdate()
+        {
+            if (useRigidbody)
+                Roll();
+        }
+
+        private void Roll()
+        {
             //Quaternion targetRot2 = Quaternion.Euler(0,0,30);
             //transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot2, 20 * Time.deltaTime);
        
@@ -68,15 +87,16 @@ namespace OMTB
 
 
                 // Compute angle depending on the angular speed
-                angle = Mathf.LerpAngle(0, Mathf.Sign(angularSpeed) * maxRoll /* * angularSpeedWeight*/, Mathf.Abs(angularSpeed) / maxAngularSpeed);
+                angle = Mathf.LerpAngle(0, Mathf.Sign(angularSpeed) * maxRoll, Mathf.Abs(angularSpeed) / maxAngularSpeed);
 
                 
             }
             else
             {
-                if (lastPos != transform.position)
+                Vector3 pos = useRigidbody ? rb.position : transform.position;
+                if (lastPos != pos)
                 {
-                    float xDisp = -Vector3.Dot((transform.position - lastPos), transform.right);
+                    float xDisp = -Vector3.Dot((pos - lastPos), transform.right);
 
                     sideSpeed = xDisp / Time.deltaTime;
                     Debug.Log("SideSpeed:" + +sideSpeed);
@@ -89,22 +109,25 @@ namespace OMTB
                 
             }
 
+          
 
             angle = Mathf.Clamp(angle, -maxRoll, maxRoll);
 
-            Quaternion targetRot = Quaternion.Euler(0, 0, angle);
-            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot, rollSpeed * Time.deltaTime);
+            if (angle != 0)
+                Debug.Log("Angle:" + angle);
 
+            Quaternion targetRot = Quaternion.Euler(0, 0, angle);
+            Debug.Log("targetRot:" + targetRot);
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot, rollSpeed * Time.deltaTime);
+            
 
 
             lastFwd = transform.forward;
-            lastPos = transform.position;
-
-
-
-
+            lastPos = useRigidbody ? rb.position : transform.position;
 
         }
+
+
     }
 
 }

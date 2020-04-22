@@ -4799,6 +4799,7 @@ GameObject:
   - component: {fileID: 919433667}
   - component: {fileID: 2108589469}
   - component: {fileID: 2108589464}
+  - component: {fileID: 2122499744}
   m_Layer: 0
   m_Name: MFalcon
   m_TagString: Player
@@ -4887,9 +4888,9 @@ MonoBehaviour:
   acceleration: 61
   deceleration: 48
   stability: 0.66
-  fireRate: 5.03
   isGamepadConnected: 0
   mouseHasGamepadBehavior: 1
+  weapon: {fileID: 2122499744}
 --- !u!114 &919433667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4934,6 +4935,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.79
   m_Center: {x: 0, y: 0, z: 0.21}
+--- !u!114 &2122499744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828393623601388251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2fc2827280e67348968111b11930e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    amount: 10
+    rangeMin: 0
+    rangeMax: 0
+  range: 20
+  rate: 6
+  shooter: {fileID: 919433667}
 --- !u!1 &3828393623919772211
 GameObject:
   m_ObjectHideFlags: 0
@@ -5300,6 +5320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2e8a1c129621442aca6a6105e327cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRoll: 60
+  rollSpeed: 90
+  target: {fileID: 3828393623601388251}
+  useRigidbody: 1
 --- !u!1 &4731764698593183443
 GameObject:
   m_ObjectHideFlags: 0
