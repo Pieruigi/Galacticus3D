@@ -28,6 +28,8 @@ namespace OMTB
         IRolleable rolleable;
         Rigidbody rb;
 
+        System.DateTime lastChange;
+
         private void Awake()
         {
             rolleable = target.GetComponent<IRolleable>();
@@ -71,7 +73,7 @@ namespace OMTB
         {
             //Quaternion targetRot2 = Quaternion.Euler(0,0,30);
             //transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot2, 20 * Time.deltaTime);
-       
+            
             
             float angle = 0;
             float angularSpeed = 0;
@@ -83,6 +85,7 @@ namespace OMTB
                 {
                     angularSpeed = Vector3.SignedAngle(transform.forward, lastFwd, Vector3.up) / Time.deltaTime;
                     angularSpeed = Mathf.Clamp(angularSpeed, -maxAngularSpeed, maxAngularSpeed);
+                    lastChange = System.DateTime.UtcNow;
                 }
 
 
@@ -96,6 +99,7 @@ namespace OMTB
                 Vector3 pos = useRigidbody ? rb.position : transform.position;
                 if (lastPos != pos)
                 {
+                    lastChange = System.DateTime.UtcNow;
                     float xDisp = -Vector3.Dot((pos - lastPos), transform.right);
 
                     sideSpeed = xDisp / Time.deltaTime;
@@ -109,15 +113,15 @@ namespace OMTB
                 
             }
 
-          
 
-            angle = Mathf.Clamp(angle, -maxRoll, maxRoll);
-
-            if (angle != 0)
-                Debug.Log("Angle:" + angle);
+            if ((System.DateTime.UtcNow - lastChange).TotalSeconds < 1f)
+                angle = Mathf.Clamp(angle, -maxRoll, maxRoll);
+            else
+                angle = 0;
 
             Quaternion targetRot = Quaternion.Euler(0, 0, angle);
             Debug.Log("targetRot:" + targetRot);
+            
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot, rollSpeed * Time.deltaTime);
             
 
