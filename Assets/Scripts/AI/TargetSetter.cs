@@ -7,14 +7,14 @@ namespace OMTB
 {
     public class TargetSetter : MonoBehaviour
     {
-        UnityAction<Transform> OnTargetSet;
+        public UnityAction<Transform> OnTargetChanged;
 
         [SerializeField]
         Transform target;
         public Transform Target
         {
             get { return target; }
-            set { target = value; OnTargetSet?.Invoke(target); }
+            set { target = value; OnTargetChanged?.Invoke(target); }
         }
         // Start is called before the first frame update
         void Start()
