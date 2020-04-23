@@ -34,6 +34,10 @@ namespace OMTB
         float aimMaxSpeedMultiplier;
 
         [SerializeField]
+        [Range(0f, 1f)]
+        float aimMaxTurnSpeedMultiplier;
+
+        [SerializeField]
         [Range(1f, 100f)]
         float acceleration;
 
@@ -214,7 +218,7 @@ namespace OMTB
             Vector3 tmp = Vector3.zero;
             if (targetDirection != Vector3.zero)
             {
-                tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * Time.deltaTime, 0.0f);
+                tmp = Vector3.RotateTowards(transform.forward, targetDirection, turningSpeed * (isAiming ? aimMaxTurnSpeedMultiplier : 1 ) * Time.deltaTime, 0.0f);
                 transform.rotation = Quaternion.LookRotation(tmp);
             }
 
