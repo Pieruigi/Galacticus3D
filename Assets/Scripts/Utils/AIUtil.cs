@@ -12,10 +12,11 @@ namespace OMTB.Utils
 
             bool onSight = false;
             RaycastHit hit;
+            int mask = ~LayerMask.GetMask(new string[] { "Bullet" });
             Debug.DrawRay(source.position, target.position - source.position, Color.red, 3);
-            if (Physics.Raycast(source.position, target.position - source.position, out hit, 1000, ~0, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(source.position, target.position - source.position, out hit, 1000, mask, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log("Hit:" + hit.transform);
+                
                 if (hit.transform == target)
                     onSight = true;
             }
