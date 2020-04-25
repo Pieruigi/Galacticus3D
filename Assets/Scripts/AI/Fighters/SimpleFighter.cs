@@ -15,6 +15,9 @@ namespace OMTB.AI
         float aimError = 3;
 
         [SerializeField]
+        bool alwaysShoot = false;
+
+        [SerializeField]
         Weapon weapon;
 
         [SerializeField]
@@ -23,29 +26,37 @@ namespace OMTB.AI
         bool isActive = false;
 
         TargetSetter targetSetter;
+
+        float sqrWeaponRange;
         
         // Start is called before the first frame update
         void Start()
         {
             targetSetter = GetComponent<TargetSetter>();
+            sqrWeaponRange = weapon.Range * weapon.Range;
             Deactivate();
         }
 
         // Update is called once per frame
         void Update()
         {
+         
             if (!isActive)
+            {
+                if (alwaysShoot) // Shoot anyway
+                {
+                    if((targetSetter.Target.position - transform.position).sqrMagnitude < sqrWeaponRange)
+                    {
+                        TryShoot();
+                    }
+                }
+
                 return;
-
-            Vector3 dir = (targetSetter.Target.position - weapon.transform.position).normalized;
-
-            // Aim target
-
+            }
+                
 
             // Shoot
-
-            if (Vector3.Angle(weapon.transform.forward, dir) < aimError)
-                weapon.Fire();
+            TryShoot();
             
         }
 
@@ -65,6 +76,12 @@ namespace OMTB.AI
                 combatMover.GetComponent<IActivable>().Deactivate();
         }
 
+        void TryShoot()
+        {
+            Vector3 dir = (targetSetter.Target.position - weapon.transform.position).normalized;
+            if (Vector3.Angle(weapon.transform.forward, dir) < aimError)
+                weapon.Fire();
+        }
 
     }
 

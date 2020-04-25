@@ -231,6 +231,53 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &182193106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 182193108}
+  - component: {fileID: 182193107}
+  m_Layer: 0
+  m_Name: ZigZager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &182193107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182193106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a03327fa053a541b8feb74c3279ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 3
+  acceleration: 5
+  deceleration: 3
+  changeDirectionRate: 0.3
+--- !u!4 &182193108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182193106}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 586082430}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &295088799
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +971,7 @@ Transform:
   - {fileID: 1201089575}
   - {fileID: 2072815867}
   - {fileID: 1970583916}
+  - {fileID: 182193108}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2684,7 +2732,7 @@ MonoBehaviour:
     amount: 10
     rangeMin: 0
     rangeMax: 0
-  range: 8
+  range: 14
   rate: 4
   shooter: {fileID: 1201089576}
 --- !u!1 &1217546527
@@ -3372,7 +3420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595076573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.7, y: 0, z: 9.32}
+  m_LocalPosition: {x: 32.5, y: 0, z: 30.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4619,8 +4667,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimSpeed: 5
   aimError: 3
+  alwaysShoot: 1
   weapon: {fileID: 1201089577}
-  combatMover: {fileID: 0}
+  combatMover: {fileID: 182193106}
 --- !u!114 &1970583915
 MonoBehaviour:
   m_ObjectHideFlags: 0

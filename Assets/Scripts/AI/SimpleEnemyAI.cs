@@ -60,7 +60,7 @@ namespace OMTB.AI
                 return;
 
             if ( (!isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance) ||
-                 (isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance*1.4f) ||
+                 (isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance*1.5f) ||
                  !Utils.AIUtil.IsOnSight(transform, target))
             {
 

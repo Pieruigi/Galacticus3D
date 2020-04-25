@@ -14,6 +14,10 @@ namespace OMTB
 
         [SerializeField]
         float range;
+        public float Range
+        {
+            get { return range; }
+        }
 
         [SerializeField]
         float rate;
