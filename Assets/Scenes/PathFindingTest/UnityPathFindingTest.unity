@@ -241,6 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 182193108}
   - component: {fileID: 182193107}
+  - component: {fileID: 182193109}
   m_Layer: 0
   m_Name: ZigZager
   m_TagString: Untagged
@@ -260,10 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a03327fa053a541b8feb74c3279ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 3
+  maxSpeed: 7
   acceleration: 5
   deceleration: 3
+  angularSpeed: 30
   changeDirectionRate: 0.3
+  useRigidbody: 1
 --- !u!4 &182193108
 Transform:
   m_ObjectHideFlags: 0
@@ -278,6 +281,19 @@ Transform:
   m_Father: {fileID: 586082430}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &182193109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182193106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf70ab3d34e459439db9b1830b94885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1595076574}
 --- !u!1 &295088799
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,9 +947,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reactionTime: 0.5
   engageTriggerPoint: {fileID: 0}
-  engageRange: 14
+  engageRange: 30
   engageOnSightOnly: 1
-  escapeRange: 22
+  escapeRange: 50
 --- !u!195 &586082429
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -989,7 +1005,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!135 &586082432
 SphereCollider:
@@ -1031,7 +1047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seeker: {fileID: 2072815864}
   figther: {fileID: 1970583913}
-  fightingDistance: 10
+  fightingDistance: 20
 --- !u!1 &616189229
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,7 +3424,7 @@ GameObject:
   m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3420,7 +3436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595076573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.5, y: 0, z: 30.7}
+  m_LocalPosition: {x: 28.21, y: 0, z: 32.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

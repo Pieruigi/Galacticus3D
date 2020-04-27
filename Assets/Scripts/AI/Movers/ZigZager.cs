@@ -5,24 +5,38 @@ using OMTB.Interfaces;
 
 namespace OMTB.AI
 {
+    [RequireComponent(typeof(TargetSetter))]
     public class ZigZager : MonoBehaviour, IActivable
     {
         [SerializeField]
         float maxSpeed = 3;
+        float maxSpeedDefault;
 
         [SerializeField]
         float acceleration = 5;
+        float accelerationDefault;
 
         [SerializeField]
         float deceleration = 3;
+        float decelerationDefault;
+
+        [SerializeField]
+        float angularSpeed;
+        float angularSpeedDefault;
 
         [SerializeField]
         float changeDirectionRate = 0.3f;
+        float changeDirectionRateDefault;
+
+        [SerializeField]
+        bool useRigidbody = false;
         
         bool isActive = false;
 
         float rComp = 0, fComp = 0;
         float currentSpeed = 0;
+        Vector3 targetPos;
+        TargetSetter targetSetter;
        
         float changeTime;
         System.DateTime lastChange;
@@ -36,11 +50,29 @@ namespace OMTB.AI
         bool isChangingDirection = false;
         bool isDecelerating = false;
 
+        Rigidbody rb;
+
+        private void Awake()
+        {
+            maxSpeedDefault = maxSpeed;
+            accelerationDefault = acceleration;
+            decelerationDefault = deceleration;
+            angularSpeedDefault = angularSpeed;
+            changeDirectionRateDefault = changeDirectionRate;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
             root = transform.root;
-            SetChangeTime();
+
+            if(useRigidbody)
+                rb = root.GetComponent<Rigidbody>();
+
+            targetSetter = GetComponent<TargetSetter>();
+
+            RandomizeValues();
+
             Debug.Log("ChangeTime:" + changeTime);
 
 
@@ -49,12 +81,11 @@ namespace OMTB.AI
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(Vector3.MoveTowards(new Vector3(12, 0, 0.2f), new Vector3(-1, 0, -.13f), 0.3f));
 
             if (!isActive)
                 return;
 
-            // Check if enough time has passed from the last time the ship changes its direction
+            // Check whether enough time has passed from the last time the ship's changed its direction
             if(!isChangingDirection && (System.DateTime.UtcNow - lastChange).TotalSeconds > changeTime)
             {
                 isChangingDirection = true;
@@ -88,13 +119,24 @@ namespace OMTB.AI
                 }
             }
 
-
-            Debug.Log("Root.right:"+root.right*rComp);
-            Debug.Log("Root.forward:" + root.forward * fComp);
-            root.position += (root.right * rComp + root.forward * fComp).normalized * currentSpeed * Time.deltaTime;
             
-           // root.position = targetPos;
+            // Apply movement to root.transform ( not using rigidbody )
+            if(!useRigidbody)
+                root.position += (root.right * rComp + root.forward * fComp).normalized * currentSpeed * Time.deltaTime;
 
+            // Aim player
+            Quaternion targetRot = Quaternion.LookRotation((targetSetter.Target.position - root.transform.position).normalized);
+            Quaternion rot = Quaternion.RotateTowards(root.transform.rotation, targetRot, angularSpeed * Time.deltaTime);
+            root.rotation = rot;
+
+
+        }
+
+        private void FixedUpdate()
+        {
+            // Apply movement to rigidbody
+            if (useRigidbody)
+                rb.MovePosition(rb.position + (root.right * rComp + root.forward * fComp).normalized * currentSpeed * Time.fixedDeltaTime);
         }
 
         public void Activate()
@@ -130,13 +172,19 @@ namespace OMTB.AI
             fComp = Random.Range(-0.2f, 0.2f);
 
             // Update che change time with a new random value            
-            SetChangeTime();
+            RandomizeValues();
         }
 
-        void SetChangeTime()
+        void RandomizeValues()
         {
-            changeTime = 1f / Random.Range(changeDirectionRate * 0.8f, changeDirectionRate * 1.2f);
+            maxSpeed = Random.Range(maxSpeedDefault * 0.8f, maxSpeedDefault * 1.2f);
+            acceleration = Random.Range(accelerationDefault * 0.8f, accelerationDefault * 1.2f);
+            deceleration = Random.Range(decelerationDefault * 0.8f, decelerationDefault * 1.2f);
+            angularSpeed = Random.Range(angularSpeedDefault * 0.8f, angularSpeedDefault * 1.2f);
+            changeDirectionRate = Random.Range(changeDirectionRateDefault * 0.5f, changeDirectionRateDefault * 2f);
+            changeTime = 1f / changeDirectionRate;
         }
+
     }
 
 }

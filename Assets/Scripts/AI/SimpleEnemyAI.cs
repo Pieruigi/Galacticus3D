@@ -59,6 +59,8 @@ namespace OMTB.AI
             if (!engaged)
                 return;
 
+            // If target is inside the fighting distance then we stop pathfinding and start the fighting routines ( movement, aim, shooting, ecc ).
+            // We keep figthing until the target is inside the fighting range plus some additin value.
             if ( (!isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance) ||
                  (isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance*1.5f) ||
                  !Utils.AIUtil.IsOnSight(transform, target))
