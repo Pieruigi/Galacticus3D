@@ -5199,10 +5199,15 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 909221749}
+    - target: {fileID: 3902582291535554744, guid: 31a77cdbd3a5a6d4ba41784108eafe4c,
+        type: 3}
+      propertyPath: m_Speed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3902582291535554747, guid: 31a77cdbd3a5a6d4ba41784108eafe4c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.1
+      value: -40.8
       objectReference: {fileID: 0}
     - target: {fileID: 3902582291535554747, guid: 31a77cdbd3a5a6d4ba41784108eafe4c,
         type: 3}
@@ -5212,7 +5217,7 @@ PrefabInstance:
     - target: {fileID: 3902582291535554747, guid: 31a77cdbd3a5a6d4ba41784108eafe4c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16
+      value: -21.6
       objectReference: {fileID: 0}
     - target: {fileID: 3902582291535554747, guid: 31a77cdbd3a5a6d4ba41784108eafe4c,
         type: 3}
@@ -17086,8 +17091,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575055442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalPosition: {x: 0, y: -0, z: 22.28}
+  m_LocalScale: {x: 10, y: 1, z: 14.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 47
@@ -22893,7 +22898,6 @@ GameObject:
   - component: {fileID: 841294167}
   - component: {fileID: 841294166}
   - component: {fileID: 841294165}
-  - component: {fileID: 841294164}
   m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Wall
@@ -22915,18 +22919,6 @@ Transform:
   m_Father: {fileID: 44730369}
   m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &841294164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841294162}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27231f22669fd4247a39ec14c93a13f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &841294165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46595,7 +46587,7 @@ PrefabInstance:
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: isGamepadConnected
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}

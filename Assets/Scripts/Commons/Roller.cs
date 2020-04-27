@@ -30,6 +30,7 @@ namespace OMTB
 
         System.DateTime lastChange;
 
+
         private void Awake()
         {
             rolleable = target.GetComponent<IRolleable>();
@@ -103,7 +104,7 @@ namespace OMTB
                     float xDisp = -Vector3.Dot((pos - lastPos), transform.right);
 
                     sideSpeed = xDisp / Time.deltaTime;
-                    Debug.Log("SideSpeed:" + +sideSpeed);
+                  
                     sideSpeed = Mathf.Clamp(sideSpeed, -maxSideSpeed, maxSideSpeed);
 
                 }
@@ -120,7 +121,6 @@ namespace OMTB
                 angle = 0;
 
             Quaternion targetRot = Quaternion.Euler(0, 0, angle);
-            Debug.Log("targetRot:" + targetRot);
             
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot, rollSpeed * Time.deltaTime);
             

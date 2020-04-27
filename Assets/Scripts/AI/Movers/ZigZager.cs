@@ -34,16 +34,18 @@ namespace OMTB.AI
         bool isActive = false;
 
         float rComp = 0, fComp = 0;
+        bool forceInvComp = false;
         float currentSpeed = 0;
         Vector3 targetPos;
         TargetSetter targetSetter;
+        float sqrAvgDistance;
        
         float changeTime;
         System.DateTime lastChange;
 
-        float checkTime = 0.5f; // Check for collisions
+        float checkCollisionTime = 0.5f; // Check for collisions
 
-        System.DateTime lastCheck;
+        System.DateTime lastCollisionCheck;
 
         Transform root;
 
@@ -119,10 +121,40 @@ namespace OMTB.AI
                 }
             }
 
-            
-            // Apply movement to root.transform ( not using rigidbody )
-            if(!useRigidbody)
+            // Check collisions ( change direction on fly if you are going to collide )
+            if((System.DateTime.UtcNow - lastCollisionCheck).TotalSeconds > checkCollisionTime)
+            {
+                
+                lastCollisionCheck = System.DateTime.UtcNow;
+                if (CheckCollisions())
+                {
+                    Debug.Log("Collision is true");
+                    if (!isChangingDirection)
+                    {
+                        isChangingDirection = true;
+                        isDecelerating = true;
+                    }
+
+                    forceInvComp = true;
+
+                }
+            }
+
+
+            // Apply movement to root.transform
+            if (!useRigidbody)
+            {
                 root.position += (root.right * rComp + root.forward * fComp).normalized * currentSpeed * Time.deltaTime;
+
+                // Check player average distance and adjust position
+                if ((targetSetter.Target.position - root.transform.position).sqrMagnitude > sqrAvgDistance * 1.2f)
+                    root.position += root.forward * currentSpeed * Time.deltaTime;
+                else if ((targetSetter.Target.position - root.transform.position).sqrMagnitude < sqrAvgDistance * 0.8f)
+                    root.position -= root.forward * currentSpeed * Time.deltaTime;
+            }
+                
+
+
 
             // Aim player
             Quaternion targetRot = Quaternion.LookRotation((targetSetter.Target.position - root.transform.position).normalized);
@@ -142,6 +174,7 @@ namespace OMTB.AI
         public void Activate()
         {
             isActive = true;
+            sqrAvgDistance = (targetSetter.Target.position - root.position).sqrMagnitude;
             Reset();
         }
 
@@ -164,12 +197,26 @@ namespace OMTB.AI
         void ChangeDirection()
         {
             // Change direction
+            float rSign = 0, fSign = 0;
+            if (forceInvComp)
+            {
+                rSign = Mathf.Sign(-rComp);
+                fSign = Mathf.Sign(fComp);
+            }
+
             if (rComp == 0)
                 rComp = (Random.Range(0, 2) == 0) ? -1f : 1f;
             else
                 rComp = -rComp;
 
             fComp = Random.Range(-0.2f, 0.2f);
+
+            if (forceInvComp)
+            {
+                forceInvComp = false;
+                rComp = rSign * Mathf.Abs(rComp);
+                fComp = fSign * Mathf.Abs(fComp);
+            }
 
             // Update che change time with a new random value            
             RandomizeValues();
@@ -185,6 +232,19 @@ namespace OMTB.AI
             changeTime = 1f / changeDirectionRate;
         }
 
+        bool CheckCollisions()
+        {
+            Vector3 source = root.position;
+            Vector3 dir = (root.right * rComp + root.forward * fComp).normalized;
+            float dist = currentSpeed * 100 * Time.deltaTime;
+
+            if(Physics.Raycast(source, dir, dist))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
 }
