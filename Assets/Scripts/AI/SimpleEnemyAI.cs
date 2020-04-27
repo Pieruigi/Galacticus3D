@@ -11,7 +11,7 @@ namespace OMTB.AI
      * Simply moves towards the target and then starts fighting.
      * */
      [RequireComponent(typeof(TargetSetter))]
-    public class SimpleEnemyAI : MonoBehaviour
+    public class SimpleEnemyAI : MonoBehaviour, IRolleable
     {
         [SerializeField]
         GameObject seeker;
@@ -142,6 +142,20 @@ namespace OMTB.AI
 
         }
 
+        public float GetMaxAngularSpeed()
+        {
+            return 30;
+        }
+
+        public float GetMaxSideSpeed()
+        {
+            return 10;
+        }
+
+        public bool IsAiming()
+        {
+            return false;
+        }
     }
 
 }
