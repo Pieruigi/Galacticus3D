@@ -6,7 +6,7 @@ using OMTB.Interfaces;
 namespace OMTB.AI
 {
     [RequireComponent(typeof(TargetSetter))]
-    public class ZigZager : MonoBehaviour, IActivable
+    public class ZigZager : MonoBehaviour, IActivable, IRolleable
     {
         [SerializeField]
         float maxSpeed = 3;
@@ -168,7 +168,16 @@ namespace OMTB.AI
         {
             // Apply movement to rigidbody
             if (useRigidbody)
+            {
                 rb.MovePosition(rb.position + (root.right * rComp + root.forward * fComp).normalized * currentSpeed * Time.fixedDeltaTime);
+
+                // Check player average distance and adjust position
+                if ((targetSetter.Target.position - rb.position).sqrMagnitude > sqrAvgDistance * 1.2f)
+                    rb.MovePosition(rb.position + root.forward * currentSpeed * Time.deltaTime);
+                else if ((targetSetter.Target.position - rb.position).sqrMagnitude < sqrAvgDistance * 0.8f)
+                    rb.MovePosition(rb.position - root.forward * currentSpeed * Time.deltaTime);
+            }
+                
         }
 
         public void Activate()
@@ -244,6 +253,28 @@ namespace OMTB.AI
             }
 
             return false;
+        }
+
+        public float GetMaxAngularSpeed()
+        {
+            Debug.Log("AngularSpeed:" + angularSpeed);
+            return angularSpeed;
+        }
+
+        public float GetMaxSideSpeed()
+        {
+            Debug.Log("MaxSideSpeed:" + maxSpeed);
+            return maxSpeed;
+        }
+
+        public bool IsAiming()
+        {
+            return true;
+        }
+
+        public bool IsActive()
+        {
+            return isActive;
         }
     }
 

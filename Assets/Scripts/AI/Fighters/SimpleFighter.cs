@@ -83,6 +83,10 @@ namespace OMTB.AI
                 weapon.Fire();
         }
 
+        public bool IsActive()
+        {
+            return isActive;
+        }
     }
 
 }

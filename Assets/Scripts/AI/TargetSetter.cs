@@ -19,7 +19,8 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Target = player.transform;
         }
 
         // Update is called once per frame

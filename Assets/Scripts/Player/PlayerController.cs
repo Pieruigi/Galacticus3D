@@ -287,8 +287,8 @@ namespace OMTB
                 if (bounceDir == Vector3.zero)
                     bounceDir = -totSpeed.normalized;
                 
-                Vector3 force1 = bounceDir * 250f * dot;
-                Vector3 force2 = collision.contacts[0].normal * 1500f;
+                Vector3 force1 = bounceDir * 125f * dot;
+                Vector3 force2 = collision.contacts[0].normal * 750f;
 
                 rb.AddForce(force1, ForceMode.Impulse);
                 rb.AddForce(force2, ForceMode.Impulse);
@@ -302,6 +302,27 @@ namespace OMTB
                 notSteeringTime = totSpeed.magnitude / 100f + notSteeringTimeBase;
                 currentVelocity = Vector3.zero;
                 return;
+            }
+
+            if ("Enemy".Equals(collision.gameObject.tag))
+            {
+                Vector3 totSpeed = currentVelocity + rb.velocity;
+                Debug.Log("TotSpeed:" + totSpeed);
+
+                float dot = Vector3.Dot(totSpeed, -collision.contacts[0].normal);
+                Vector3 bounceDir;
+
+                bounceDir = (collision.contacts[0].normal + totSpeed.normalized).normalized;
+                if (bounceDir == Vector3.zero)
+                    bounceDir = -totSpeed.normalized;
+
+                Vector3 force1 = bounceDir * 125f * dot;
+                rb.AddForce(force1, ForceMode.Impulse);
+
+                Rigidbody eRb = collision.gameObject.GetComponent<Rigidbody>();
+                if(eRb)
+                    eRb.AddForce(-force1, ForceMode.Impulse);
+
             }
         }
 

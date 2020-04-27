@@ -11,7 +11,7 @@ namespace OMTB.AI
      * Simply moves towards the target and then starts fighting.
      * */
      [RequireComponent(typeof(TargetSetter))]
-    public class SimpleEnemyAI : MonoBehaviour, IRolleable
+    public class SimpleEnemyAI : MonoBehaviour
     {
         [SerializeField]
         GameObject seeker;
@@ -27,7 +27,6 @@ namespace OMTB.AI
         bool engaged = false;
 
         TargetSetter targetSetter;
-        Transform target;
         float sqrFightingDistance;
 
         bool isFighting = false;
@@ -44,7 +43,6 @@ namespace OMTB.AI
         {
             startingPoint = transform.position;
             targetSetter = GetComponent<TargetSetter>();
-            target = targetSetter.Target;
             aiTrigger = GetComponent<IEngageTrigger>();
             aiTrigger.OnTargetEngaged += HandleOnTargetEngaged;
             aiTrigger.OnTargetDisengaged += HandleOnTargetDisengaged;
@@ -61,9 +59,9 @@ namespace OMTB.AI
 
             // If target is inside the fighting distance then we stop pathfinding and start the fighting routines ( movement, aim, shooting, ecc ).
             // We keep figthing until the target is inside the fighting range plus some additin value.
-            if ( (!isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance) ||
-                 (isFighting && (target.position - transform.position).sqrMagnitude > sqrFightingDistance*1.5f) ||
-                 !Utils.AIUtil.IsOnSight(transform, target))
+            if ( (!isFighting && (targetSetter.Target.position - transform.position).sqrMagnitude > sqrFightingDistance) ||
+                 (isFighting && (targetSetter.Target.position - transform.position).sqrMagnitude > sqrFightingDistance*1.5f) ||
+                 !Utils.AIUtil.IsOnSight(transform, targetSetter.Target))
             {
 
 
@@ -100,13 +98,6 @@ namespace OMTB.AI
             StopFighting();
         }
 
-        //void SetStoppingDistance()
-        //{
-        //    stoppingDistance = seeker.GetComponent<Seeker>().StoppingDistance;
-        //    stoppingDistance *= 1.4f;
-        //    sqrStoppingDistance = stoppingDistance * stoppingDistance;
-        //}
-
         void StartFighting()
         {
             isFighting = true;
@@ -137,25 +128,11 @@ namespace OMTB.AI
         {
             Debug.Log("Start seeking");
             isSeeking = true;
-            //SetStoppingDistance();
+            
             seeker.GetComponent<IActivable>().Activate();
 
         }
 
-        public float GetMaxAngularSpeed()
-        {
-            return 30;
-        }
-
-        public float GetMaxSideSpeed()
-        {
-            return 10;
-        }
-
-        public bool IsAiming()
-        {
-            return false;
-        }
     }
 
 }

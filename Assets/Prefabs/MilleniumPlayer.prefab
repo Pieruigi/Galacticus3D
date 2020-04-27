@@ -4885,9 +4885,10 @@ MonoBehaviour:
   turningSpeed: 4.4
   maxSpeed: 27.3
   aimMaxSpeedMultiplier: 0.66
-  acceleration: 61
+  aimMaxTurnSpeedMultiplier: 0.49
+  acceleration: 42
   deceleration: 48
-  stability: 0.66
+  stability: 0.648
   isGamepadConnected: 0
   mouseHasGamepadBehavior: 1
   weapon: {fileID: 2122499744}

@@ -130,6 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3902582290330319963}
   - component: {fileID: 3902582290330319962}
+  - component: {fileID: 375042915}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -166,8 +167,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxRoll: 60
   rollSpeed: 90
-  target: {fileID: 3902582291535554750}
+  target: {fileID: 3902582290044594237}
   useRigidbody: 0
+--- !u!114 &375042915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902582290330319960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237298db485ec214f8621fcfa76816ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3902582290360957677
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +260,7 @@ MonoBehaviour:
     amount: 10
     rangeMin: 0
     rangeMax: 0
-  range: 14
+  range: 30
   rate: 4
   shooter: {fileID: 3902582291050605805}
 --- !u!114 &3902582291050605805
@@ -282,7 +295,7 @@ GameObject:
   - component: {fileID: 3902582291535554630}
   m_Layer: 0
   m_Name: AI
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -316,7 +329,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 2
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 180
@@ -336,13 +349,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3902582291535554750}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 100
+  m_Drag: 2
+  m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!135 &3902582291535554629
 SphereCollider:
@@ -450,8 +463,8 @@ MonoBehaviour:
   acceleration: 18
   deceleration: 12
   angularSpeed: 60
-  changeDirectionRate: 0.3
-  useRigidbody: 0
+  changeDirectionRate: 1
+  useRigidbody: 1
 --- !u!114 &3902582291935136528
 MonoBehaviour:
   m_ObjectHideFlags: 0

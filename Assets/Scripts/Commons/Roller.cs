@@ -19,32 +19,33 @@ namespace OMTB
         [SerializeField]
         bool useRigidbody;
 
-        float maxAngularSpeed;
-        float maxSideSpeed;
+       
 
         Vector3 lastPos;
         Vector3 lastFwd;
 
         IRolleable rolleable;
+        public IRolleable Rolleable
+        {
+            get { return rolleable; }
+            set { rolleable = value;  }
+        }
         Rigidbody rb;
 
         System.DateTime lastChange;
 
 
-        private void Awake()
-        {
-            rolleable = target.GetComponent<IRolleable>();
-            maxAngularSpeed = rolleable.GetMaxAngularSpeed();
-            maxSideSpeed = rolleable.GetMaxSideSpeed();
-            Debug.Log("maxSideSpeed:" + maxSideSpeed);
-
-            if (useRigidbody)
-                rb = target.GetComponent<Rigidbody>();
-        }
-
         // Start is called before the first frame update
         void Start()
         {
+            rolleable = target.GetComponent<IRolleable>();
+            //maxAngularSpeed = rolleable.GetMaxAngularSpeed();
+            //maxSideSpeed = rolleable.GetMaxSideSpeed();
+            //Debug.Log("maxSideSpeed:" + maxSideSpeed);
+
+            if (useRigidbody)
+                rb = target.GetComponent<Rigidbody>();
+
             lastPos = transform.position;
             lastFwd = transform.forward;
 
@@ -70,6 +71,8 @@ namespace OMTB
                 Roll();
         }
 
+
+
         private void Roll()
         {
             //Quaternion targetRot2 = Quaternion.Euler(0,0,30);
@@ -79,7 +82,11 @@ namespace OMTB
             float angle = 0;
             float angularSpeed = 0;
             float sideSpeed = 0;
-            
+
+            float maxAngularSpeed = rolleable.GetMaxAngularSpeed();
+            float maxSideSpeed = rolleable.GetMaxSideSpeed();
+
+
             if (!rolleable.IsAiming())
             {
                 if (transform.forward != lastFwd) // Ship has some angular speed
@@ -131,7 +138,12 @@ namespace OMTB
 
         }
 
-
+        //void SetRolleable(IRolleable rolleable)
+        //{
+        //    this.rolleable = rolleable;
+        //    maxAngularSpeed = rolleable.GetMaxAngularSpeed();
+        //    maxSideSpeed = rolleable.GetMaxSideSpeed();
+        //}
     }
 
 }

@@ -11,7 +11,7 @@ namespace OMTB.AI
      * Simply moves towards the target and then starts fighting.
      * */
     [RequireComponent(typeof(TargetSetter))]
-    public class Seeker : MonoBehaviour, IActivable
+    public class Seeker : MonoBehaviour, IActivable, IRolleable
     {
         [SerializeField]
         float repathTime = 0.5f;
@@ -25,13 +25,11 @@ namespace OMTB.AI
         DateTime lastRepath;
 
         TargetSetter targetSetter;
-        Transform target;
-
+        
         // Start is called before the first frame update
         void Awake()
         {
             targetSetter = GetComponent<TargetSetter>();
-            target = targetSetter.Target;
             agent = GetComponentInParent<NavMeshAgent>();
             Deactivate();
         }
@@ -46,7 +44,7 @@ namespace OMTB.AI
             if((DateTime.UtcNow - lastRepath).TotalSeconds > repathTime)
             {
                 lastRepath = DateTime.UtcNow;
-                agent.SetDestination(target.position);
+                agent.SetDestination(targetSetter.Target.position);
             }
 
         }
@@ -71,6 +69,28 @@ namespace OMTB.AI
                 agent = GetComponent<NavMeshAgent>();
 
             return agent.stoppingDistance;
+        }
+
+        public float GetMaxAngularSpeed()
+        {
+            if (agent == null)
+                agent = GetComponent<NavMeshAgent>();
+            return agent.angularSpeed;
+        }
+
+        public float GetMaxSideSpeed()
+        {
+            return 0;
+        }
+
+        public bool IsAiming()
+        {
+            return false;
+        }
+
+        public bool IsActive()
+        {
+            return !agent.isStopped;
         }
     }
 
