@@ -7,7 +7,7 @@ namespace OMTB
 {
     public class Bullet : Damager
     {
-        float speed = 30;
+        float speed = 50;
 
         float range;
 

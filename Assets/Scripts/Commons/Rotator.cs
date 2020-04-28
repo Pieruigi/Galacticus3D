@@ -6,16 +6,21 @@ namespace OMTB
 {
     public class Rotator : MonoBehaviour
     {
+        Vector3 axis;
+
+        float maxSpeed = 10;
+        
         // Start is called before the first frame update
         void Start()
         {
-
+                axis = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
+                
         }
 
         // Update is called once per frame
         void Update()
         {
-            transform.Rotate(new Vector3(0.05f, 0.03f, 0.01f));
+            transform.Rotate(axis*Time.deltaTime);
 
         }
     }

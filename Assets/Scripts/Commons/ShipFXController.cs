@@ -7,10 +7,13 @@ namespace OMTB
     public class ShipFXController : MonoBehaviour
     {
         [SerializeField]
-        ParticleSystem hitPs;
+        List<ParticleSystem> hitPsList;
         
         [SerializeField]
         ParticleSystem diePS;
+
+        [SerializeField]
+        Transform point;
 
         // Start is called before the first frame update
         void Start()
@@ -28,10 +31,14 @@ namespace OMTB
         {
             if("Bullet".Equals(collision.gameObject.tag))
             {
-                ParticleSystem ps = GameObject.Instantiate(hitPs);
-                ps.transform.position = transform.position;
-                ps.transform.rotation = Quaternion.identity;
-                ps.Play();
+                foreach(ParticleSystem hitPs in hitPsList)
+                {
+                    ParticleSystem ps = GameObject.Instantiate(hitPs);
+                    ps.transform.position = point.position;
+                    //ps.transform.rotation = Quaternion.identity;
+                    ps.Play();
+                }
+                
             }
         }
     }
