@@ -256,12 +256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fc2827280e67348968111b11930e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
-    amount: 10
-    rangeMin: 0
-    rangeMax: 0
-  range: 30
-  rate: 4
+  fireRange: 30
+  fireRate: 4
+  damageAmount: 20
+  damageMinRange: 0
+  damageMaxRange: 0
   shooter: {fileID: 3902582291050605805}
 --- !u!114 &3902582291050605805
 MonoBehaviour:
@@ -293,8 +292,10 @@ GameObject:
   - component: {fileID: 3902582291535554628}
   - component: {fileID: 3902582291535554745}
   - component: {fileID: 3902582291535554630}
+  - component: {fileID: 160743796}
+  - component: {fileID: 160743797}
   m_Layer: 0
-  m_Name: AI
+  m_Name: MilleniumAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -415,6 +416,34 @@ MonoBehaviour:
   seeker: {fileID: 3902582290044594237}
   figther: {fileID: 3902582290268469676}
   fightingDistance: 20
+--- !u!114 &160743796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902582291535554750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  health: 50
+--- !u!114 &160743797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902582291535554750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002672814037c33458f5ac895d11d155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPs: {fileID: 6043550620054221262, guid: 7459c061219f3704c9f4169cc9e9370c, type: 3}
+  diePS: {fileID: 0}
 --- !u!1 &3902582291935136535
 GameObject:
   m_ObjectHideFlags: 0
