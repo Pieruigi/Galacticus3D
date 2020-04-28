@@ -287,8 +287,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRange: 30
-  fireRate: 4
-  damageAmount: 20
+  fireRate: 6
+  damageAmount: 40
   damageMinRange: 0
   damageMaxRange: 0
   shooter: {fileID: 3902582291050605805}
@@ -459,8 +459,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  health: 50
+  maxHealth: 200
+  health: 150
 --- !u!114 &160743797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,7 +473,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002672814037c33458f5ac895d11d155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPs: {fileID: 6043550620054221262, guid: 7459c061219f3704c9f4169cc9e9370c, type: 3}
+  hitPsList:
+  - {fileID: 4422643419642021895, guid: 24086c46ee1dedd449577fac622ff931, type: 3}
+  - {fileID: 6043550620054221262, guid: 7459c061219f3704c9f4169cc9e9370c, type: 3}
+  - {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
   diePS: {fileID: 0}
   point: {fileID: 82131574}
 --- !u!1 &3902582291935136535
