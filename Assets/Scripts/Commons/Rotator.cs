@@ -15,6 +15,7 @@ namespace OMTB
         // Update is called once per frame
         void Update()
         {
+            transform.Rotate(new Vector3(0.05f, 0.03f, 0.01f));
 
         }
     }
