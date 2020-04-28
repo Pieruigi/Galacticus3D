@@ -8,12 +8,21 @@ namespace OMTB
 {
     public class Health : MonoBehaviour, IDamageable
     {
-        
+        public UnityAction OnHealthChanged;
+
         [SerializeField]
         float maxHealth;
+        public float MaxHealth
+        {
+            get { return maxHealth; }
+        }
 
         [SerializeField]
         float health;
+        public float CurrentHealth
+        {
+            get { return health; }
+        }
 
        
         void Awake()
@@ -37,7 +46,13 @@ namespace OMTB
         public void ApplyDamage(float amount)
         {
             health -= amount;
-            if(health < 0)
+
+            if (health < 0)
+                health = 0;
+
+            OnHealthChanged?.Invoke();
+
+            if(health == 0)
             {
                 Destroy(gameObject);
             }
