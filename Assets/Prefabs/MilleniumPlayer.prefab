@@ -4800,6 +4800,8 @@ GameObject:
   - component: {fileID: 2108589469}
   - component: {fileID: 2108589464}
   - component: {fileID: 2122499744}
+  - component: {fileID: 1999740970}
+  - component: {fileID: 1999740971}
   m_Layer: 0
   m_Name: MilleniumPlayer
   m_TagString: Player
@@ -4954,6 +4956,34 @@ MonoBehaviour:
   damageMinRange: 0
   damageMaxRange: 0
   shooter: {fileID: 919433667}
+--- !u!114 &1999740970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828393623601388251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  health: 50
+--- !u!114 &1999740971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828393623601388251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002672814037c33458f5ac895d11d155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPs: {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
+  diePS: {fileID: 0}
 --- !u!1 &3828393623919772211
 GameObject:
   m_ObjectHideFlags: 0
