@@ -12,15 +12,8 @@ namespace OMTB
         [SerializeField]
         Transform firePoint;
 
-        Transform owner;
-        Weapon weapon;
+             
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            owner = transform.root;
-            weapon = GetComponent<Weapon>();
-        }
 
         // Update is called once per frame
         void Update()
@@ -36,16 +29,16 @@ namespace OMTB
             bullet.transform.eulerAngles = firePoint.eulerAngles;
             bullet.GetComponent<Bullet>().Init(new BulletConfig()
             {
-                Range = weapon.FireRange,
-                Amount = weapon.DamageAmount,
-                MaxRange = weapon.DamageMaxRange,
-                MinRange = weapon.DamageMinRange
+                Range = Weapon.FireRange,
+                Amount = Weapon.DamageAmount,
+                MaxRange = Weapon.DamageMaxRange,
+                MinRange = Weapon.DamageMinRange
 
             });
 
             // No collision with the owner
-            if (owner)
-                Physics.IgnoreCollision(owner.GetComponent<Collider>(), bullet.GetComponent<Collider>());
+            if (Owner)
+                Physics.IgnoreCollision(Owner.GetComponent<Collider>(), bullet.GetComponent<Collider>());
 
 
         }

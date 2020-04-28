@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using OMTB.Interfaces;
+using UnityEngine.AI;
 
 namespace OMTB.AI
 {
@@ -53,6 +54,7 @@ namespace OMTB.AI
         bool isDecelerating = false;
 
         Rigidbody rb;
+        NavMeshAgent agent;
 
         private void Awake()
         {
@@ -67,6 +69,7 @@ namespace OMTB.AI
         void Start()
         {
             root = transform.root;
+            agent = root.GetComponent<NavMeshAgent>();
 
             if(useRigidbody)
                 rb = root.GetComponent<Rigidbody>();
@@ -180,6 +183,9 @@ namespace OMTB.AI
         public void Activate()
         {
             isActive = true;
+            if(agent)
+                agent.isStopped = true;
+                
             sqrAvgDistance = (targetSetter.Target.position - root.position).sqrMagnitude;
             Reset();
         }

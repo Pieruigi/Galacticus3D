@@ -25,6 +25,8 @@ namespace OMTB.AI
         DateTime lastRepath;
 
         TargetSetter targetSetter;
+
+        bool isActive = false;
         
         // Start is called before the first frame update
         void Awake()
@@ -37,7 +39,7 @@ namespace OMTB.AI
         // Update is called once per frame
         void Update()
         {
-            if (agent.isStopped)
+            if (!isActive)
                 return;
 
   
@@ -53,13 +55,16 @@ namespace OMTB.AI
 
         public void Activate()
         {
-            Debug.Log("Activate seeker");   
+            Debug.Log("Activate seeker");
+            //agent.isStopped = false;
+            isActive = true;
             agent.isStopped = false;
         }
 
         public void Deactivate()
         {
-            agent.isStopped = true;
+            //agent.isStopped = true;
+            isActive = false;
             
         }
 

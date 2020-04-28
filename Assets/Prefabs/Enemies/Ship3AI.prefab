@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315686751379506898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.203, z: 0}
+  m_LocalPosition: {x: 0, y: 0.203, z: 1.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 315686752032985309}
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRange: 30
   fireRate: 8
-  damageAmount: 15
+  damageAmount: 5
   damageMinRange: 0
   damageMaxRange: 0
   shooter: {fileID: 315686752032985298}
@@ -318,6 +318,7 @@ Transform:
   - {fileID: 315686751741576598}
   - {fileID: 315686753026586414}
   - {fileID: 3623509319197197897}
+  - {fileID: 7566351078960016294}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -414,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca656ef7fd51a5b438b81ec96dbd801c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleMover: {fileID: 490410313131812751}
   seeker: {fileID: 315686751695967234}
   figther: {fileID: 315686751741576595}
   fightingDistance: 20
@@ -429,8 +431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 60
-  health: 50
+  maxHealth: 20
+  health: 20
 --- !u!114 &3623509319386987850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +498,7 @@ MonoBehaviour:
   maxSpeed: 18
   acceleration: 24
   deceleration: 12
-  angularSpeed: 360
+  angularSpeed: 240
   changeDirectionRate: 1
   useRigidbody: 1
 --- !u!114 &315686753026586415
@@ -512,6 +514,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!1 &490410313131812751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7566351078960016294}
+  - component: {fileID: 2826108489896006981}
+  m_Layer: 0
+  m_Name: IdleMover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7566351078960016294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490410313131812751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 315686752620696708}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2826108489896006981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490410313131812751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1236a13bdd28bcf4888f704a69f86848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &731250532213111306
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,12 +6,28 @@ namespace OMTB
 {
     public abstract class Shooter : MonoBehaviour
     {
+
+        Transform owner;
+        public Transform Owner
+        {
+            get { return owner; }
+        }
+
+        Weapon weapon;
+        public Weapon Weapon
+        {
+            get { return weapon; }
+            set { weapon = value; }
+        }
+
         public abstract void Shoot();
 
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
-
+            owner = transform.root;
+            if (weapon == null)
+                weapon = GetComponent<Weapon>();
         }
 
         // Update is called once per frame

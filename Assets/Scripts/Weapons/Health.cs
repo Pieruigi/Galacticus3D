@@ -16,7 +16,11 @@ namespace OMTB
         float health;
 
        
-
+        void Awake()
+        {
+            if (health > maxHealth)
+                health = maxHealth;
+        }
 
         // Start is called before the first frame update
         void Start()

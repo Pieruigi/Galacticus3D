@@ -14,6 +14,9 @@ namespace OMTB.AI
     public class SimpleEnemyAI : MonoBehaviour
     {
         [SerializeField]
+        GameObject idleMover;
+
+        [SerializeField]
         GameObject seeker;
 
         [SerializeField]
@@ -46,7 +49,7 @@ namespace OMTB.AI
             aiTrigger = GetComponent<IEngageTrigger>();
             aiTrigger.OnTargetEngaged += HandleOnTargetEngaged;
             aiTrigger.OnTargetDisengaged += HandleOnTargetDisengaged;
-            
+            idleMover.GetComponent<IActivable>().Activate();
         }
 
         // Update is called once per frame
@@ -70,7 +73,7 @@ namespace OMTB.AI
 
                 if (!isSeeking)
                     StartSeeking();
-               
+                               
             }
             else
             {
@@ -79,6 +82,8 @@ namespace OMTB.AI
 
                 if (isSeeking)
                     StopSeeking();
+
+                
             }
             
         }
@@ -87,7 +92,7 @@ namespace OMTB.AI
         {
             Debug.Log(string.Format("Enemy {0} is engaging you.", name));
             engaged = true;
-
+            StopIdle();
         }
 
         void HandleOnTargetDisengaged()
@@ -96,6 +101,7 @@ namespace OMTB.AI
             engaged = false;
             StopSeeking();
             StopFighting();
+            StartIdle();
         }
 
         void StartFighting()
@@ -117,6 +123,11 @@ namespace OMTB.AI
 
         }
 
+        void StartIdle()
+        {
+            idleMover.GetComponent<IActivable>().Activate();
+        }
+
         void StopSeeking()
         {
             Debug.Log("Stop seeking");
@@ -133,6 +144,10 @@ namespace OMTB.AI
 
         }
 
+        void StopIdle()
+        {
+            idleMover.GetComponent<IActivable>().Deactivate();
+        }
     }
 
 }
