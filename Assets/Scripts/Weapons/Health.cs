@@ -35,7 +35,7 @@ namespace OMTB
             health -= amount;
             if(health < 0)
             {
-                Destroy(gameObject,2);
+                Destroy(gameObject);
             }
         }
 
