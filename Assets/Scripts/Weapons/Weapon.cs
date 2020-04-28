@@ -8,20 +8,40 @@ namespace OMTB
     public class Weapon : MonoBehaviour
     {
 
-
+        [Header("Weapon Stats")]
         [SerializeField]
-        Damage damage;
-
-        [SerializeField]
-        float range;
-        public float Range
+        float fireRange;
+        public float FireRange
         {
-            get { return range; }
+            get { return fireRange; }
         }
 
         [SerializeField]
-        float rate;
+        float fireRate;
 
+        [Header("Damage")]
+        [SerializeField]
+        float damageAmount;
+        public float DamageAmount
+        {
+            get { return damageAmount; }
+        }
+
+        [SerializeField]
+        float damageMinRange;
+        public float DamageMinRange
+        {
+            get { return damageMinRange; }
+        }
+
+        [SerializeField]
+        float damageMaxRange;
+        public float DamageMaxRange
+        {
+            get { return damageMaxRange; }
+        }
+
+        [Header("Components")]
         [SerializeField]
         Shooter shooter;
 
@@ -31,7 +51,7 @@ namespace OMTB
 
         private void Awake()
         {
-            fireTime = 1f / rate;
+            fireTime = 1f / fireRate;
         }
 
         // Start is called before the first frame update

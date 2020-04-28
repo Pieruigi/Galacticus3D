@@ -4801,7 +4801,7 @@ GameObject:
   - component: {fileID: 2108589464}
   - component: {fileID: 2122499744}
   m_Layer: 0
-  m_Name: MFalcon
+  m_Name: MilleniumPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4889,7 +4889,7 @@ MonoBehaviour:
   acceleration: 42
   deceleration: 48
   stability: 0.648
-  isGamepadConnected: 0
+  isGamepadConnected: 1
   mouseHasGamepadBehavior: 1
   weapon: {fileID: 2122499744}
 --- !u!114 &919433667
@@ -4948,12 +4948,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fc2827280e67348968111b11930e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
-    amount: 10
-    rangeMin: 0
-    rangeMax: 0
-  range: 20
-  rate: 6
+  fireRange: 30
+  fireRate: 6
+  damageAmount: 10
+  damageMinRange: 0
+  damageMaxRange: 0
   shooter: {fileID: 919433667}
 --- !u!1 &3828393623919772211
 GameObject:

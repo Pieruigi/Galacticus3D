@@ -75,9 +75,6 @@ namespace OMTB.AI
 
             RandomizeValues();
 
-            Debug.Log("ChangeTime:" + changeTime);
-
-
         }
 
         // Update is called once per frame

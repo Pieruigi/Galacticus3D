@@ -33,7 +33,7 @@ namespace OMTB.AI
         void Start()
         {
             targetSetter = GetComponent<TargetSetter>();
-            sqrWeaponRange = weapon.Range * weapon.Range;
+            sqrWeaponRange = weapon.FireRange * weapon.FireRange;
             Deactivate();
         }
 

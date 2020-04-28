@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Interfaces;
 
 namespace OMTB
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : Damager
     {
-        [SerializeField]
-        float speed;
+        float speed = 30;
 
-        [SerializeField]
         float range;
 
+     
         Vector3 startPosition;
         float rangeSqr;
 
@@ -31,8 +31,23 @@ namespace OMTB
                 GameObject.Destroy(gameObject);
         }
 
-        private void OnCollisionEnter(Collision collision)
+        public override void Init(DamagerConfig config)
         {
+            base.Init(config);
+            
+            BulletConfig bulletConfig = config as BulletConfig;
+            range = bulletConfig.Range;
+
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.ApplyDamage(Amount);
+            }
+
             GameObject.Destroy(gameObject);
         }
     }
