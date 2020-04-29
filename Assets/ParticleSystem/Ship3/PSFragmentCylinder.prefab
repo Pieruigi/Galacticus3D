@@ -4768,7 +4768,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ba3b4f94be78c24494c9f27b41d3c6f, type: 2}
+  - {fileID: 2100000, guid: 256402f63978ea34fbfb2ed2a7e8bdb9, type: 2}
   - {fileID: 2100000, guid: 19ed5e92c99c0794c8d66f51ebe12e7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4803,11 +4803,11 @@ ParticleSystemRenderer:
   m_RenderAlignment: 1
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
-  m_VertexStreams: 00010304
+  m_VertexStreams: 00030409
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
