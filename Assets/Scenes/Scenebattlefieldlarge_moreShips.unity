@@ -6373,6 +6373,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1609570400291886389, guid: ec525175eb3c9a04e80a08e74540589a,
+        type: 3}
+      propertyPath: m_ShowToolkit
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1609570400291886539, guid: ec525175eb3c9a04e80a08e74540589a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6609,7 +6614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 643474274}
   - component: {fileID: 643474273}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PostProcessVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
