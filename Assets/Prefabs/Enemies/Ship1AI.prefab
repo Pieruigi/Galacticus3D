@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 943365436397018246}
   - component: {fileID: 397885807646223784}
   - component: {fileID: 19222905051680963}
+  - component: {fileID: 4986933924820923916}
   m_Layer: 0
   m_Name: Ship1AI
   m_TagString: Untagged
@@ -80,6 +81,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &4986933924820923916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042949937027017699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a54eb2544b96d6e47a16cbf9919091e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 1
 --- !u!1 &5686741892960617264
 GameObject:
   m_ObjectHideFlags: 0
@@ -5432,9 +5446,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reactionTime: 0.5
   engageTriggerPoint: {fileID: 0}
-  engageRange: 30
+  engageRange: 38
   engageOnSightOnly: 1
-  escapeRange: 50
+  escapeRange: 60
 --- !u!114 &8701970935194964227
 MonoBehaviour:
   m_ObjectHideFlags: 0

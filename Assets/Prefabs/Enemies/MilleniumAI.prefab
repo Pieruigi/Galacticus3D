@@ -131,6 +131,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &1278374899939855720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4974556728088507779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a54eb2544b96d6e47a16cbf9919091e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 1
 --- !u!1 &3902582290268469676
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRange: 30
   fireRate: 6
-  damageAmount: 40
+  damageAmount: 20
   damageMinRange: 0
   damageMaxRange: 0
   shooter: {fileID: 3902582291050605805}
@@ -473,9 +486,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reactionTime: 0.5
   engageTriggerPoint: {fileID: 0}
-  engageRange: 30
+  engageRange: 38
   engageOnSightOnly: 1
-  escapeRange: 50
+  escapeRange: 60
 --- !u!114 &3902582291535554630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 150
   health: 150
 --- !u!114 &160743797
 MonoBehaviour:
@@ -674,6 +687,12 @@ PrefabInstance:
 --- !u!4 &8309833060118448016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 29aedb33af27d6d4d9538a3bd26f09e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3902582290209959050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4974556728088507779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 29aedb33af27d6d4d9538a3bd26f09e8,
     type: 3}
   m_PrefabInstance: {fileID: 3902582290209959050}
   m_PrefabAsset: {fileID: 0}
