@@ -17,7 +17,7 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-            Color c = Color.blue;
+            Color c = Color.cyan;
             if (isEnemy)
                 c = Color.red;
 
