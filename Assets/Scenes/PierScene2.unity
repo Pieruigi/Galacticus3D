@@ -4363,6 +4363,7 @@ GameObject:
   m_Component:
   - component: {fileID: 773661477}
   - component: {fileID: 773661476}
+  - component: {fileID: 773661478}
   m_Layer: 0
   m_Name: Dropper
   m_TagString: Untagged
@@ -4377,14 +4378,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773661475}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a8637c1b5a714442be1f86d703b32c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dropChance: 1
   droppables:
-  - {fileID: 11400000, guid: 44e38820059c18b4f806e31f3d94198d, type: 2}
+  - {fileID: 0}
   pickerPrefab: {fileID: 1657492801139177798, guid: fb42470ad6bb38e48af854a427a4b073,
     type: 3}
 --- !u!4 &773661477
@@ -4401,6 +4402,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &773661478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773661475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23c3aa89e130934982e30edab09171c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropChance: 1
+  byScene: 1
+  bySpaceStation: 1
+  byCommonEnemy: 1
 --- !u!1001 &791197218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6556,6 +6573,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1041370288}
+  - component: {fileID: 1041370289}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -6577,6 +6595,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1041370289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041370287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ff0858fbfeeda4cb7ecc916c55d98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1060213139
 PrefabInstance:
   m_ObjectHideFlags: 0

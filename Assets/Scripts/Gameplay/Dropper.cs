@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OMTB.Collections;
+
 
 namespace OMTB.Gameplay
 {
@@ -30,11 +30,10 @@ namespace OMTB.Gameplay
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K))
-                TryDropSomething(new Vector3(-8.2f,0f,-38f));
+        
         }
 
-        public void TryDropSomething(Vector3 position)
+        public void TryGetRandomDroppable()
         {
             // Check the chance to drop something
             float r = 0;
@@ -65,10 +64,10 @@ namespace OMTB.Gameplay
             Droppable toDrop = l[Random.Range(0, l.Count)];
             Debug.Log("Dropping " + toDrop.name);
 
-            GameObject picker = GameObject.Instantiate(pickerPrefab);
-            picker.transform.position = position;
-            picker.transform.rotation = Quaternion.identity;
-            picker.GetComponent<Picker>().AddContent(toDrop.Prefab);
+            //GameObject picker = GameObject.Instantiate(pickerPrefab);
+            //picker.transform.position = position;
+            //picker.transform.rotation = Quaternion.identity;
+            //picker.GetComponent<Picker>().AddContent(toDrop.PickerPrefab);
         }
     }
 

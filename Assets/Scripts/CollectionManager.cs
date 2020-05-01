@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OMTB.Collections;
+using OMTB.Gameplay;
 
 namespace OMTB
 {
@@ -9,8 +9,6 @@ namespace OMTB
     {
         
         public const string DroppablesFolder = "Droppables";
-
-        
 
         private List<Droppable> droppables;
 
