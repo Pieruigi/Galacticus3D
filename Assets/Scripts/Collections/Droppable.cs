@@ -12,6 +12,10 @@ namespace OMTB.Collections
 
         [SerializeField]
         GameObject prefab;
+        public GameObject Prefab
+        {
+            get { return prefab; }
+        }
 
         [SerializeField]
         [Range(0f,1f)]

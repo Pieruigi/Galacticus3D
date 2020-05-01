@@ -6,22 +6,30 @@ namespace OMTB
 {
     public class Rotator : MonoBehaviour
     {
+        [SerializeField]
         Vector3 axis;
 
-        float maxSpeed = 10;
-        
-        // Start is called before the first frame update
+        [SerializeField]
+        bool world;
+
+        [SerializeField]
+        float speed;
+
+        Vector3 rotAxis;
+
         void Start()
         {
-                axis = new Vector3(Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed), Random.Range(-maxSpeed, maxSpeed));
-                
+            if (world)
+                rotAxis = axis.normalized;
+            else
+                rotAxis = (transform.right * axis.x + transform.up * axis.y + transform.forward * axis.z).normalized;
         }
 
         // Update is called once per frame
         void Update()
         {
-            transform.Rotate(axis*Time.deltaTime);
-
+            float angle = speed * Time.deltaTime;
+            transform.Rotate(rotAxis, angle, world ? Space.World : Space.Self);
         }
     }
 

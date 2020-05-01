@@ -7,7 +7,8 @@ namespace OMTB.Editor
 {
     public abstract class Builder : MonoBehaviour 
     {
-
+        const string basePath = "Assets/Resources/";
+        const string droppablesResourcePath = basePath + "Droppables" + "/";
 
         // Start is called before the first frame update
         void Start()
@@ -27,7 +28,7 @@ namespace OMTB.Editor
         {
             try
             {
-                string path = CollectionManager.DroppablesResourcePath;
+                string path = droppablesResourcePath;
                 if (!System.IO.Directory.Exists(path))
                 {
                     System.IO.Directory.CreateDirectory(path);

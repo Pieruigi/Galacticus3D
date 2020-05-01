@@ -47,8 +47,8 @@ namespace OMTB
 
 
                 // Set some mesh static
-                Rotator[] rotators = child.GetComponentsInChildren<Rotator>();
-                Debug.Log("Rotators.Length:" + rotators.Length);
+                RandomRotator[] rotators = child.GetComponentsInChildren<RandomRotator>();
+
                 for(int j=0; j<rotators.Length; j++)
                 {
                     remove = ((int)Random.Range(0, 4) == 0) ? false : true;

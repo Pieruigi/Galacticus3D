@@ -84,7 +84,7 @@ namespace OMTB
         bool notSteering = false;
         DateTime notSteeringLastTime;
         float notSteeringTime = 0;
-        float notSteeringTimeBase = 1;
+        float notSteeringTimeBase = 1f;
         float aimLerpSpeed = 20;
 
         bool isAiming = false;

@@ -7,10 +7,10 @@ namespace OMTB
 {
     public class CollectionManager
     {
-        const string basePath = "Assets/Resources/";
-        const string droppablesFolder = "Droppables";
+        
+        public const string DroppablesFolder = "Droppables";
 
-        public const string DroppablesResourcePath = basePath + "Droppables" + "/";
+        
 
         private List<Droppable> droppables;
 
@@ -23,7 +23,7 @@ namespace OMTB
         CollectionManager()
         {
 
-            droppables = new List<Droppable>(Resources.LoadAll<Droppable>(droppablesFolder)); 
+            droppables = new List<Droppable>(Resources.LoadAll<Droppable>(DroppablesFolder)); 
             
         }
 
@@ -48,5 +48,28 @@ namespace OMTB
 
         }
     }
+
+    //public class Collection<T>
+    //{
+    //    private List<T> objects;
+
+    //    static Collection<T> instance;
+
+        
+    //    public static Collection<T> Instance
+    //    {
+    //        get { return GetCollection(); }
+    //    }
+
+    //    private static Collection<T> GetCollection()
+    //    {
+    //        if (instance == null)
+    //            new Collection<T>();
+
+    //        return instance;
+
+    //    }
+    //}
+
 
 }

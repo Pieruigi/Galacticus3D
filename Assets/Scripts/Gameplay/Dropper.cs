@@ -11,64 +11,64 @@ namespace OMTB.Gameplay
         [Range(0f,1f)]
         float dropChance = 1;
 
+        [SerializeField]
         List<Droppable> droppables;
+
+        [SerializeField]
+        GameObject pickerPrefab;
+
         // Start is called before the first frame update
         void Start()
         {
-            droppables = new List<Droppable>(CollectionManager.Instance.GetDroppables());
+            if(droppables == null)
+                droppables = new List<Droppable>(CollectionManager.Instance.GetDroppables());
             Debug.Log("Droppables.Count:" + droppables.Count);
+
+            //Collection<string>
         }
 
         // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
-                TryDropSomething();
+                TryDropSomething(new Vector3(-8.2f,0f,-38f));
         }
 
-        public void TryDropSomething()
+        public void TryDropSomething(Vector3 position)
         {
             // Check the chance to drop something
-            float r = Random.Range(0f, 1f);
+            float r = 0;
+            
+            if(dropChance < 1)
+            {
+                r = Random.Range(0f, 1f);
+                if (r > dropChance)
+                    return;
+            }
 
-            if (r > dropChance)
-                return;
-    // Ok, drop something
+            // Ok, drop something
             Debug.Log("Drop something");
 
             // Choose the object to be dropped
             r = Random.Range(0f, 1f);
+            Debug.Log("r:" + r);
 
-            // Get the object with the minimum weight
-            Droppable dMin = null;
-            float wMin = 0;
+            // Get all the object with the minimum weight
+            List<Droppable> l = droppables.FindAll(d => d.DropChance >= r);
 
-            foreach(Droppable d in droppables)
-            {
-                if (d.DropChance > r)
-                    continue;
-
-                if((dMin == null) || (wMin > d.DropChance))
-                {
-                    dMin = d;
-                    wMin = d.DropChance;
-                }
-                    
-            }
-
-                
-            if(dMin == null)
+            if(l.Count == 0)
             {
                 Debug.Log("Nothing to drop");
                 return;
             }
 
-            // Get all the object with the minimum weight
-            List<Droppable> l = droppables.FindAll(d => d.DropChance == wMin);
+            Droppable toDrop = l[Random.Range(0, l.Count)];
+            Debug.Log("Dropping " + toDrop.name);
 
-            dMin = l[Random.Range(0, l.Count)];
-            Debug.Log("Dropping " + dMin.name);
-            
+            GameObject picker = GameObject.Instantiate(pickerPrefab);
+            picker.transform.position = position;
+            picker.transform.rotation = Quaternion.identity;
+            picker.GetComponent<Picker>().AddContent(toDrop.Prefab);
         }
     }
 

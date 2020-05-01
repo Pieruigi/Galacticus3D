@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafde975409ec854a8d327448483a6d1, type: 3}
   m_Name: RepairKit
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 3346736869290878605, guid: 06c671d6301de29408add1cd527a2e45, type: 3}
   dropChance: 0.5

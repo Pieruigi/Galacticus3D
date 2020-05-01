@@ -85,6 +85,7 @@ namespace OMTB
 
             float maxAngularSpeed = rolleable.GetMaxAngularSpeed();
             float maxSideSpeed = rolleable.GetMaxSideSpeed();
+            //Debug.Log("maxAngSpeed:" + maxAngularSpeed); Debug.Log("maxSideSpeed:" + maxSideSpeed);
 
 
             if (!rolleable.IsAiming())
@@ -93,6 +94,7 @@ namespace OMTB
                 {
                     angularSpeed = Vector3.SignedAngle(transform.forward, lastFwd, Vector3.up) / Time.deltaTime;
                     angularSpeed = Mathf.Clamp(angularSpeed, -maxAngularSpeed, maxAngularSpeed);
+                    Debug.Log("AngularSpeed:" + angularSpeed);
                     lastChange = System.DateTime.UtcNow;
                 }
 
@@ -126,6 +128,8 @@ namespace OMTB
                 angle = Mathf.Clamp(angle, -maxRoll, maxRoll);
             else
                 angle = 0;
+
+           // Debug.Log("Angle:" + angle);
 
             Quaternion targetRot = Quaternion.Euler(0, 0, angle);
             
