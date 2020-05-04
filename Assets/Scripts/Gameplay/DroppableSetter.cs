@@ -19,7 +19,7 @@ namespace OMTB.Gameplay
         bool bySpaceStation;
 
         [SerializeField]
-        bool byCommonEnemy;
+        bool byCommonEnemy; // True if you want this to release common enemies powerup
 
         [SerializeField]
         OMTB.Collections.Droppable.SpecialEnemyGroupType specialEnemyGroup;
@@ -31,7 +31,7 @@ namespace OMTB.Gameplay
             List<Droppable> list = new List<Droppable>(Resources.LoadAll<OMTB.Collections.Droppable>(OMTB.Collections.Droppable.ResourceFolder)).
                 FindAll(d => d.ByScene == byScene &&
                         d.BySpaceStation == bySpaceStation &&
-                        d.ByCommonEnemies == byCommonEnemy &&
+                        (byCommonEnemy && d.SpecialEnemyGroup == Droppable.SpecialEnemyGroupType.None) &&
                         d.MinLevel <= LevelManager.Instance.Level &&
                         (d.MaxLevel < 0 || d.MaxLevel >= LevelManager.Instance.Level) &&
                         (d.SpecialEnemyGroup == Droppable.SpecialEnemyGroupType.None || d.SpecialEnemyGroup == specialEnemyGroup)
@@ -50,12 +50,14 @@ namespace OMTB.Gameplay
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
-                List<Droppable> list = new List<Droppable>(Resources.LoadAll<Droppable>("Droppables")).
-               FindAll(d => d.ByScene == byScene &&
-                       d.BySpaceStation == bySpaceStation &&
-                       d.ByCommonEnemies == byCommonEnemy &&
-                       d.MinLevel <= LevelManager.Instance.Level &&
-                       (d.MaxLevel < 0 || d.MaxLevel >= LevelManager.Instance.Level));
+                List<Droppable> list = new List<Droppable>(Resources.LoadAll<OMTB.Collections.Droppable>(OMTB.Collections.Droppable.ResourceFolder)).
+                 FindAll(d => d.ByScene == byScene &&
+                         d.BySpaceStation == bySpaceStation &&
+                         (byCommonEnemy && d.SpecialEnemyGroup == Droppable.SpecialEnemyGroupType.None) &&
+                         d.MinLevel <= LevelManager.Instance.Level &&
+                         (d.MaxLevel < 0 || d.MaxLevel >= LevelManager.Instance.Level) &&
+                         (d.SpecialEnemyGroup == Droppable.SpecialEnemyGroupType.None || d.SpecialEnemyGroup == specialEnemyGroup)
+                         );
 
                 Droppable ret;
                 if (TryGetRandom(list, out ret))
