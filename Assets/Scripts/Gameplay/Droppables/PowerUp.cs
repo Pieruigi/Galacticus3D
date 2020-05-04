@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OMTB.Gameplay
 {
-    public abstract class PowerUp : Droppable
+    public abstract class PowerUp : Pickable
     {
         public override void PickUp()
         {

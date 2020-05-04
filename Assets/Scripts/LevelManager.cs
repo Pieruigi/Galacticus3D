@@ -16,7 +16,7 @@ namespace OMTB
 
         private void Awake()
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
             }
@@ -30,6 +30,11 @@ namespace OMTB
         void Start()
         {
             //CollectionManager.Create();
+            //System.DateTime start = System.DateTime.UtcNow;
+            //OMTB.Gameplay.Droppable[] a = Resources.LoadAll<OMTB.Gameplay.Droppable>("Droppables");
+            //System.DateTime end = System.DateTime.UtcNow;
+            //Debug.Log("Loaded " + a.Length + " in " + (end - start).TotalMilliseconds +" mills.");
+
         }
 
         // Update is called once per frame

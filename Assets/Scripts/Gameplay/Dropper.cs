@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Collections;
 
 
 namespace OMTB.Gameplay
@@ -20,8 +21,7 @@ namespace OMTB.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            if(droppables == null)
-                droppables = new List<Droppable>(CollectionManager.Instance.GetDroppables());
+            
             Debug.Log("Droppables.Count:" + droppables.Count);
 
             //Collection<string>
