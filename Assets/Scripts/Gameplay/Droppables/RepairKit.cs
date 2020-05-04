@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OMTB.Gameplay
 {
-    public class RepairKit : Droppable
+    public class RepairKit : Pickable
     {
         public override void PickUp()
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OMTB.Gameplay
 {
-    public class Coin : Droppable
+    public class Coin : Pickable
     {
         public override void PickUp()
         {

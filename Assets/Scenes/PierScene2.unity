@@ -4362,7 +4362,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 773661477}
-  - component: {fileID: 773661476}
   - component: {fileID: 773661478}
   m_Layer: 0
   m_Name: Dropper
@@ -4371,23 +4370,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &773661476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773661475}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8637c1b5a714442be1f86d703b32c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropChance: 1
-  droppables:
-  - {fileID: 0}
-  pickerPrefab: {fileID: 1657492801139177798, guid: fb42470ad6bb38e48af854a427a4b073,
-    type: 3}
 --- !u!4 &773661477
 Transform:
   m_ObjectHideFlags: 0
@@ -4418,6 +4400,7 @@ MonoBehaviour:
   byScene: 1
   bySpaceStation: 1
   byCommonEnemy: 1
+  specialEnemyGroup: 0
 --- !u!1001 &791197218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11516,6 +11499,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+        type: 3}
+      propertyPath: turningSpeed
+      value: 3.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}

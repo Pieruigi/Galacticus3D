@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafde975409ec854a8d327448483a6d1, type: 3}
+  m_Name: droppable
+  m_EditorClassIdentifier: 
+  pickerPrefab: {fileID: 0}
+  dropChance: 0
+  minLevel: 0
+  maxLevel: -1
+  byScene: 0
+  bySpaceStation: 0
+  byCommonEnemies: 0
+  specialEnemyGroup: 0

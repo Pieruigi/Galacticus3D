@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OMTB.Gameplay;
+using OMTB.Collections;
 
 namespace OMTB.Gameplay
 {
@@ -21,19 +21,25 @@ namespace OMTB.Gameplay
         [SerializeField]
         bool byCommonEnemy;
 
+        [SerializeField]
+        OMTB.Collections.Droppable.SpecialEnemyGroupType specialEnemyGroup;
+
         // Start is called before the first frame update
         void Start()
         {
 
-            List<Droppable> list = new List<Droppable>(CollectionManager.Instance.GetDroppables()).FindAll(d=>d.ByScene == byScene && 
-                                                                                         d.BySpaceStation == bySpaceStation &&
-                                                                                         d.ByCommonEnemies == byCommonEnemy &&
-                                                                                         d.MinLevel <= LevelManager.Instance.Level &&
-                                                                                         (d.MaxLevel < 0 || d.MaxLevel >= LevelManager.Instance.Level));
+            List<Droppable> list = new List<Droppable>(Resources.LoadAll<OMTB.Collections.Droppable>(OMTB.Collections.Droppable.ResourceFolder)).
+                FindAll(d => d.ByScene == byScene &&
+                        d.BySpaceStation == bySpaceStation &&
+                        d.ByCommonEnemies == byCommonEnemy &&
+                        d.MinLevel <= LevelManager.Instance.Level &&
+                        (d.MaxLevel < 0 || d.MaxLevel >= LevelManager.Instance.Level) &&
+                        (d.SpecialEnemyGroup == Droppable.SpecialEnemyGroupType.None || d.SpecialEnemyGroup == specialEnemyGroup)
+                        );
 
             Debug.Log("LIst:" + list.Count);
             Droppable ret;
-            if(TryGetRandom(list, out ret))
+            if (TryGetRandom(list, out ret))
             {
                 Debug.Log("Ret:" + ret.name);
             }
