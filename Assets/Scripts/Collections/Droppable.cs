@@ -54,12 +54,12 @@ namespace OMTB.Collections
             get { return bySpaceStation; }
         }
 
-        [SerializeField]
-        bool byCommonEnemies;
-        public bool ByCommonEnemies
-        {
-            get { return byCommonEnemies; }
-        }
+        //[SerializeField]
+        //bool byCommonEnemies;
+        //public bool ByCommonEnemies
+        //{
+        //    get { return byCommonEnemies; }
+        //}
 
         [SerializeField]
         SpecialEnemyGroupType specialEnemyGroup;

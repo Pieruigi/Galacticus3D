@@ -13,11 +13,11 @@ namespace OMTB
     {
         [Header("Movement")]
         [SerializeField]
-        [Range(1f, 20f)]
+        [Range(4f, 6f)]
         float turningSpeed;
 
         [SerializeField]
-        [Range(1f, 50f)]
+        [Range(10f, 30f)]
         float maxSpeed;
         public float MaxSpeed
         {
@@ -38,7 +38,7 @@ namespace OMTB
         float aimMaxTurnSpeedMultiplier;
 
         [SerializeField]
-        [Range(1f, 100f)]
+        [Range(30f, 50f)]
         float acceleration;
 
         [SerializeField]
