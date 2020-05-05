@@ -16,7 +16,7 @@ namespace OMTB.Utils
             Debug.DrawRay(source.position, target.position - source.position, Color.red, 3);
             if (Physics.Raycast(source.position, target.position - source.position, out hit, 1000, mask, QueryTriggerInteraction.Ignore))
             {
-                
+                Debug.Log("hit:" + hit.transform.name);
                 if (hit.transform == target)
                     onSight = true;
             }

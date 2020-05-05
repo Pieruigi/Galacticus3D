@@ -17,7 +17,7 @@ namespace OMTB
         float turningSpeed;
 
         [SerializeField]
-        [Range(10f, 30f)]
+        [Range(15f, 25f)]
         float maxSpeed;
         public float MaxSpeed
         {
