@@ -25,11 +25,18 @@ namespace OMTB
             get { return maxRange; }
         }
 
+        private Transform owner;
+        public Transform Owner
+        {
+            get { return owner; }
+        }
+
         public virtual void Init(DamagerConfig config)
         {
             amount = config.Amount;
             minRange = config.MinRange;
             maxRange = config.MaxRange;
+            owner = config.Owner;
         }
 
         
@@ -37,28 +44,23 @@ namespace OMTB
         /**
          * Use this method to compute damage for damageable not directly hit by the damager when min anx max range are different than zero.
          * */
-        protected float GetDoubleRangeInterpolationMultiplier(float distance, float internalRange, float externalRange, bool decreasing)
+        protected float GetDamageAmountByRange(float distance, float internalRange, float externalRange)
         {
 
-            if (externalRange <= 0 || distance <= internalRange)
-                return (!decreasing ? 0 : 1);
+            if (distance <= internalRange)
+                return amount;
 
-            if (distance > externalRange)
-                return (!decreasing ? 1 : 0);
-
-
-            if (externalRange < internalRange)
-                externalRange = internalRange;
+            if (externalRange > 0 && distance > externalRange)
+                return 0;
 
             float mul = 0;
 
-            if (externalRange > 0)
-            {
-                if (distance > internalRange && distance < externalRange)
-                    mul = (externalRange - distance + internalRange) / (externalRange - internalRange);
-            }
 
-            return (!decreasing ? mul : 1 - mul);
+            if (distance > internalRange && distance < externalRange)
+                mul = ((externalRange - distance) / (externalRange - internalRange));
+
+
+            return mul*amount;
         }
     }
 

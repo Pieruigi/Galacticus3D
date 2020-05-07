@@ -53,10 +53,13 @@ namespace OMTB.AI
 
                 return;
             }
-                
+            else
+            {
+                // Shoot
+                TryShoot();
+            }    
 
-            // Shoot
-            TryShoot();
+            
             
         }
 
@@ -79,6 +82,14 @@ namespace OMTB.AI
         void TryShoot()
         {
             Vector3 dir = (targetSetter.Target.position - weapon.transform.position).normalized;
+
+            // Check collision
+            RaycastHit hit;
+            if (Physics.SphereCast(weapon.transform.position, 1f, dir, out hit, 10, LayerMask.GetMask(new string[] { "Obstacle" })))
+                return;
+                
+
+            
             if (Vector3.Angle(weapon.transform.forward, dir) < aimError)
                 weapon.Fire();
         }

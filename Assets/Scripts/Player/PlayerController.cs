@@ -278,7 +278,6 @@ namespace OMTB
             if ("Wall".Equals(collision.gameObject.tag))
             {
                 Vector3 totSpeed = currentVelocity + rb.velocity;
-                Debug.Log("TotSpeed:" + totSpeed);
 
                 float dot = Vector3.Dot(totSpeed, -collision.contacts[0].normal);
                 Vector3 bounceDir;

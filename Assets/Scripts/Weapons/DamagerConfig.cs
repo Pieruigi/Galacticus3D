@@ -12,6 +12,8 @@ namespace OMTB
         public float MinRange { get; set; }
 
         public float MaxRange { get; set; }
+
+        public Transform Owner { get; set; }
     }
 
 }

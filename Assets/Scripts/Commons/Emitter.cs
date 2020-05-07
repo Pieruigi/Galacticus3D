@@ -7,19 +7,31 @@ namespace OMTB
     public class Emitter : MonoBehaviour
     {
         [SerializeField]
-        bool isEnemy = false;
-        public bool IsEnemy
+        Transform owner;
+        public Transform Owner
         {
-            get { return isEnemy; }
-            set { isEnemy = value; }
+            get { return owner; }
+            protected set { owner = value; }
         }
 
+        //[SerializeField]
+        bool isEnemy = false;
+        //public bool IsEnemy
+        //{
+        //    get { return isEnemy; }
+        //    set { isEnemy = value; }
+        //}
+
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
             Color c = Color.cyan;
-            if (isEnemy)
+            if ("Enemy".Equals(owner.tag))
+            {
                 c = Color.red;
+                isEnemy = true;
+            }
+                
 
             if (isEnemy)
             {

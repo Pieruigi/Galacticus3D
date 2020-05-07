@@ -94,7 +94,6 @@ namespace OMTB
                 {
                     angularSpeed = Vector3.SignedAngle(transform.forward, lastFwd, Vector3.up) / Time.deltaTime;
                     angularSpeed = Mathf.Clamp(angularSpeed, -maxAngularSpeed, maxAngularSpeed);
-                    Debug.Log("AngularSpeed:" + angularSpeed);
                     lastChange = System.DateTime.UtcNow;
                 }
 

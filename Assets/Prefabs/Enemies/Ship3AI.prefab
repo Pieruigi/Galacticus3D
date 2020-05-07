@@ -206,7 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b686f2139d3718a4dafccfb1b2437c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimSpeed: 14
   aimError: 8
   alwaysShoot: 1
   weapon: {fileID: 315686752032985299}
@@ -274,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d8fa3d307fbf649978eee61e68c86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 315686752620696708}
   bulletPrefab: {fileID: 6683447071312092115, guid: 5b7ca725f0fb2d348bd50b386f96465c,
     type: 3}
   firePoint: {fileID: 315686751379506899}
@@ -10191,7 +10191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54eb2544b96d6e47a16cbf9919091e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemy: 1
+  owner: {fileID: 315686752620696708}
 --- !u!1 &6883823897299673137
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,8 +32,8 @@ namespace OMTB
                 Range = Weapon.FireRange,
                 Amount = Weapon.DamageAmount,
                 MaxRange = Weapon.DamageMaxRange,
-                MinRange = Weapon.DamageMinRange
-
+                MinRange = Weapon.DamageMinRange,
+                Owner = this.Owner
             });
 
             // No collision with the owner
