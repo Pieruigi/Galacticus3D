@@ -96,16 +96,16 @@ namespace OMTB.AI
                     
                 }
             }
-            else
-            {
-                // If target is outside the escape range then disengage
-                if(sqrRange > 0 && (target.position - engageTriggerPoint.position).sqrMagnitude > sqrRange)
-                {
-                    engaged = false;
-                    sqrRange = engageRange * engageRange;
-                    OnTargetDisengaged?.Invoke();
-                }
-            }
+            //else
+            //{
+            //    // If target is outside the escape range then disengage
+            //    if(sqrRange > 0 && (target.position - engageTriggerPoint.position).sqrMagnitude > sqrRange)
+            //    {
+            //        engaged = false;
+            //        sqrRange = engageRange * engageRange;
+            //        OnTargetDisengaged?.Invoke();
+            //    }
+            //}
         }
 
        

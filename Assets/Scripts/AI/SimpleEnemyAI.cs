@@ -49,7 +49,8 @@ namespace OMTB.AI
             aiTrigger = GetComponent<IEngageTrigger>();
             aiTrigger.OnTargetEngaged += HandleOnTargetEngaged;
             aiTrigger.OnTargetDisengaged += HandleOnTargetDisengaged;
-            idleMover.GetComponent<IActivable>().Activate();
+            if(idleMover)
+                idleMover.GetComponent<IActivable>().Activate();
         }
 
         // Update is called once per frame
@@ -107,7 +108,9 @@ namespace OMTB.AI
         void StartFighting()
         {
             isFighting = true;
-            figther.GetComponent<IActivable>().Activate();
+
+            if(figther)
+                figther.GetComponent<IActivable>().Activate();
             
             Debug.Log("Fight");
          
@@ -117,7 +120,9 @@ namespace OMTB.AI
         void StopFighting()
         {
             isFighting = false;
-            figther.GetComponent<IActivable>().Deactivate();
+
+            if(figther)
+                figther.GetComponent<IActivable>().Deactivate();
 
             Debug.Log("StopFighting");
 
@@ -125,14 +130,17 @@ namespace OMTB.AI
 
         void StartIdle()
         {
-            idleMover.GetComponent<IActivable>().Activate();
+            if(idleMover)
+                idleMover.GetComponent<IActivable>().Activate();
         }
 
         void StopSeeking()
         {
             Debug.Log("Stop seeking");
             isSeeking = false;
-            seeker.GetComponent<IActivable>().Deactivate();
+
+            if(seeker)
+                seeker.GetComponent<IActivable>().Deactivate();
         }
 
         void StartSeeking()
@@ -140,13 +148,15 @@ namespace OMTB.AI
             Debug.Log("Start seeking");
             isSeeking = true;
             
-            seeker.GetComponent<IActivable>().Activate();
+            if(seeker)
+                seeker.GetComponent<IActivable>().Activate();
 
         }
 
         void StopIdle()
         {
-            idleMover.GetComponent<IActivable>().Deactivate();
+            if(idleMover)
+                idleMover.GetComponent<IActivable>().Deactivate();
         }
     }
 

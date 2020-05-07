@@ -449,7 +449,7 @@ MonoBehaviour:
   - {fileID: 3953212361138255818, guid: 85cf0297d455fb54986a666478f68cbc, type: 3}
   - {fileID: 7630400946233682821, guid: 22c3b1242d2154645a5930bb4feef5c3, type: 3}
   - {fileID: 4066232596815223833, guid: 15b04b5643613124fa46fdce8bef4a9a, type: 3}
-  diePS: {fileID: 0}
+  diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 3623509319197197897}
 --- !u!1 &315686753026586408
 GameObject:

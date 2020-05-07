@@ -18,7 +18,7 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-
+            GetComponent<Health>().OnDestroyed += HandleOnDestroyed;
         }
 
         // Update is called once per frame
@@ -40,6 +40,14 @@ namespace OMTB
                 }
                 
             }
+        }
+
+        void HandleOnDestroyed()
+        {
+            ParticleSystem ps = GameObject.Instantiate(diePS);
+            ps.transform.position = point.position;
+            //ps.transform.rotation = Quaternion.identity;
+            ps.Play();
         }
     }
 

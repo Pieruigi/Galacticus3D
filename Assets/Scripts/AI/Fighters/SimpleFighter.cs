@@ -8,8 +8,8 @@ namespace OMTB.AI
     [RequireComponent(typeof(TargetSetter))]
     public class SimpleFighter : MonoBehaviour, IActivable
     {
-        [SerializeField]
-        float aimSpeed = 5;
+        //[SerializeField]
+        //float aimSpeed = 5;
 
         [SerializeField]
         float aimError = 3;

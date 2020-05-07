@@ -6,7 +6,7 @@ namespace OMTB
 {
     public abstract class Shooter : MonoBehaviour
     {
-
+        [SerializeField]
         Transform owner;
         public Transform Owner
         {
@@ -25,7 +25,9 @@ namespace OMTB
         // Start is called before the first frame update
         protected virtual void Start()
         {
-            owner = transform.root;
+            if(!owner)
+                owner = transform.root;
+
             if (weapon == null)
                 weapon = GetComponent<Weapon>();
         }

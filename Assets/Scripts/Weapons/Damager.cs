@@ -14,8 +14,16 @@ namespace OMTB
         }
 
         private float minRange = 0; // Zero to deliver damage by contact ( ex. bullet ); use to deliver the whole damage to the enemies in range ( for explosion )
+        public float MinRange
+        {
+            get { return minRange; }
+        }
 
         private float maxRange;  // Part of the damage will be applied to all the enemies in range
+        public float MaxRange
+        {
+            get { return maxRange; }
+        }
 
         public virtual void Init(DamagerConfig config)
         {

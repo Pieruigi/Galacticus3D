@@ -131,19 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
---- !u!114 &1278374899939855720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4974556728088507779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a54eb2544b96d6e47a16cbf9919091e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEnemy: 1
 --- !u!1 &3902582290268469676
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +522,7 @@ MonoBehaviour:
   - {fileID: 4422643419642021895, guid: 24086c46ee1dedd449577fac622ff931, type: 3}
   - {fileID: 6043550620054221262, guid: 7459c061219f3704c9f4169cc9e9370c, type: 3}
   - {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
-  diePS: {fileID: 0}
+  diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 82131574}
 --- !u!1 &3902582291935136535
 GameObject:
@@ -600,6 +587,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &1278374899939855720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4974556728088507779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a54eb2544b96d6e47a16cbf9919091e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 1
 --- !u!1001 &3902582290209959050
 PrefabInstance:
   m_ObjectHideFlags: 0
