@@ -18,10 +18,13 @@ namespace OMTB.Gameplay
         [SerializeField]
         GameObject pickerPrefab;
 
+        [SerializeField]
+        GameObject pickablePrefab;
+
         // Start is called before the first frame update
         void Start()
         {
-            
+            Debug.LogError("Remove Input test");
             Debug.Log("Droppables.Count:" + droppables.Count);
 
             //Collection<string>
@@ -30,7 +33,16 @@ namespace OMTB.Gameplay
         // Update is called once per frame
         void Update()
         {
-        
+            if (Input.GetKeyDown(KeyCode.L))
+                Drop();
+        }
+
+        void Drop()
+        {
+            GameObject picker = GameObject.Instantiate(pickerPrefab);
+            picker.transform.position = new Vector3(50,0,-55);
+            picker.transform.rotation = Quaternion.identity;
+            picker.GetComponent<Picker>().Init(pickablePrefab);
         }
 
         public void TryGetRandomDroppable()
