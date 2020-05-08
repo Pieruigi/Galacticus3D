@@ -7,7 +7,7 @@ namespace OMTB.Gameplay
 {
     public class Coin : MonoBehaviour, IPickable
     {
-        public bool TryPickUp()
+        public bool TryPickUp(GameObject player)
         {
             throw new System.NotImplementedException();
         }

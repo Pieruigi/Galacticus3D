@@ -5122,6 +5122,7 @@ GameObject:
   - component: {fileID: 3902582291535554630}
   - component: {fileID: 160743796}
   - component: {fileID: 160743797}
+  - component: {fileID: -3945482553662171338}
   m_Layer: 0
   m_Name: MilleniumAI
   m_TagString: Enemy
@@ -5186,7 +5187,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 84
   m_CollisionDetection: 1
 --- !u!135 &3902582291535554629
 SphereCollider:
@@ -5279,6 +5280,19 @@ MonoBehaviour:
   - {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 82131574}
+--- !u!114 &-3945482553662171338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902582291535554750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc075604fa780944bafdc0747bd70af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 2
 --- !u!1 &3902582291935136535
 GameObject:
   m_ObjectHideFlags: 0

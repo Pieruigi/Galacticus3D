@@ -15,7 +15,7 @@ namespace OMTB.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            //LeanTween.scale(content, Vector3.one, 1f).setEaseInOutElastic();
+            
         }
 
         // Update is called once per frame
@@ -33,7 +33,7 @@ namespace OMTB.Gameplay
             g.transform.localScale = Vector3.zero;
             content = g;
 
-
+            LeanTween.scale(content, Vector3.one, 1f).setEaseInOutElastic();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -44,14 +44,17 @@ namespace OMTB.Gameplay
             if("Player".Equals(other.tag))
             {
                 Debug.Log("Picked");
-                if (content.GetComponent<IPickable>().TryPickUp())
+                if (content.GetComponent<IPickable>().TryPickUp(other.gameObject))
                 {
                     noPicking = true;
-                    GameObject.Destroy(gameObject);
+                    LeanTween.scale(content, Vector3.zero, 1f).setEaseInOutElastic();
+                    GameObject.Destroy(gameObject,1);
                 }
                     
             }
         }
+
+       
     }
 
 }

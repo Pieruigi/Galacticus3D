@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 4881424545478234062}
   - component: {fileID: 8473113852626233084}
   - component: {fileID: 8473113852626233085}
+  - component: {fileID: -7236522280730968837}
   m_Layer: 0
   m_Name: Ship2AI
   m_TagString: Enemy
@@ -418,7 +419,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 84
   m_CollisionDetection: 1
 --- !u!135 &4881424545478234061
 SphereCollider:
@@ -511,6 +512,19 @@ MonoBehaviour:
   - {fileID: 8011036034965652369, guid: 8faca756a9f3ba4449ef6b99342ae2f1, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 8473113852409257470}
+--- !u!114 &-7236522280730968837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881424545478233910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc075604fa780944bafdc0747bd70af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 4
 --- !u!1 &4881424545881828511
 GameObject:
   m_ObjectHideFlags: 0

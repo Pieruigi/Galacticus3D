@@ -5342,6 +5342,7 @@ GameObject:
   - component: {fileID: 8701970935194964227}
   - component: {fileID: 5686741892875810865}
   - component: {fileID: 5686741892875810864}
+  - component: {fileID: 1789564011}
   m_Layer: 0
   m_Name: Ship1AI
   m_TagString: Enemy
@@ -5406,7 +5407,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 84
   m_CollisionDetection: 1
 --- !u!135 &8701970935194964224
 SphereCollider:
@@ -5499,3 +5500,16 @@ MonoBehaviour:
   - {fileID: 5804522256724830186, guid: a93e3c40a56157f4bab5a0b67e078902, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 5686741892960617267}
+--- !u!114 &1789564011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701970935194964475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc075604fa780944bafdc0747bd70af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 4

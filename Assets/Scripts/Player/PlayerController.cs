@@ -287,11 +287,10 @@ namespace OMTB
                     bounceDir = -totSpeed.normalized;
                 
                 Vector3 force1 = bounceDir * 125f * dot;
-                Vector3 force2 = collision.contacts[0].normal * 750f;
-
                 rb.AddForce(force1, ForceMode.Impulse);
+                Vector3 force2 = collision.contacts[0].normal * 750f;
                 rb.AddForce(force2, ForceMode.Impulse);
-
+            
                 float signedAngle = Vector3.SignedAngle(totSpeed, collision.contacts[0].normal, Vector3.up);
 
                 rb.AddTorque(transform.up * -200 * totSpeed.magnitude * Mathf.Sign(signedAngle), ForceMode.Impulse);
@@ -318,9 +317,22 @@ namespace OMTB
                 Vector3 force1 = bounceDir * 125f * dot;
                 rb.AddForce(force1, ForceMode.Impulse);
 
+                float signedAngle = Vector3.SignedAngle(totSpeed, collision.contacts[0].normal, Vector3.up);
+
+                rb.AddTorque(transform.up * -200 * totSpeed.magnitude * Mathf.Sign(signedAngle), ForceMode.Impulse);
+
+                notSteering = true;
+                notSteeringLastTime = DateTime.UtcNow;
+                notSteeringTime = totSpeed.magnitude / 100f + notSteeringTimeBase;
+                currentVelocity = Vector3.zero;
+
                 Rigidbody eRb = collision.gameObject.GetComponent<Rigidbody>();
-                if(eRb)
+                if (eRb)
+                {
                     eRb.AddForce(-force1, ForceMode.Impulse);
+                    eRb.AddTorque(eRb.transform.up * 200 * totSpeed.magnitude * Mathf.Sign(signedAngle), ForceMode.Impulse);
+                }
+                collision.gameObject.GetComponent<AI.Freezer>()?.Freeze();
 
             }
         }

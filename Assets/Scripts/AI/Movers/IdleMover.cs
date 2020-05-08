@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace OMTB.AI
 {
-    public class IdleMover : MonoBehaviour, IActivable
+    public class IdleMover : MonoBehaviour, IActivable, IFreezable
     {
         Vector3 startingPosition;
 
@@ -48,6 +48,11 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return !agent.isStopped;
+        }
+
+        public void Freeze(bool value)
+        {
+            gameObject.SetActive(!value);
         }
     }
 

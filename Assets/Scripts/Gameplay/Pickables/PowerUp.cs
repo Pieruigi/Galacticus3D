@@ -7,7 +7,7 @@ namespace OMTB.Gameplay
 {
     public abstract class PowerUp : MonoBehaviour, IPickable
     {
-        public virtual bool TryPickUp()
+        public virtual bool TryPickUp(GameObject player)
         {
             throw new System.NotImplementedException();
         }

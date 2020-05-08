@@ -7,9 +7,9 @@ namespace OMTB.Gameplay
 {
     public class Shield : PowerUp
     {
-        public override bool TryPickUp()
+        public override bool TryPickUp(GameObject player)
         {
-            return base.TryPickUp();
+            return base.TryPickUp(player);
         }
     }
 

@@ -11,7 +11,7 @@ namespace OMTB.AI
      * Simply moves towards the target and then starts fighting.
      * */
     [RequireComponent(typeof(TargetSetter))]
-    public class Seeker : MonoBehaviour, IActivable, IRolleable
+    public class Seeker : MonoBehaviour, IActivable, IRolleable, IFreezable
     {
         [SerializeField]
         float repathTime = 0.5f;
@@ -96,6 +96,11 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return !agent.isStopped;
+        }
+
+        public void Freeze(bool value)
+        {
+            gameObject.SetActive(!value);
         }
     }
 
