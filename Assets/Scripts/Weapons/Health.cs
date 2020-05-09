@@ -60,6 +60,15 @@ namespace OMTB
             }
         }
 
+
+        public void Recover(float amount)
+        {
+            health += amount;
+            if (health > maxHealth)
+                health = maxHealth;
+
+            OnHealthChanged?.Invoke();
+        }
     }
 
 }

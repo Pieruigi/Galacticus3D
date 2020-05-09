@@ -6,7 +6,7 @@ using OMTB.Interfaces;
 namespace OMTB.AI
 {
     [RequireComponent(typeof(TargetSetter))]
-    public class SimpleFighter : MonoBehaviour, IActivable
+    public class SimpleFighter : MonoBehaviour, IActivable, IFreezable
     {
         //[SerializeField]
         //float aimSpeed = 5;
@@ -97,6 +97,11 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return isActive;
+        }
+
+        public void Freeze(bool value)
+        {
+            gameObject.SetActive(!value);
         }
     }
 

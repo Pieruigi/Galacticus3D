@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace OMTB.AI
 {
     [RequireComponent(typeof(TargetSetter))]
-    public class Aimer : MonoBehaviour, IActivable
+    public class Aimer : MonoBehaviour, IActivable, IFreezable
     {
         
         [SerializeField]
@@ -88,6 +88,11 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return isActive;
+        }
+
+        public void Freeze(bool value)
+        {
+            gameObject.SetActive(!value);
         }
     }
 

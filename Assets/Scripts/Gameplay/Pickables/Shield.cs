@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Interfaces;
 
 namespace OMTB.Gameplay
 {
     public class Shield : PowerUp
     {
-        public override void PickUp()
+        public override bool TryPickUp(GameObject player)
         {
-            base.PickUp();
+            return base.TryPickUp(player);
         }
     }
 

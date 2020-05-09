@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace OMTB.AI
 {
     [RequireComponent(typeof(TargetSetter))]
-    public class ZigZager : MonoBehaviour, IActivable, IRolleable
+    public class ZigZager : MonoBehaviour, IActivable, IRolleable, IFreezable
     {
         [SerializeField]
         float maxSpeed = 3;
@@ -278,6 +278,11 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return isActive;
+        }
+
+        public void Freeze(bool value)
+        {
+            gameObject.SetActive(!value);
         }
     }
 

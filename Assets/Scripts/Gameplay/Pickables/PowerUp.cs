@@ -1,17 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Interfaces;
 
 namespace OMTB.Gameplay
 {
-    public class Coin : Pickable
+    public abstract class PowerUp : MonoBehaviour, IPickable
     {
-        public override void PickUp()
+        public virtual bool TryPickUp(GameObject player)
         {
             throw new System.NotImplementedException();
         }
-
-
     }
 
 }
