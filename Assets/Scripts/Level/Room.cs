@@ -19,13 +19,20 @@ namespace OMTB
         int width, height;
         float tileSize = 8;
 
-     
+        List<Portal> portals = new List<Portal>();
+                
 
         public Room(RoomConfig config)
         {
             width = config.Width;
             height = config.Height;
             tileSize = config.TileSize;
+
+        }
+
+        public void AddPortal(Portal portal)
+        {
+            portals.Add(portal);
         }
     }
 
