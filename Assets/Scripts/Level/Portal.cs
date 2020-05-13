@@ -15,6 +15,11 @@ namespace OMTB
     public class Portal
     {
         Room targetRoom;
+        public Room TargetRoom
+        {
+            get { return targetRoom; }
+        }
+
         bool isClosed = false;
         public Portal(PortalConfig config)
         {

@@ -14,6 +14,8 @@ namespace OMTB
         public BossRoom(BossRoomConfig config) : base(config)
         {
         }
+
+        
     }
 
 }

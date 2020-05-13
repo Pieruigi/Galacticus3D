@@ -28,13 +28,13 @@ namespace OMTB
         int smallLabyrinthWallDistance = 1;
         int hugeLabyrinthWallDistance = 2;
 
-        float bankRate = 0.5f;
+        float bankRate = 0.75f;
         float spaceStationRate = 0.5f;
 
         int galacticusMinLevel = 3;
         float galacticusRate = 0.1f;
 
-        List<Room> rooms;
+        List<Room> rooms = new List<Room>();
 
         Room startingRoom;
 
@@ -104,7 +104,7 @@ namespace OMTB
             // At least one room of each type of common room
             for (int i = 0; i < minSmallLabyrinths; i++)
                 commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = smallLabyrinthWallDistance, Width = 18, Height = 9, TileSize = tileSize }));
-
+            
             for (int i = 0; i < minHugeLabyrinths; i++)
                 commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = hugeLabyrinthWallDistance, Width = 12, Height = 9, TileSize = tileSize }));
 
@@ -126,18 +126,29 @@ namespace OMTB
 
             // Get the starting room
             startingRoom = commonRooms[Random.Range(0, commonRooms.Count)];
-           
+
+#if UNITY_EDITOR
+            for (int i = 0; i < commonRooms.Count; i++)
+                commonRooms[i].RoomName = "Room_" + i;
+#endif
 
             // Create the boss room
             Room bossRoom = new BossRoom(new BossRoomConfig() { Width = 10, Height = 10, TileSize = tileSize });
             int bossDepth = Random.Range(minBossRoomDepth, totalRooms - 2);
+#if UNITY_EDITOR
+            bossRoom.RoomName = "BossRoom";
+#endif
 
 
             // Check for special rooms
             List<Room> specialRooms = new List<Room>();
-            if (Random.Range(0f, 1f) <= bankRate)
+            if (Random.Range(0f, 1f) <= bankRate) 
                 specialRooms.Add(new BankRoom(new RoomConfig() { Width = 5, Height = 5, TileSize = tileSize }));
 
+#if UNITY_EDITOR
+            if(specialRooms.Count > 0)
+                specialRooms[specialRooms.Count-1].RoomName = "BankRoom";
+#endif
             //
             // Start creating tree
             //
@@ -164,11 +175,11 @@ namespace OMTB
                 prevRoom = room;
             }
 
-            // Attach the boss room to the tree
+            // Add the boss room ( only portals ); the used list only holds common rooms
             prevRoom.AddPortal(new Portal(new PortalConfig() { TargetRoom = bossRoom, IsClosed = true }));
             bossRoom.AddPortal(new Portal(new PortalConfig() { TargetRoom = prevRoom, IsClosed = true }));
 
-            // Add the remaining common rooms
+            // Add remaining common rooms
             count = commonRooms.Count;
             for(int i=0; i<count; i++)
             {
@@ -187,8 +198,29 @@ namespace OMTB
                 child.AddPortal(new Portal(new PortalConfig() { TargetRoom = parent }));
             }
 
-            // Finish adding the special rooms
+            // Add special rooms
+            count = specialRooms.Count;
+            for(int i=0; i<count; i++)
+            {
+                // Get the parent room
+                Room parent = used[Random.Range(0, used.Count)];
 
+                // Get the child room
+                Room child = specialRooms[i];
+
+                // Set portals
+                parent.AddPortal(new Portal(new PortalConfig() { TargetRoom = child }));
+                child.AddPortal(new Portal(new PortalConfig() { TargetRoom = parent }));
+            }
+
+            // Store all rooms
+            foreach (Room r in commonRooms)
+                rooms.Add(r);
+                
+            foreach(Room r in specialRooms)
+                rooms.Add(r);
+
+            rooms.Add(bossRoom);
 
             //// Set rooms
             //rooms = new List<Room>();
@@ -211,16 +243,19 @@ namespace OMTB
             Debug.Log( string.Format("Number of common rooms:{0}\n", commonRooms.Count));
             Debug.Log(string.Format("Number of special rooms:{0}\n", specialRooms.Count));
             Debug.Log(string.Format("Boss room depth:{0}\n", bossDepth));
-           
+            Debug.Log(string.Format("StartingRoom:{0}", startingRoom));
+            Debug.Log("Rooms:");
+            foreach (Room r in used)
+                Debug.Log(r);
+
 #endif
         }
 
         void ClearAll()
         {
-            if(rooms != null)
-                rooms.Clear();
-
             startingRoom = null;
+            rooms.Clear();
+            
         }
 
 

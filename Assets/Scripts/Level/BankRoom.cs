@@ -9,6 +9,8 @@ namespace OMTB
         public BankRoom(RoomConfig config) : base(config)
         {
         }
+
+
     }
 
 }
