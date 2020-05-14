@@ -59,16 +59,26 @@ namespace OMTB
             portals.Add(portal);
         }
 
-        public void SetTileValue(int row, int col, TileValue value)
+        public void SetTileValue(int row, int col, int value)
         {
             int i = row * width + col % width;
             tiles[i] = (int)value;
         }
 
-        public TileValue GetTileValue(int row, int col)
+        public void SetTileValue(int index, int value)
+        {
+            tiles[index] = value;
+        }
+
+        public int GetTileValue(int row, int col)
         {
             int i = row * width + col % width;
-            return (TileValue)tiles[i];
+            return tiles[i];
+        }
+
+        public int GetTileValue(int index)
+        {
+            return tiles[index];
         }
 
 #if UNITY_EDITOR

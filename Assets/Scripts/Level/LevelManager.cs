@@ -25,8 +25,8 @@ namespace OMTB
         int minBossRoomDepth = 2; // Starts from 0, the starting room
 
 
-        int smallLabyrinthWallDistance = 1;
-        int hugeLabyrinthWallDistance = 2;
+        int smallLabyrinthWallDistance = 2;
+        int hugeLabyrinthWallDistance = 3;
 
         float bankRate = 0.75f;
         float spaceStationRate = 0.5f;
@@ -101,12 +101,19 @@ namespace OMTB
             // How many rooms in the current level?
             int totalRooms = Random.Range(minCommonRooms, maxCommonRooms + 1);
 
+            int smallWidth = smallLabyrinthWallDistance + (smallLabyrinthWallDistance + 1)* /*num of horizontal walls*/2;
+
+            int smallHeight = smallLabyrinthWallDistance + (smallLabyrinthWallDistance+1)*/*num of vertical walls*/2;
+
+            int hugeWidth = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance+1)*2;
+            int hugeHeight = hugeLabyrinthWallDistance * (hugeLabyrinthWallDistance+1)*1;
+
             // At least one room of each type of common room
             for (int i = 0; i < minSmallLabyrinths; i++)
-                commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = smallLabyrinthWallDistance, Width = 18, Height = 9, TileSize = tileSize }));
+                commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = smallLabyrinthWallDistance, Width = smallWidth, Height = smallHeight, TileSize = tileSize }));
             
             for (int i = 0; i < minHugeLabyrinths; i++)
-                commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = hugeLabyrinthWallDistance, Width = 12, Height = 9, TileSize = tileSize }));
+                commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = hugeLabyrinthWallDistance, Width = hugeWidth, Height = hugeHeight, TileSize = tileSize }));
 
             for (int i = 0; i < minCustomRooms; i++)
                 commonRooms.Add(new CustomRoom(new CustomRoomConfig() { Width = 12, Height = 9, TileSize = tileSize }));
@@ -117,9 +124,9 @@ namespace OMTB
             {
                 int r = Random.Range(0, commonRoomTypesNum);
                 if(r == 0)
-                    commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = smallLabyrinthWallDistance, Width = 18, Height = 9, TileSize = tileSize }));
+                    commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = smallLabyrinthWallDistance, Width = smallWidth, Height = smallHeight, TileSize = tileSize }));
                 else if(r == 1)
-                    commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = hugeLabyrinthWallDistance, Width = 18, Height = 9, TileSize = tileSize }));
+                    commonRooms.Add(new Labyrinth(new LabyrinthConfig() { TilesBetweenWalls = hugeLabyrinthWallDistance, Width = hugeWidth, Height = hugeHeight, TileSize = tileSize }));
                 else
                     commonRooms.Add(new CustomRoom(new CustomRoomConfig() { Width = 12, Height = 9, TileSize = tileSize }));
             }
