@@ -12,6 +12,10 @@ namespace OMTB
     public class Labyrinth : Room
     {
         int tilesBetweenWalls;
+        public int CorridorWidthInTiles
+        {
+            get { return tilesBetweenWalls; }
+        }
 
         float fillRate = 1;
 

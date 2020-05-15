@@ -9,7 +9,6 @@ namespace OMTB
     public class LevelManager : MonoBehaviour
     {
         
-        
         public static LevelManager Instance { get; private set; }
 
         float tileSize = 8;
@@ -35,6 +34,7 @@ namespace OMTB
         float galacticusRate = 0.1f;
 
         List<Room> rooms = new List<Room>();
+        List<GameObject> allocators = new List<GameObject>(); 
 
         Room startingRoom;
 
@@ -52,7 +52,9 @@ namespace OMTB
 
                 SetParamsByLevel();
 
-                InitLevel();
+                CreateLevel();
+
+                AllocateLevel();
             }
             else
             {
@@ -87,11 +89,13 @@ namespace OMTB
             
         }
 
-        void InitLevel()
+        #region LEVEL_CREATION
+        void CreateLevel()
         {
             CreateRooms();
         }
 
+        
         void CreateRooms()
         {
             ClearAll();
@@ -134,17 +138,15 @@ namespace OMTB
             // Get the starting room
             startingRoom = commonRooms[Random.Range(0, commonRooms.Count)];
 
-#if UNITY_EDITOR
+
             for (int i = 0; i < commonRooms.Count; i++)
                 commonRooms[i].RoomName = "Room_" + i;
-#endif
 
             // Create the boss room
             Room bossRoom = new BossRoom(new BossRoomConfig() { Width = 10, Height = 10, TileSize = tileSize });
             int bossDepth = Random.Range(minBossRoomDepth, totalRooms - 2);
-#if UNITY_EDITOR
+
             bossRoom.RoomName = "BossRoom";
-#endif
 
 
             // Check for special rooms
@@ -152,10 +154,10 @@ namespace OMTB
             if (Random.Range(0f, 1f) <= bankRate) 
                 specialRooms.Add(new BankRoom(new RoomConfig() { Width = 5, Height = 5, TileSize = tileSize }));
 
-#if UNITY_EDITOR
+
             if(specialRooms.Count > 0)
                 specialRooms[specialRooms.Count-1].RoomName = "BankRoom";
-#endif
+
             //
             // Start creating tree
             //
@@ -221,41 +223,22 @@ namespace OMTB
             }
 
             // Store all rooms
-            foreach (Room r in commonRooms)
+            foreach (Room r in used)
                 rooms.Add(r);
-                
-            foreach(Room r in specialRooms)
+            
+            foreach (Room r in specialRooms)
                 rooms.Add(r);
 
             rooms.Add(bossRoom);
-
-            //// Set rooms
-            //rooms = new List<Room>();
-            //for (int i = 0; i < commonRooms.Count; i++)
-            //    rooms.Add(commonRooms[i]);
-            //rooms.Add(bossRoom);
-            //for (int i = 0; i < specialRooms.Count; i++)
-            //    rooms.Add(specialRooms[i]);
+            
+            
 
 
-
-
-#if UNITY_EDITOR
             //
             // Debug
             //
-            Debug.Log(".......................................");
-            Debug.Log(string.Format("Level:{0}\n", level));
-            Debug.Log(string.Format("Number of rooms:{0}\n", totalRooms));
-            Debug.Log( string.Format("Number of common rooms:{0}\n", commonRooms.Count));
-            Debug.Log(string.Format("Number of special rooms:{0}\n", specialRooms.Count));
-            Debug.Log(string.Format("Boss room depth:{0}\n", bossDepth));
-            Debug.Log(string.Format("StartingRoom:{0}", startingRoom));
-            Debug.Log("Rooms:");
-            foreach (Room r in used)
-                Debug.Log(r);
+            DebugLevel();
 
-#endif
         }
 
         void ClearAll()
@@ -265,6 +248,52 @@ namespace OMTB
             
         }
 
+        #endregion
+
+
+        #region LEVEL_ALLOCATION
+
+        void AllocateLevel()
+        {
+            float dist = 0;
+            foreach(Room room in rooms)
+            {
+                // Half the distance depends on the previous room, the other on the current one
+                if (dist > 0)
+                    dist += room.TileSize;
+                // Create root game object
+                GameObject obj = new GameObject(room.RoomName);
+                allocators.Add(obj);
+                obj.transform.position = Vector3.zero + Vector3.forward * dist;
+                obj.transform.rotation = Quaternion.identity;
+                dist += (room.Height + 1 ) * room.TileSize;
+
+                // Add the component and allocate objects
+                //RoomAllocator allocator = obj.AddComponent<RoomAllocator>();
+                System.Type t = RoomAllocatorFactory.Instance.GetRoomAllocator(room.GetType());
+                if(t != null)
+                {
+                    RoomAllocator alloc = obj.AddComponent(t) as RoomAllocator;
+                    alloc.Room = room;
+                    alloc.Allocate();
+                }
+                    
+                //allocator.Allocate(room);
+            }
+        }
+
+        #endregion
+
+        void DebugLevel()
+        {
+            Debug.Log(".......................................");
+            Debug.Log(string.Format("Level:{0}\n", level));
+            Debug.Log(string.Format("Number of rooms:{0}\n", rooms.Count));
+            Debug.Log(string.Format("StartingRoom:{0}", startingRoom));
+            Debug.Log("Rooms:");
+            foreach (Room r in rooms)
+                Debug.Log(r);
+        }
 
     }
 

@@ -7,6 +7,8 @@ namespace OMTB
     
     public class RoomConfig
     {
+        public string RoomName { get; set; }
+
         public int Width { get; set; }
 
         public int Height { get; set; }
@@ -31,6 +33,18 @@ namespace OMTB
         }
 
         float tileSize = 8;
+        public float TileSize
+        {
+            get { return tileSize; }
+        }
+
+        string roomName;
+        public string RoomName
+        {
+            get { return roomName; }
+            set { roomName = value; }
+        }
+
 
         List<Portal> portals = new List<Portal>();
 
@@ -81,7 +95,7 @@ namespace OMTB
             return tiles[index];
         }
 
-#if UNITY_EDITOR
+
         public override string ToString()
         {
 
@@ -94,10 +108,6 @@ namespace OMTB
             return string.Format("[{0} - Portals:{1}]", RoomName, pstr);
         }
 
-
-        public string RoomName { get; set; }
-
-#endif
     }
 
 }
