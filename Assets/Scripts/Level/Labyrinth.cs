@@ -13,6 +13,8 @@ namespace OMTB
     {
         int tilesBetweenWalls;
 
+        float fillRate = 1;
+
         public Labyrinth(LabyrinthConfig config):base(config)
         {
             Debug.Log("Child const...");
@@ -25,10 +27,8 @@ namespace OMTB
         void Init()
         {
             int len = tilesBetweenWalls + 1;
-            //if (Width % len > 0 || Height % len > 0)
-            //    throw new System.Exception("Width and Height must be multiple of " + len);
-
-            // Compute the number of walls in their original position ( not yet rotated )
+        
+            // Create walls and give the labyrinth some shape
             Debug.Log("Setting walls for room - width:" + Width + ", height:" + Height + ", dist:" + tilesBetweenWalls);
             InitWalls();
 
@@ -45,19 +45,51 @@ namespace OMTB
             {
                 for(int j=0; j<h; j++)
                 {
-                    // Set the base wall tile
-                    int idx = (tilesBetweenWalls + j*c) + (tilesBetweenWalls + i*c)*Width;
-                    SetTileValue(idx, (int)TileValue.Wall);
+                    if(Random.Range(0f,1f) <= fillRate)
+                    {
+                        // Set the base wall tile
+                        int idx = (tilesBetweenWalls + j * c) + (tilesBetweenWalls + i * c) * Width;
+                        SetTileValue(idx, (int)TileValue.Wall);
+
+                        // Give the labyrinth some shape
+                        SetWallDirection(idx);
+                    }
                     
-                    // Give the labyrinth some shape
-                    SetWallDirection(idx);
                 }
             }
+
+            // Remove some walls depending on the configuration
+            // RemoveWalls(wallRate);
+
+            // Free unreacheable areas
+            List<int> freeList = new List<int>();
+            List<int> checkList = new List<int>();
+            float size = Width * Height;
+            for (int i = 0; i < size; i++)
+                CheckIsTileRecheable(i, ref freeList, ref checkList);
+            
         }
 
         void SetWallDirection(int tileIndex)
         {
-            int r = Random.Range(0, 4);
+            int tot = Width * Height;
+            List<int> dirs = new List<int>();
+            // Check north
+            if (GetTileValue(tileIndex - Width) == (int)TileValue.Free)
+                dirs.Add(0);
+            // Check East
+            if (GetTileValue(tileIndex + 1) == (int)TileValue.Free)
+                dirs.Add(1);
+            // Check south
+            if (GetTileValue(tileIndex + Width) == (int)TileValue.Free)
+                dirs.Add(2);
+            // Check west
+            if (GetTileValue(tileIndex - 1) == (int)TileValue.Free)
+                dirs.Add(3);
+
+
+            int r = dirs[Random.Range(0, dirs.Count)];
+
             switch (r)
             {
                 case 0: // North
@@ -92,6 +124,65 @@ namespace OMTB
             }
         }
 
+
+        bool CheckIsTileRecheable(int tileId, ref List<int> freeList, ref List<int> checkList)
+        {
+            // It's a wall tile, so it's not reacheable 
+            if (GetTileValue(tileId) == (int)TileValue.Wall)
+                return false;
+
+            // It's a reacheable tile
+            if (freeList.Contains(tileId))
+                return true;
+
+            // All the tiles along the border are reacheable for sure
+            if (tileId / Width == 0 || tileId / Width == Height - 1 || tileId % Width == 0 || tileId % Width == Width - 1)
+            {
+                freeList.Add(tileId);
+                return true;
+            }
+
+            // We don't know if it's reacheable yet
+            checkList.Add(tileId);
+
+            bool ret = false;
+
+            int i = 0;
+
+            while (i < 4 && !ret)
+            {
+                int adjacentId = -1;
+                if (i == 0) // Left tile
+                    adjacentId = tileId - 1;
+                else if (i == 1) // Up
+                    adjacentId = tileId - Width;
+                else if (i == 2) // Right
+                    adjacentId = tileId + 1;
+                else if (i == 3)
+                    adjacentId = tileId + Width;
+
+                if (!checkList.Contains(adjacentId))
+                {
+                    // If some adjacent tile is reacheable then the current one is recheable too
+                    ret = CheckIsTileRecheable(adjacentId, ref freeList, ref checkList);
+
+                    if (ret)
+                        freeList.Add(tileId);
+                    
+                }
+
+
+
+                i++;
+            }
+
+            checkList.Remove(tileId);
+
+            return ret;
+
+        }
+               
+
         void DebugRoom()
         {
             string s = "";
@@ -99,7 +190,7 @@ namespace OMTB
             {
                 for(int j=0; j<Width; j++)
                 {
-                    s += " " + GetTileValue(i, j);
+                    s += " " + (GetTileValue(i, j) == (int)TileValue.Free ? "0" : "3");
                 }
 
                 s += "\n";

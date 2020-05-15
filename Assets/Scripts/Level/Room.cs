@@ -14,7 +14,7 @@ namespace OMTB
         public float TileSize { get; set; }
     }
 
-    public enum TileValue { Empty = 0, Wall, Enemy, Droppable }
+    public enum TileValue { Free = 0, Wall, Enemy, Droppable }
 
     public abstract class Room 
     {

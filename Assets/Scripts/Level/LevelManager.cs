@@ -106,7 +106,7 @@ namespace OMTB
             int smallHeight = smallLabyrinthWallDistance + (smallLabyrinthWallDistance+1)*/*num of vertical walls*/2;
 
             int hugeWidth = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance+1)*2;
-            int hugeHeight = hugeLabyrinthWallDistance * (hugeLabyrinthWallDistance+1)*1;
+            int hugeHeight = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance+1)*1;
 
             // At least one room of each type of common room
             for (int i = 0; i < minSmallLabyrinths; i++)

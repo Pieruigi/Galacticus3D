@@ -4828,12 +4828,12 @@ GameObject:
   - component: {fileID: 4731764697925511216}
   - component: {fileID: 919433667}
   - component: {fileID: 2108589469}
-  - component: {fileID: 2108589464}
   - component: {fileID: 2122499744}
   - component: {fileID: 1999740970}
   - component: {fileID: 1999740971}
+  - component: {fileID: 1495165154451638664}
   m_Layer: 0
-  m_Name: MilleniumPlayer
+  m_Name: EnterprizerPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4957,19 +4957,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 84
   m_CollisionDetection: 1
---- !u!135 &2108589464
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3828393623601388251}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.79
-  m_Center: {x: 0, y: 0, z: 0.21}
 --- !u!114 &2122499744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5000,8 +4987,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 100
+  maxHealth: 10000
+  health: 10000
 --- !u!114 &1999740971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5020,6 +5007,20 @@ MonoBehaviour:
   - {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 1322638741995851443}
+--- !u!136 &1495165154451638664
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828393623601388251}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.57
+  m_Height: 4.19
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4431441406028521328
 GameObject:
   m_ObjectHideFlags: 0
