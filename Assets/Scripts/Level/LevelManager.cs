@@ -260,13 +260,13 @@ namespace OMTB
             {
                 // Half the distance depends on the previous room, the other on the current one
                 if (dist > 0)
-                    dist += room.TileSize;
+                    dist += 2*room.TileSize;
                 // Create root game object
                 GameObject obj = new GameObject(room.RoomName);
                 allocators.Add(obj);
                 obj.transform.position = Vector3.zero + Vector3.forward * dist;
                 obj.transform.rotation = Quaternion.identity;
-                dist += (room.Height + 1 ) * room.TileSize;
+                dist += (room.Height + 2 ) * room.TileSize;
 
                 // Add the component and allocate objects
                 //RoomAllocator allocator = obj.AddComponent<RoomAllocator>();
@@ -275,7 +275,7 @@ namespace OMTB
                 {
                     RoomAllocator alloc = obj.AddComponent(t) as RoomAllocator;
                     alloc.Room = room;
-                    alloc.Allocate();
+                    //alloc.Allocate();
                 }
                     
                 //allocator.Allocate(room);

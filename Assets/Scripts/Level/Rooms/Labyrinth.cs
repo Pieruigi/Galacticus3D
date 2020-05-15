@@ -11,6 +11,32 @@ namespace OMTB
 
     public class Labyrinth : Room
     {
+        public class Wall
+        {
+            int rootIndex;
+            public int RootIndex
+            {
+                get { return rootIndex; }
+            }
+            /**
+             *  0: north
+             *  1: east
+             *  2: south
+             *  3: west
+             *  */
+            int direction; 
+            public int Direction
+            {
+                get { return direction; }
+            }
+
+            public Wall(int rootIndex, int direction)
+            {
+                this.rootIndex = rootIndex;
+                this.direction = direction;
+            }
+        }
+
         int tilesBetweenWalls;
         public int CorridorWidthInTiles
         {
@@ -18,6 +44,12 @@ namespace OMTB
         }
 
         float fillRate = 1;
+
+        List<Wall> walls = new List<Wall>();
+        public IList<Wall> Walls
+        {
+            get { return walls.AsReadOnly(); }
+        }
 
         public Labyrinth(LabyrinthConfig config):base(config)
         {
@@ -27,7 +59,7 @@ namespace OMTB
             Init();
         }
 
- 
+
         void Init()
         {
             int len = tilesBetweenWalls + 1;
@@ -62,15 +94,15 @@ namespace OMTB
                 }
             }
 
-            // Remove some walls depending on the configuration
-            // RemoveWalls(wallRate);
 
-            // Free unreacheable areas
+            // Set unreacheable tiles
             List<int> freeList = new List<int>();
             List<int> checkList = new List<int>();
             float size = Width * Height;
             for (int i = 0; i < size; i++)
-                CheckIsTileRecheable(i, ref freeList, ref checkList);
+                if (!CheckTileIsRecheable(i, ref freeList, ref checkList))
+                    SetTileValue(i, (int)TileValue.Unreacheable);
+
             
         }
 
@@ -126,10 +158,12 @@ namespace OMTB
                     }
                     break;
             }
+
+            walls.Add(new Wall(tileIndex, r));
         }
 
 
-        bool CheckIsTileRecheable(int tileId, ref List<int> freeList, ref List<int> checkList)
+        bool CheckTileIsRecheable(int tileId, ref List<int> freeList, ref List<int> checkList)
         {
             // It's a wall tile, so it's not reacheable 
             if (GetTileValue(tileId) == (int)TileValue.Wall)
@@ -168,7 +202,7 @@ namespace OMTB
                 if (!checkList.Contains(adjacentId))
                 {
                     // If some adjacent tile is reacheable then the current one is recheable too
-                    ret = CheckIsTileRecheable(adjacentId, ref freeList, ref checkList);
+                    ret = CheckTileIsRecheable(adjacentId, ref freeList, ref checkList);
 
                     if (ret)
                         freeList.Add(tileId);
