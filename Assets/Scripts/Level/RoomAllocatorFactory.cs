@@ -27,6 +27,9 @@ namespace OMTB
         {
             allocators = new Dictionary<System.Type, System.Type>();
             allocators.Add(typeof(Labyrinth) , typeof(LabyrinthAllocator));
+            allocators.Add(typeof(CustomRoom), typeof(CustomRoomAllocator));
+            allocators.Add(typeof(BossRoom), typeof(BossRoomAllocator));
+            allocators.Add(typeof(BankRoom), typeof(BankRoomAllocator));
         }
 
         static void Create()

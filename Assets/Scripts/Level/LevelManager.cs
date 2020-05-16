@@ -25,7 +25,17 @@ namespace OMTB
 
 
         int smallLabyrinthWallDistance = 2;
-        int hugeLabyrinthWallDistance = 3;
+        int hugeLabyrinthWallDistance = 5;
+
+        int minSmallLabyrinthWallsH = 3;
+        int maxSmallLabyrinthWallsH = 6;
+        int minSmallLabyrinthWallsV = 2;
+        int maxSmallLabyrinthWallsV = 3;
+
+        int minHugeLabyrinthWallsH = 3;
+        int maxHugeLabyrinthWallsH = 6;
+        int minHugeLabyrinthWallsV = 2;
+        int maxHugeLabyrinthWallsV = 3;
 
         float bankRate = 0.75f;
         float spaceStationRate = 0.5f;
@@ -105,12 +115,12 @@ namespace OMTB
             // How many rooms in the current level?
             int totalRooms = Random.Range(minCommonRooms, maxCommonRooms + 1);
 
-            int smallWidth = smallLabyrinthWallDistance + (smallLabyrinthWallDistance + 1)* /*num of horizontal walls*/2;
+            int smallWidth = smallLabyrinthWallDistance + (smallLabyrinthWallDistance + 1) * Random.Range(minSmallLabyrinthWallsH, maxSmallLabyrinthWallsH);// /*num of horizontal walls*/2;
 
-            int smallHeight = smallLabyrinthWallDistance + (smallLabyrinthWallDistance+1)*/*num of vertical walls*/2;
+            int smallHeight = smallLabyrinthWallDistance + (smallLabyrinthWallDistance + 1) * Random.Range(minSmallLabyrinthWallsV, maxSmallLabyrinthWallsV);// */*num of vertical walls*/2;
 
-            int hugeWidth = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance+1)*2;
-            int hugeHeight = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance+1)*1;
+            int hugeWidth = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance + 1) * Random.Range(minHugeLabyrinthWallsH, maxHugeLabyrinthWallsH);// * 2;
+            int hugeHeight = hugeLabyrinthWallDistance + (hugeLabyrinthWallDistance+1) * Random.Range(minHugeLabyrinthWallsV, maxHugeLabyrinthWallsV);//*1;
 
             // At least one room of each type of common room
             for (int i = 0; i < minSmallLabyrinths; i++)
@@ -255,19 +265,18 @@ namespace OMTB
 
         void AllocateLevel()
         {
-            float dist = 0;
+            float dist = 0; // Distance between rooms
             foreach(Room room in rooms)
             {
-                // Half the distance depends on the previous room, the other on the current one
-                if (dist > 0)
-                    dist += 2*room.TileSize;
+                dist += (room.Height + 4) * room.TileSize;
+
                 // Create root game object
                 GameObject obj = new GameObject(room.RoomName);
                 allocators.Add(obj);
+
                 obj.transform.position = Vector3.zero + Vector3.forward * dist;
                 obj.transform.rotation = Quaternion.identity;
-                dist += (room.Height + 2 ) * room.TileSize;
-
+                
                 // Add the component and allocate objects
                 //RoomAllocator allocator = obj.AddComponent<RoomAllocator>();
                 System.Type t = RoomAllocatorFactory.Instance.GetRoomAllocator(room.GetType());

@@ -45,6 +45,8 @@ namespace OMTB
 
         float fillRate = 1;
 
+        bool allowUnreacheableTiles = false;
+
         List<Wall> walls = new List<Wall>();
         public IList<Wall> Walls
         {
@@ -96,12 +98,16 @@ namespace OMTB
 
 
             // Set unreacheable tiles
-            List<int> freeList = new List<int>();
-            List<int> checkList = new List<int>();
-            float size = Width * Height;
-            for (int i = 0; i < size; i++)
-                if (!CheckTileIsRecheable(i, ref freeList, ref checkList))
-                    SetTileValue(i, (int)TileValue.Unreacheable);
+            if (allowUnreacheableTiles)
+            {
+                List<int> freeList = new List<int>();
+                List<int> checkList = new List<int>();
+                float size = Width * Height;
+                for (int i = 0; i < size; i++)
+                    if (!CheckTileIsRecheable(i, ref freeList, ref checkList))
+                        SetTileValue(i, (int)TileValue.Unreacheable);
+            }
+            
 
             
         }
@@ -110,6 +116,8 @@ namespace OMTB
         {
             int tot = Width * Height;
             List<int> dirs = new List<int>();
+
+            // Avoid overlapping
             // Check north
             if (GetTileValue(tileIndex - Width) == (int)TileValue.Free)
                 dirs.Add(0);
@@ -123,6 +131,18 @@ namespace OMTB
             if (GetTileValue(tileIndex - 1) == (int)TileValue.Free)
                 dirs.Add(3);
 
+            if (!allowUnreacheableTiles)
+            {
+                // Avoid unreacheable tiles
+                int left = tileIndex - tilesBetweenWalls - 1;
+                int upper = tileIndex - (Width * (tilesBetweenWalls + 1));
+                int upperLeft = upper - tilesBetweenWalls - 1;
+                if (left == 0 && upperLeft == 1 && upper == 2)
+                    dirs.Remove(3);
+                if (left == 1 && upperLeft == 2 && upper == 3)
+                    dirs.Remove(0);
+            }
+            
 
             int r = dirs[Random.Range(0, dirs.Count)];
 
