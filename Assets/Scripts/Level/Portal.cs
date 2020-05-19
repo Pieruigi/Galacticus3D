@@ -14,6 +14,9 @@ namespace OMTB
 
     public class Portal
     {
+        public static readonly int HorizontalTileSize = 2;
+        public static readonly int VerticalTileSize = 2;
+
         Room targetRoom;
         public Room TargetRoom
         {

@@ -28,7 +28,7 @@ namespace OMTB
             wallRoot.transform.parent = transform;
             wallRoot.transform.localPosition = Vector3.zero;
             wallRoot.transform.localRotation = Quaternion.identity;
-            wallRoot.AddComponent<Optimizer>();
+            //wallRoot.AddComponent<Optimizer>();
 
         }
 
@@ -37,6 +37,7 @@ namespace OMTB
         {
             AllocateBorders();
             Allocate();
+            AllocatePortals();
         }
 
         protected virtual void AllocateBorders()
@@ -87,8 +88,27 @@ namespace OMTB
             return ret;
         }
 
+        void AllocatePortals()
+        {
+            List<GameObject> res = LoadStargateResources();
+            foreach(Portal p in Room.Portals)
+            {
+                Vector3 pos = Room.GetPortalPosition(p);
 
+                GameObject g = GameObject.Instantiate(res[0]);
+                g.transform.parent = transform;
+                g.transform.localPosition = pos;
+            }
+        }
 
+        List<GameObject> LoadStargateResources()
+        {
+            string res = "Stargates/";
+
+            List<GameObject> ret = new List<GameObject>(Resources.LoadAll<GameObject>(res));
+
+            return ret;
+        }
     }
 
 }
