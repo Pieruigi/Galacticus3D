@@ -12,7 +12,7 @@ namespace OMTB
 
         Transform[] walls;
 
-        float w, h = 80; 
+        float w, h = 140; 
 
         // Start is called before the first frame update
         void Start()

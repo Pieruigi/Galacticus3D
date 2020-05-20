@@ -24,6 +24,10 @@ namespace OMTB
         }
 
         bool isClosed = false;
+        public bool IsClosed
+        {
+            get { return isClosed; }
+        }
         public Portal(PortalConfig config)
         {
             targetRoom = config.TargetRoom;

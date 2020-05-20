@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Gameplay;
 
 namespace OMTB
 {
@@ -28,7 +29,7 @@ namespace OMTB
             wallRoot.transform.parent = transform;
             wallRoot.transform.localPosition = Vector3.zero;
             wallRoot.transform.localRotation = Quaternion.identity;
-            //wallRoot.AddComponent<Optimizer>();
+            wallRoot.AddComponent<Optimizer>();
 
         }
 
@@ -96,8 +97,10 @@ namespace OMTB
                 Vector3 pos = Room.GetPortalPosition(p);
 
                 GameObject g = GameObject.Instantiate(res[0]);
-                g.transform.parent = transform;
+                g.transform.parent = transform.GetChild(0);
                 g.transform.localPosition = pos;
+                g.GetComponent<Stargate>().Portal = p;
+                g.GetComponent<Stargate>().Room = room;
             }
         }
 
