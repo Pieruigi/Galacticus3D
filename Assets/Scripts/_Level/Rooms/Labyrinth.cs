@@ -78,6 +78,9 @@ namespace OMTB
             int c = tilesBetweenWalls + 1;
             int h = Width / c;
             int v = Height / c;
+
+            
+
             // Check every wall and rotate it
             for(int i=0; i<v; i++)
             {
