@@ -39,6 +39,9 @@ namespace OMTB.Level
             get { return wallRoot; }
         }
 
+        int[] tiles; // tile[i] == 0 means the tile at the index 'i' is free
+     
+
         protected abstract void CreateWalls();
 
         protected virtual void Awake()
@@ -48,7 +51,7 @@ namespace OMTB.Level
             wallRoot.transform.parent = transform;
             wallRoot.transform.localPosition = Vector3.zero;
             wallRoot.transform.localRotation = Quaternion.identity;
-            //wallRoot.AddComponent<Optimizer>();
+            wallRoot.AddComponent<RoomOptimizer>();
 
         }
 
@@ -56,8 +59,8 @@ namespace OMTB.Level
         // Start is called before the first frame update
         protected virtual void Start()
         {
-            CreateBorders();
-            CreateWalls();
+            
+            
         }
 
         // Update is called once per frame
@@ -66,17 +69,103 @@ namespace OMTB.Level
 
         }
 
-        
+        public virtual void Create()
+        {
+            CreateBorders();
+            CreateWalls();
+            Debug.Log("Room created");
+        }
+
         public virtual void Init(RoomConfig config)
         {
             Debug.Log("Init");
             width = config.Width;
             height = config.Height;
             tileSize = config.TileSize;
+            tiles = new int[width * height];
         }
 
+        /**
+         * Width: how many horizontal tiles it takes
+         * height: how many vertical tiles it takes
+         * */
+        public virtual Vector3 GetRandomSpawnPosition(int widthInTiles, int heightInTiles)
+        {
+            // Get all the tiles that match reference
+            List<int> allowedTiles = GetRandomAdjacentFreeTiles(heightInTiles, widthInTiles);
+
+            // Get a random group
+            int rootTile = allowedTiles[Random.Range(0, allowedTiles.Count)];
+
+            for (int i = 0; i < heightInTiles; i++)
+            {
+                for (int j = 0; j < widthInTiles; j++)
+                {
+                    int index = rootTile + j + (i * width);
+                    tiles[index] = 1;
+                    Debug.Log("PortalTile:" + index);
+                }
+            }
+
+            float x = rootTile%width + widthInTiles - (float)widthInTiles / 2f;
+            x *= TileSize;
+            float z = (rootTile/width + heightInTiles - (float)heightInTiles / 2f);
+            z *= -TileSize;
+            Debug.Log("RandomSpawnPoint:" + new Vector3(x, 0, z));
+
+            return  (transform.position + new Vector3(x, 0, z));
+
+        }
+
+        protected void SetTile(int index)
+        {
+            tiles[index] = 1;
+        }
+
+        protected void ResetTile(int index)
+        {
+            tiles[index] = 0;
+        }
        
-       
+        protected int GetTile(int index)
+        {
+            return tiles[index];
+        }
+
+        /**
+        * Some droppables may occupie more than one tile
+        * */
+        protected List<int> GetRandomAdjacentFreeTiles(int rows, int cols)
+        {
+            List<int> indices = new List<int>();
+            for (int i = 0; i < tiles.Length; i++)
+                indices.Add(i);
+            List<int> all = indices.FindAll(delegate (int t)
+            {
+                // Debug.Log("Delegate t:" + t);
+                if (t + cols >= tiles.Length)
+                    return false;
+                if (t + rows * width >= tiles.Length)
+                    return false;
+
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        int index = t + j + (i * width);
+
+                        if (tiles[index] != 0)
+                            return false;
+                    }
+                }
+
+                return true;
+            });
+
+            return all;
+        }
+
         protected virtual void CreateBorders()
         {
             List<GameObject> borders = LoadBorderResources();

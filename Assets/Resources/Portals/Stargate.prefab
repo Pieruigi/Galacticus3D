@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1120948909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250558105296290898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3da61a9e5194847b47e8a869272ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scalingMode: 0
+  scale: 0.5
+--- !u!114 &1051332823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910945970489490296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3da61a9e5194847b47e8a869272ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scalingMode: 0
+  scale: 0.5
 --- !u!1 &6798412553031759497
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,8 +37,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3667588120285265040}
-  - component: {fileID: 6858401686250900776}
   - component: {fileID: 2472009035422410468}
+  - component: {fileID: 8937059504935957863}
   m_Layer: 0
   m_Name: Stargate
   m_TagString: Untagged
@@ -33,18 +61,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6858401686250900776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6798412553031759497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16bd92716587985409bf4e874fefa0bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &2472009035422410468
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -59,6 +75,18 @@ CapsuleCollider:
   m_Height: 10.22
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8937059504935957863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798412553031759497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8705eb80f3147c74e80baa2abd655ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5079784279934789899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,17 +152,17 @@ PrefabInstance:
     - target: {fileID: 35916000727326450, guid: f1e1d07c7db8da9459d24c9659487545,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 35916000727326450, guid: f1e1d07c7db8da9459d24c9659487545,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 35916000727326450, guid: f1e1d07c7db8da9459d24c9659487545,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3901455045774552289, guid: f1e1d07c7db8da9459d24c9659487545,
         type: 3}
@@ -146,6 +174,18 @@ PrefabInstance:
 --- !u!4 &5044204799025395705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 35916000727326450, guid: f1e1d07c7db8da9459d24c9659487545,
+    type: 3}
+  m_PrefabInstance: {fileID: 5079784279934789899}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5910945970489490296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1475178370142376563, guid: f1e1d07c7db8da9459d24c9659487545,
+    type: 3}
+  m_PrefabInstance: {fileID: 5079784279934789899}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &250558105296290898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4973431560543382873, guid: f1e1d07c7db8da9459d24c9659487545,
     type: 3}
   m_PrefabInstance: {fileID: 5079784279934789899}
   m_PrefabAsset: {fileID: 0}

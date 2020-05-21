@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using OMTB.Collections;
 
-namespace OMTB.Gameplay
+namespace OMTB.Level
 {
     public class DroppableSetter : MonoBehaviour
     {

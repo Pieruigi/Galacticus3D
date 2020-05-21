@@ -16,17 +16,12 @@ namespace OMTB.Level
         float fillRate = 1;
         bool allowUnreachable = false;
 
-        // Start is called before the first frame update
-        protected override void Start()
-        {
-            base.Start();
-        }
 
 
         public override void Init(RoomConfig config)
         {
-            corridorWidth = (config as LabyrinthConfig).CorridorWidth;
             base.Init(config);
+            corridorWidth = (config as LabyrinthConfig).CorridorWidth;
         }
 
         /**
@@ -42,10 +37,10 @@ namespace OMTB.Level
             int v = Height / c;
 
             // Create a tiles array to keep trace of the walls
-            int[] tiles = new int[Width * Height];
-            for (int i = 0; i < tiles.Length; i++)
+            int[] rots = new int[Width * Height];
+            for (int i = 0; i < rots.Length; i++)
             {
-                tiles[i] = -1; // Not used yet
+                rots[i] = -1; // Not used yet
             }
 
             // Check every wall and rotate it
@@ -68,86 +63,93 @@ namespace OMTB.Level
                         GameObject g = GameObject.Instantiate(wallRes[Random.Range(0, wallRes.Count)]);
                         g.transform.parent = WallRoot.transform;
                         g.transform.localPosition = new Vector3(x, 0, z);
-                        //g.transform.localEulerAngles = Vector3.up * 90f * (float)wall.Direction;
+                       
 
                         // Rotate wall
-                        RotateWall(idx, g, ref tiles);
+                        RotateWall(idx, g, ref rots);
                     }
 
                 }
             }
 
+            string s = "";
+            for(int i=0; i<Height; i++)
+            {
+                for(int j=0; j<Width; j++)
+                {
+                    int idx = i * Width + j ;
+                    s += rots[idx] + " ";
+                }
+                s += "\n";
+            }
+            print(s);
         }
 
 
-        void RotateWall(int tileIndex, GameObject wallObject, ref int[] tiles)
+        void RotateWall(int tileIndex, GameObject wallObject, ref int[] rots)
         {
             int tot = Width * Height;
             List<int> dirs = new List<int>();
 
             // Avoid overlapping
             // Check north
-            if (tiles[tileIndex - Width] == -1)
+            if (rots[tileIndex - Width] == -1)
                 dirs.Add(0);
             // Check East
-            if (tiles[tileIndex + 1] == -1)
+            if (rots[tileIndex + 1] == -1)
                 dirs.Add(1);
             // Check south
-            if (tiles[tileIndex + Width] == -1)
+            if (rots[tileIndex + Width] == -1)
                 dirs.Add(2);
             // Check west
-            if (tiles[tileIndex - 1] == -1)
+            if (rots[tileIndex - 1] == -1)
                 dirs.Add(3);
 
             if (!allowUnreachable)
             {
                 // Avoid unreacheable tiles
+                //int left = tileIndex - corridorWidth - 1;
+                //int upper = tileIndex - (Width * (corridorWidth + 1));
+                //int upperLeft = upper - corridorWidth - 1;
                 int left = tileIndex - corridorWidth - 1;
                 int upper = tileIndex - (Width * (corridorWidth + 1));
                 int upperLeft = upper - corridorWidth - 1;
-                if (left == 0 && upperLeft == 1 && upper == 2)
+                print(string.Format("l,u,ul:{0},{1},{2}", left, upper, upperLeft));
+                if (left >= 0 && upper >= 0 && upperLeft >= 0 && rots[left] == 0 && rots[upperLeft] == 1 && rots[upper] == 2)
                     dirs.Remove(3);
-                if (left == 1 && upperLeft == 2 && upper == 3)
+                if (left >= 0 && upper >= 0 && upperLeft >= 0 && rots[left] == 1 && rots[upperLeft] == 2 && rots[upper] == 3)
                     dirs.Remove(0);
             }
 
             // Rotate
             int r = dirs[Random.Range(0, dirs.Count)];
+            rots[tileIndex] = r;
+            SetTile(tileIndex); // Tile is no longer free
 
-            switch (r)
+            for (int i = 0; i < corridorWidth; i++)
             {
-                case 0: // North
-                    for (int i = 0; i < corridorWidth; i++)
-                    {
-                        int idx = tileIndex - Width * (i + 1);
-                        tiles[idx] = r;// SetTileValue(idx, (int)TileValue.Wall);
-                    }
-                    break;
+                int idx = -1;
 
-                case 1: // East
-                    for (int i = 0; i < corridorWidth; i++)
-                    {
-                        int idx = tileIndex + i + 1;
-                        tiles[idx] = r; //SetTileValue(idx, (int)TileValue.Wall);
-                    }
-                    break;
-                case 2: // South
-                    for (int i = 0; i < corridorWidth; i++)
-                    {
-                        int idx = tileIndex + Width * (i + 1);
-                        tiles[idx] = r; //SetTileValue(idx, (int)TileValue.Wall);
-                    }
-                    break;
-                case 3: // West
-                    for (int i = 0; i < corridorWidth; i++)
-                    {
-                        int idx = tileIndex - i - 1;
-                        tiles[idx] = r; //SetTileValue(idx, (int)TileValue.Wall);
-                    }
-                    break;
+                switch (r)
+                {
+                    case 0: // North
+                        idx = tileIndex - Width * (i + 1);
+                        break;
+                    case 1: // East
+                        idx = tileIndex + i + 1;
+                        break;
+                    case 2: // South
+                        idx = tileIndex + Width * (i + 1);
+                        break;
+                    case 3: // West
+                        idx = tileIndex - i - 1;
+                        break;
+                }
+
+                rots[idx] = r;
+                SetTile(idx); // Tile is no longer free
             }
-
-
+     
             wallObject.transform.localEulerAngles = Vector3.up * 90f * r;
 
         }

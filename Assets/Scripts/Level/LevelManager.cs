@@ -41,7 +41,12 @@ namespace OMTB.Level
         float galacticusRate = 0.1f;
 
         List<Room> rooms = new List<Room>();
-        List<GameObject> allocators = new List<GameObject>();
+        //List<GameObject> allocators = new List<GameObject>();
+        List<Portal> portals = new List<Portal>();
+        public IList<Portal> Portals
+        {
+            get { return portals.AsReadOnly(); }
+        }
 
         Room startingRoom;
 
@@ -55,6 +60,8 @@ namespace OMTB.Level
 
         int count = 1;
 
+        Transform portalGroup;
+
         private void Awake()
         {
 
@@ -63,13 +70,16 @@ namespace OMTB.Level
             {
                 Instance = this;
 
+                portalGroup = new GameObject("PortalGroup").transform;
+
                 SetParamsByLevel();
 
                 CreateLevel();
 
 
+//                AllocateLevel();
 
-                AllocateLevel();
+                Debug.Log("Levelmanager Awake completed");
             }
             else
             {
@@ -85,7 +95,7 @@ namespace OMTB.Level
             //OMTB.Gameplay.Droppable[] a = Resources.LoadAll<OMTB.Gameplay.Droppable>("Droppables");
             //System.DateTime end = System.DateTime.UtcNow;
             //Debug.Log("Loaded " + a.Length + " in " + (end - start).TotalMilliseconds +" mills.");
-
+            Debug.Log("Levelmanager Start completed");
 
         }
 
@@ -121,39 +131,17 @@ namespace OMTB.Level
             // How many rooms in the current level?
             int totalRooms = Random.Range(minCommonRooms, maxCommonRooms + 1);
 
-
-            int w, h;
-            
             // At least one room of each type of common room
             for (int i = 0; i < minExplorationRooms; i++)
-            {
-                //w = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsH, maxExplorationRoomWallsH + 1);// /*num of horizontal walls*/2;
-
-                //h = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsV, maxExplorationRoomWallsV + 1);// */*num of vertical walls*/2;
-
-                // Create Room object
-                //GameObject room = CreateRoom(new LabyrinthConfig() { CorridorWidth = explorationRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
                 commonRooms.Add(CreateExplorationRoom().GetComponent<Room>());
 
-                //commonRooms.Add(new Labyrinth(new LabyrinthConfig() { CorridorWidth = explorationRoomWallDistance, Width = w, Height = h, TileSize = tileSize }));
-            }
-
-
             for (int i = 0; i < minFightingRoom; i++)
-            {
-                //w = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFigthingRoomWallsH, maxFightingRoomWallsH + 1);// * 2;
-                //h = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFightingRoomWallsV, maxFightingRoomWallsV + 1);//*1;
-                //GameObject room = CreateRoom(new LabyrinthConfig() { CorridorWidth = fightingRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
                 commonRooms.Add(CreateFightingRoom().GetComponent<Room>());
-                
-            }
+        
 
-
-            for (int i = 0; i < minCustomRooms; i++)
-            {
-                //commonRooms.Add(new CustomRoom(new CustomRoomConfig() { Width = 12, Height = 9, TileSize = tileSize }));
-            }
-
+            //for (int i = 0; i < minCustomRooms; i++)
+            //    commonRooms.Add(new CustomRoom(new CustomRoomConfig() { Width = 12, Height = 9, TileSize = tileSize }));
+            
 
             //Create the other common rooms
             int count = totalRooms - commonRooms.Count;
@@ -162,15 +150,10 @@ namespace OMTB.Level
 
                 int r = Random.Range(0, commonRoomTypesNum);
                 if (r == 0)
-                {
                     commonRooms.Add(CreateExplorationRoom().GetComponent<Room>());
-                }
-
                 else if (r == 1)
-                {
                     commonRooms.Add(CreateFightingRoom().GetComponent<Room>());
-                }
-
+                
                 //else
                 //    commonRooms.Add(new CustomRoom(new CustomRoomConfig() { Width = 12, Height = 9, TileSize = tileSize }));
             }
@@ -179,24 +162,15 @@ namespace OMTB.Level
             startingRoom = commonRooms[Random.Range(0, commonRooms.Count)];
 
 
-            //for (int i = 0; i < commonRooms.Count; i++)
-            //    commonRooms[i].RoomName = "Room_" + i;
-
             // Create the boss room
             Room bossRoom = CreateBossRoom().GetComponent<Room>();
             int bossDepth = Random.Range(minBossRoomDepth, totalRooms - 2);
 
-            //bossRoom.RoomName = "BossRoom";
-
 
             // Check for special rooms
-            //List<Room> specialRooms = new List<Room>();
-            //if (Random.Range(0f, 1f) <= bankRate)
-            //    specialRooms.Add(new BankRoom(new RoomConfig() { Width = 5, Height = 5, TileSize = tileSize }));
-
-
-            //if (specialRooms.Count > 0)
-            //    specialRooms[specialRooms.Count - 1].RoomName = "BankRoom";
+            List<Room> specialRooms = new List<Room>();
+            if (Random.Range(0f, 1f) <= bankRate)
+                specialRooms.Add(CreateBankRoom().GetComponent<BankRoom>());
 
             //
             // Start creating tree
@@ -210,66 +184,64 @@ namespace OMTB.Level
             commonRooms.Remove(startingRoom);
 
             // Create the tree up to the boss room
-            //for (int i = 0; i < bossDepth; i++)
-            //{
-            //    Room room = commonRooms[Random.Range(0, commonRooms.Count)];
-            //    commonRooms.Remove(room);
-            //    used.Add(room);
+            for (int i = 0; i < bossDepth; i++)
+            {
+                Room room = commonRooms[Random.Range(0, commonRooms.Count)];
+                commonRooms.Remove(room);
+                used.Add(room);
 
-            //    // Add two portals, one for each room
-            //    prevRoom.AddPortal(new Portal(new PortalConfig() { TargetRoom = room }));
-            //    room.AddPortal(new Portal(new PortalConfig() { TargetRoom = prevRoom }));
-
-            //    // Update the current room
-            //    prevRoom = room;
-            //}
+                // Create portals
+                CreatePortals(prevRoom, room, false);
+        
+                // Update the current room
+                prevRoom = room;
+            }
 
             // Add the boss room ( only portals ); the used list only holds common rooms
-            //prevRoom.AddPortal(new Portal(new PortalConfig() { TargetRoom = bossRoom, IsClosed = true }));
-            //bossRoom.AddPortal(new Portal(new PortalConfig() { TargetRoom = prevRoom, IsClosed = true }));
-
+            CreatePortals(prevRoom, bossRoom, false);
+            
             // Add remaining common rooms
-            //count = commonRooms.Count;
-            //for (int i = 0; i < count; i++)
-            //{
-            //    // Get the parent room
-            //    Room parent = used[Random.Range(0, used.Count)];
+            count = commonRooms.Count;
+            for (int i = 0; i < count; i++)
+            {
+                // Get the parent room
+                Room parent = used[Random.Range(0, used.Count)];
 
-            //    // Get the child room
-            //    Room child = commonRooms[0];
-            //    commonRooms.RemoveAt(0);
+                // Get the child room
+                Room child = commonRooms[0];
+                commonRooms.RemoveAt(0);
 
-            //    // Add to used
-            //    used.Add(child);
+                // Add to used
+                used.Add(child);
 
-            //    // Set portals
-            //    parent.AddPortal(new Portal(new PortalConfig() { TargetRoom = child }));
-            //    child.AddPortal(new Portal(new PortalConfig() { TargetRoom = parent }));
-            //}
+                // Set portals
+                CreatePortals(parent, child, false);
+                
+            }
 
             // Add special rooms
-            //count = specialRooms.Count;
-            //for (int i = 0; i < count; i++)
-            //{
-            //    // Get the parent room
-            //    Room parent = used[Random.Range(0, used.Count)];
+            count = specialRooms.Count;
+            for (int i = 0; i < count; i++)
+            {
+                // Get the parent room
+                Room parent = used[Random.Range(0, used.Count)];
 
-            //    // Get the child room
-            //    Room child = specialRooms[i];
+                // Get the child room
+                Room child = specialRooms[i];
 
-            //    // Set portals
-            //    parent.AddPortal(new Portal(new PortalConfig() { TargetRoom = child }));
-            //    child.AddPortal(new Portal(new PortalConfig() { TargetRoom = parent }));
-            //}
+                // Set portals
+                CreatePortals(parent, child, false);
+             
+            }
 
             // Store all rooms
             foreach (Room r in used)
                 rooms.Add(r);
 
-            //foreach (Room r in specialRooms)
-            //    rooms.Add(r);
+            foreach (Room r in specialRooms)
+                rooms.Add(r);
 
-            //rooms.Add(bossRoom);
+            rooms.Add(bossRoom);
 
 
 
@@ -284,14 +256,60 @@ namespace OMTB.Level
         void ClearAll()
         {
             startingRoom = null;
-            rooms.Clear();
-
+            int count = portals.Count;
+            for(int i=0; i<count; i++)
+            {
+                Destroy(portals[0].gameObject);
+            }
+            portals.Clear();
+            count = rooms.Count;
+            for (int i = 0; i < count; i++)
+            {
+                Destroy(rooms[0].gameObject);
+            }
         }
 
         #endregion
 
 
         #region LEVEL_ALLOCATION
+        private void CreatePortals(Room room1, Room room2, bool isLocked)
+        {
+            int portalSize = 2;
+
+            // Create object
+            List<GameObject> res = LoadPortalResources();
+            GameObject g = GameObject.Instantiate(res[Random.Range(0, res.Count)]);
+            GameObject g2 = GameObject.Instantiate(res[Random.Range(0, res.Count)]);
+
+            g.GetComponent<Portal>().Init(room1, g2.GetComponent<Portal>(), isLocked);
+            g2.GetComponent<Portal>().Init(room2, g.GetComponent<Portal>(), isLocked);
+
+            // Set position
+            g.transform.position = room1.GetRandomSpawnPosition(portalSize, portalSize);
+            g2.transform.position = room2.GetRandomSpawnPosition(portalSize, portalSize);
+
+            portals.Add(g.GetComponent<Portal>());
+            portals.Add(g2.GetComponent<Portal>());
+
+            g.transform.parent = portalGroup;
+            g2.transform.parent = portalGroup;
+
+            g.AddComponent<DistanceClipper>();
+            g2.AddComponent<DistanceClipper>();
+         
+
+        }
+
+        List<GameObject> LoadPortalResources()
+        {
+            string res = "Portals/";
+
+            List<GameObject> ret = new List<GameObject>(Resources.LoadAll<GameObject>(res));
+
+            return ret;
+        }
+
         private GameObject CreateRoom(RoomConfig config, System.Type roomType)
         {
             GameObject ret = new GameObject("Room_"+count);
@@ -307,8 +325,11 @@ namespace OMTB.Level
                 comp = ret.AddComponent<Labyrinth>();
             else if (roomType == typeof(BossRoom))
                 comp = ret.AddComponent<BossRoom>();
-            
+            else if (roomType == typeof(BankRoom))
+                comp = ret.AddComponent<BankRoom>();
+
             comp.Init(config);
+            comp.Create();
             count++;
             return ret;
         }
@@ -342,34 +363,14 @@ namespace OMTB.Level
             return room;
         }
 
-        void AllocateLevel()
+        private GameObject CreateBankRoom()
         {
-            float dist = 0; // Distance between rooms
-            //foreach (Room room in rooms)
-            //{
-            //    dist += (room.Height + 4) * room.TileSize;
-
-            //    // Create root game object
-            //    GameObject obj = new GameObject(room.RoomName);
-            //    allocators.Add(obj);
-
-            //    obj.transform.position = Vector3.zero + Vector3.forward * dist;
-            //    obj.transform.rotation = Quaternion.identity;
-
-            //    // Add the component and allocate objects
-            //    //RoomAllocator allocator = obj.AddComponent<RoomAllocator>();
-            //    System.Type t = RoomAllocatorFactory.Instance.GetRoomAllocator(room.GetType());
-            //    if (t != null)
-            //    {
-            //        RoomAllocator alloc = obj.AddComponent(t) as RoomAllocator;
-            //        alloc.Room = room;
-            //        //alloc.Allocate();
-            //    }
-
-            //    //allocator.Allocate(room);
-            //}
+            GameObject room = CreateRoom(new RoomConfig() { Width = 10, Height = 6, TileSize = 8 }, typeof(BankRoom));
+            room.name += "_Bank";
+            return room;
         }
 
+     
         #endregion
 
         void DebugLevel()

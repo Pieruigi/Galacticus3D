@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace OMTB
+namespace OMTB.Level
 {
-    public class Optimizer : MonoBehaviour
+    public class RoomOptimizer : MonoBehaviour
     {
         GameObject player;
 
@@ -12,7 +12,8 @@ namespace OMTB
 
         Transform[] walls;
 
-        float w, h = 140; 
+        float w, h = 140;
+
 
         // Start is called before the first frame update
         void Start()
@@ -70,6 +71,7 @@ namespace OMTB
 
         }
 
+
         private void LateUpdate()
         {
             Vector3 pos = player.transform.position;
@@ -93,6 +95,8 @@ namespace OMTB
             }
             
         }
+
+ 
     }
 }
 
