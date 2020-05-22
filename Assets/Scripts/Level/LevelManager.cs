@@ -10,8 +10,8 @@ namespace OMTB.Level
 
         float tileSize = 8;
 
-        int minCommonRooms = 8;
-        int maxCommonRooms = 11;
+        int minCommonRooms = 5;
+        int maxCommonRooms = 7;
 
         int minExplorationRooms = 3;
         int minFightingRoom = 2;
@@ -119,6 +119,8 @@ namespace OMTB.Level
         void CreateLevel()
         {
             CreateRooms();
+
+            GameObject.FindObjectOfType<NavMeshBuilder>().BuildNavMesh(rooms);
         }
 
 

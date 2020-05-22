@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OMTB.Level
 {
-    public class RoomOptimizer : MonoBehaviour
+    public class WallOptimizer : MonoBehaviour
     {
         GameObject player;
 
@@ -12,7 +12,7 @@ namespace OMTB.Level
 
         Transform[] walls;
 
-        float w, h = 140;
+        float w, h = 80;
 
 
         // Start is called before the first frame update
@@ -78,22 +78,26 @@ namespace OMTB.Level
 
             for(int i=0; i<walls.Length; i++)
             {
-                if(walls[i].position.x > pos.x - w && walls[i].position.x < pos.x + w &&
-                   walls[i].position.z > pos.z - h && walls[i].position.z < pos.z + h)
+
+                for(int j=0; j<walls[i].childCount; j++)
                 {
-                    if (!walls[i].GetChild(0).gameObject.activeSelf)
-                        walls[i].GetChild(0).gameObject.SetActive(true);
-                }
-                else
-                {
-                    if (walls[i].GetChild(0).gameObject.activeSelf)
-                        walls[i].GetChild(0).gameObject.SetActive(false);
+                    Transform child = walls[i].GetChild(j);
+                    if (child.position.x > pos.x - w && child.position.x < pos.x + w && child.position.z > pos.z - h && child.position.z < pos.z + h)
+                    {
+                        if (!child.gameObject.activeSelf)
+                            child.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        if (child.gameObject.activeSelf)
+                            child.gameObject.SetActive(false);
+                    }
+
                 }
 
-                
 
             }
-            
+
         }
 
  

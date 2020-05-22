@@ -51,7 +51,7 @@ namespace OMTB.Level
             wallRoot.transform.parent = transform;
             wallRoot.transform.localPosition = Vector3.zero;
             wallRoot.transform.localRotation = Quaternion.identity;
-            wallRoot.AddComponent<RoomOptimizer>();
+            wallRoot.AddComponent<WallOptimizer>();
 
         }
 
@@ -143,10 +143,11 @@ namespace OMTB.Level
             List<int> all = indices.FindAll(delegate (int t)
             {
                 // Debug.Log("Delegate t:" + t);
-                if (t + cols >= tiles.Length)
+                if (t%width + cols > width)
                     return false;
-                if (t + rows * width >= tiles.Length)
+                if (t/width + rows > height)
                     return false;
+
 
 
                 for (int i = 0; i < rows; i++)
@@ -155,6 +156,7 @@ namespace OMTB.Level
                     {
                         int index = t + j + (i * width);
 
+                      
                         if (tiles[index] != 0)
                             return false;
                     }

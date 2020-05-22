@@ -114,7 +114,7 @@ namespace OMTB.Level
                 int left = tileIndex - corridorWidth - 1;
                 int upper = tileIndex - (Width * (corridorWidth + 1));
                 int upperLeft = upper - corridorWidth - 1;
-                print(string.Format("l,u,ul:{0},{1},{2}", left, upper, upperLeft));
+                
                 if (left >= 0 && upper >= 0 && upperLeft >= 0 && rots[left] == 0 && rots[upperLeft] == 1 && rots[upper] == 2)
                     dirs.Remove(3);
                 if (left >= 0 && upper >= 0 && upperLeft >= 0 && rots[left] == 1 && rots[upperLeft] == 2 && rots[upper] == 3)
