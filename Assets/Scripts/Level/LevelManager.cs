@@ -364,7 +364,7 @@ namespace OMTB.Level
 
             GameObject r = CreateRoom(new LabyrinthConfig() { CorridorWidth = fightingRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
             RoomEnemyData red = r.AddComponent<RoomEnemyData>();
-            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 4, MaxEnemyCount = 7 });
+            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 9, MaxEnemyCount = 13 });
 
             return r;
         }
@@ -400,11 +400,16 @@ namespace OMTB.Level
                 RoomEnemyData red = r.GetComponent<RoomEnemyData>();
                 if (red)
                 {
-                    Enemy e = enemies[Random.Range(0, enemies.Count)];
-                    Vector3 pos = r.GetRandomSpawnPosition(1, 1);
-                    pos.y = 0;
-                    GameObject eObj = GameObject.Instantiate(e.PrefabObject);
-                    eObj.transform.position = pos;
+                    int count = Random.Range(red.MinEnemyCount, red.MaxEnemyCount + 1);
+                    for(int i=0; i<count; i++)
+                    {
+                        Enemy e = enemies[Random.Range(0, enemies.Count)];
+                        Vector3 pos = r.GetRandomSpawnPosition((int)e.Size.x, (int)e.Size.y);
+                        pos.y = 0;
+                        GameObject eObj = GameObject.Instantiate(e.PrefabObject);
+                        eObj.transform.position = pos;
+                    }
+                    
 
                 }
             }

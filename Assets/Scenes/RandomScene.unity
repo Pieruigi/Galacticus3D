@@ -419,11 +419,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1142686924080469637, guid: 49f9ddf059a925b498927f331633462b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.15
-      objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388251, guid: 49f9ddf059a925b498927f331633462b,
         type: 3}
       propertyPath: m_Name
@@ -482,16 +477,6 @@ PrefabInstance:
     - target: {fileID: 3828393623601388255, guid: 49f9ddf059a925b498927f331633462b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 49f9ddf059a925b498927f331633462b,
-        type: 3}
-      propertyPath: isGamepadConnected
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4731764697925511216, guid: 49f9ddf059a925b498927f331633462b,
-        type: 3}
-      propertyPath: mouseHasGamepadBehavior
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

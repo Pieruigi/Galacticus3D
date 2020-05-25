@@ -26,6 +26,12 @@ namespace OMTB.Collections
             get { return level; }
         }
 
+        [SerializeField]
+        Vector2 size = Vector3.one;
+        public Vector2 Size
+        {
+            get { return size; }
+        }
     }
 
 }
