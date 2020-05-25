@@ -51,9 +51,12 @@ namespace OMTB.Level
 
             foreach (NavMeshSurface s in navMeshSurfaces)
                 s.BuildNavMesh();
+                
 
             foreach (GameObject g in groundPlanes)
                 Destroy(g);
+
+
         }
 
         GameObject CreateGround(Room room)

@@ -53,6 +53,35 @@ namespace OMTB.Editor
             }
         }
 
+        [MenuItem("Assets/Create/OMTB/Enemy")]
+        public static Enemy BuildEnemy()
+        {
+            try
+            {
+                string path = basePath + Enemy.ResourceFolder;
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+
+                Enemy asset = ScriptableObject.CreateInstance<Enemy>();
+
+                AssetDatabase.CreateAsset(asset, path + "/enemy.asset");
+                AssetDatabase.SaveAssets();
+
+                EditorUtility.FocusProjectWindow();
+
+                Selection.activeObject = asset;
+
+                return asset;
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("ERROR!", e.Message, "OK");
+                Debug.LogError(e);
+                return null;
+            }
+        }
     }
 
 }

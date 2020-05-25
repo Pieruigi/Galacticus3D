@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Collections;
 
 namespace OMTB.Level
 {
@@ -52,7 +53,7 @@ namespace OMTB.Level
 
         float lastRoomPosZ = 0;
 
-        int level;
+        int level = 1;
         public int Level
         {
             get { return level; }
@@ -97,6 +98,9 @@ namespace OMTB.Level
             //Debug.Log("Loaded " + a.Length + " in " + (end - start).TotalMilliseconds +" mills.");
             Debug.Log("Levelmanager Start completed");
 
+            
+
+            
         }
 
         // Update is called once per frame
@@ -120,7 +124,11 @@ namespace OMTB.Level
         {
             CreateRooms();
 
+            AddEnemies();
+
             GameObject.FindObjectOfType<NavMeshBuilder>().BuildNavMesh(rooms);
+
+
         }
 
 
@@ -343,14 +351,22 @@ namespace OMTB.Level
             int h = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsV, maxExplorationRoomWallsV + 1);// */*num of vertical walls*/2;
 
             // Create Room object
-            return CreateRoom(new LabyrinthConfig() { CorridorWidth = explorationRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
+            GameObject r = CreateRoom(new LabyrinthConfig() { CorridorWidth = explorationRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
+            RoomEnemyData red = r.AddComponent<RoomEnemyData>();
+            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 0, MaxEnemyCount = 3 });
+            return r;
         }
 
         private GameObject CreateFightingRoom()
         {
             int w = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFigthingRoomWallsH, maxFightingRoomWallsH + 1);// * 2;
             int h = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFightingRoomWallsV, maxFightingRoomWallsV + 1);//*1;
-            return CreateRoom(new LabyrinthConfig() { CorridorWidth = fightingRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
+
+            GameObject r = CreateRoom(new LabyrinthConfig() { CorridorWidth = fightingRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
+            RoomEnemyData red = r.AddComponent<RoomEnemyData>();
+            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 4, MaxEnemyCount = 7 });
+
+            return r;
         }
 
         private GameObject CreateCustomRoom()
@@ -372,6 +388,27 @@ namespace OMTB.Level
             return room;
         }
 
+        void AddEnemies()
+        {
+            List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e=>e.Level <= level);
+
+            Debug.Log("Enemies:" + enemies.Count);
+
+            foreach(Room r in rooms)
+            {
+                Debug.Log("Enemies - Room:" + r.name);
+                RoomEnemyData red = r.GetComponent<RoomEnemyData>();
+                if (red)
+                {
+                    Enemy e = enemies[Random.Range(0, enemies.Count)];
+                    Vector3 pos = r.GetRandomSpawnPosition(1, 1);
+                    pos.y = 0;
+                    GameObject eObj = GameObject.Instantiate(e.PrefabObject);
+                    eObj.transform.position = pos;
+
+                }
+            }
+        }
      
         #endregion
 

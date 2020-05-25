@@ -39,6 +39,8 @@ namespace OMTB.Level
             get { return wallRoot; }
         }
 
+        
+
         int[] tiles; // tile[i] == 0 means the tile at the index 'i' is free
      
 

@@ -36,17 +36,22 @@ namespace OMTB.AI
         {
             //agent.isStopped = false;
             isActive = true;
+            if(!agent)
+                agent = GetComponentInParent<NavMeshAgent>();
             agent.isStopped = false;
         }
 
         public void Deactivate()
         {
             //agent.isStopped = true;
+
             isActive = false;
         }
 
         public bool IsActive()
         {
+            if (!agent)
+                agent = GetComponentInParent<NavMeshAgent>();
             return !agent.isStopped;
         }
 
