@@ -32,6 +32,12 @@ namespace OMTB.Collections
         {
             get { return size; }
         }
+
+
+
+        [SerializeField]
+        List<GameObject> droppables;
+
     }
 
 }

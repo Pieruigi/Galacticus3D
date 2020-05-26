@@ -41,9 +41,8 @@ namespace OMTB.Level
         int galacticusMinLevel = 3;
         float galacticusRate = 0.1f;
 
-        List<Room> rooms = new List<Room>();
-        //List<GameObject> allocators = new List<GameObject>();
-        List<Portal> portals = new List<Portal>();
+        List<Room> rooms = new List<Room>(); // List of rooms
+        List<Portal> portals = new List<Portal>(); // List of portals
         public IList<Portal> Portals
         {
             get { return portals.AsReadOnly(); }
@@ -65,8 +64,6 @@ namespace OMTB.Level
 
         private void Awake()
         {
-
-
             if (Instance == null)
             {
                 Instance = this;
@@ -76,9 +73,6 @@ namespace OMTB.Level
                 SetParamsByLevel();
 
                 CreateLevel();
-
-
-//                AllocateLevel();
 
                 Debug.Log("Levelmanager Awake completed");
             }
@@ -91,16 +85,8 @@ namespace OMTB.Level
         // Start is called before the first frame update
         void Start()
         {
-            //CollectionManager.Create();
-            //System.DateTime start = System.DateTime.UtcNow;
-            //OMTB.Gameplay.Droppable[] a = Resources.LoadAll<OMTB.Gameplay.Droppable>("Droppables");
-            //System.DateTime end = System.DateTime.UtcNow;
-            //Debug.Log("Loaded " + a.Length + " in " + (end - start).TotalMilliseconds +" mills.");
-            Debug.Log("Levelmanager Start completed");
+            Debug.Log("Levelmanager - Starting game...");
 
-            
-
-            
         }
 
         // Update is called once per frame
@@ -128,7 +114,19 @@ namespace OMTB.Level
 
             GameObject.FindObjectOfType<NavMeshBuilder>().BuildNavMesh(rooms);
 
+            // Disable all the objects of each room except for the starting one
+            foreach(Room r in rooms)
+            {
+                if (startingRoom == r)
+                    ActivateRoomObjects(r, true);
+                else
+                    ActivateRoomObjects(r, false);
+            }
 
+            // Set player position
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Vector3 pos = startingRoom.GetRandomSpawnPosition(1, 1);
+            player.transform.position = pos;
         }
 
 
@@ -307,7 +305,9 @@ namespace OMTB.Level
 
             g.AddComponent<DistanceClipper>();
             g2.AddComponent<DistanceClipper>();
-         
+
+            g.GetComponent<Portal>().OnTeleport += HandleOnTeleport;
+            g2.GetComponent<Portal>().OnTeleport += HandleOnTeleport;
 
         }
 
@@ -403,18 +403,46 @@ namespace OMTB.Level
                     int count = Random.Range(red.MinEnemyCount, red.MaxEnemyCount + 1);
                     for(int i=0; i<count; i++)
                     {
+                        // Add random enemy
                         Enemy e = enemies[Random.Range(0, enemies.Count)];
                         Vector3 pos = r.GetRandomSpawnPosition((int)e.Size.x, (int)e.Size.y);
                         pos.y = 0;
                         GameObject eObj = GameObject.Instantiate(e.PrefabObject);
                         eObj.transform.position = pos;
+
+ 
+                        // Add room setter
+                        eObj.AddComponent<RoomSetter>().Room = r;
+
                     }
                     
 
                 }
             }
         }
-     
+
+        #endregion
+
+        #region FUNCTIONS
+        void HandleOnTeleport(Portal portal)
+        {
+            Debug.Log("Teleporting:" + portal);
+            // Disable all the object of the current room
+            ActivateRoomObjects(portal.Room, false);
+            Debug.Log("Deactivating objects on room:" + portal.Room);
+
+            // Enable of the object of the new room
+            ActivateRoomObjects(portal.TargetPortal.Room, true);
+            Debug.Log("Activating objects on room:" + portal.Room);
+        }
+
+        void ActivateRoomObjects(Room room, bool value)
+        {
+            List<RoomSetter> l = RoomSetter.GetObjects(room);
+            foreach (RoomSetter rs in l)
+                rs.gameObject.SetActive(value);
+        }
+
         #endregion
 
         void DebugLevel()
