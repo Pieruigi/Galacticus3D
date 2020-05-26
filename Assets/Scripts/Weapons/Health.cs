@@ -9,7 +9,7 @@ namespace OMTB
     public class Health : MonoBehaviour, IDamageable
     {
         public UnityAction OnHealthChanged;
-        public UnityAction OnDestroyed;
+        //public UnityAction OnDestroyed;
 
         [SerializeField]
         float maxHealth;
@@ -20,6 +20,9 @@ namespace OMTB
 
         [SerializeField]
         float health;
+
+        public event Destroy OnDestroy;
+
         public float CurrentHealth
         {
             get { return health; }
@@ -55,8 +58,10 @@ namespace OMTB
 
             if(health == 0)
             {
-                OnDestroyed?.Invoke();
-                Destroy(gameObject);
+                //OnDestroyed?.Invoke();
+                OnDestroy?.Invoke(this);
+                
+                //Destroy(gameObject, 1);
             }
         }
 
@@ -68,6 +73,11 @@ namespace OMTB
                 health = maxHealth;
 
             OnHealthChanged?.Invoke();
+        }
+
+        public bool IsDead()
+        {
+            return health == 0;
         }
     }
 

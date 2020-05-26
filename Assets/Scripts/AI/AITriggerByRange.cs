@@ -10,11 +10,11 @@ using OMTB.Utils;
 namespace OMTB.AI
 {
     [RequireComponent(typeof(TargetSetter))]
-    public class AITriggerByRange : MonoBehaviour, IEngageTrigger
+    public class AITriggerByRange : MonoBehaviour, IEngageTrigger, IActivable
     {
         public event TargetEngaged OnTargetEngaged;
         public event TargetDisengaged OnTargetDisengaged;
-
+        
         [SerializeField]
         float reactionTime = 0;
 
@@ -29,14 +29,15 @@ namespace OMTB.AI
         [SerializeField]
         bool engageOnSightOnly = false;
 
-        [SerializeField]
-        [Tooltip("Zero is infinite, just leave zero if you want the enemy to stay in the engaging state until you destroy it... or you die.")]
-        float escapeRange = 0;
+        //[SerializeField]
+        //[Tooltip("Zero is infinite, just leave zero if you want the enemy to stay in the engaging state until you destroy it... or you die.")]
+        //float escapeRange = 0;
 
         
 
         TargetSetter targetSetter;
 
+         
 
         Transform target;
         public Transform Target
@@ -52,11 +53,11 @@ namespace OMTB.AI
 
         private void Awake()
         {
-            if((escapeRange > 0 && escapeRange < engageRange) || (engageRange == 0 && escapeRange > 0))
-            {
-                Debug.LogWarning(string.Format("Misconfiguration error: engageRange:{0}, escapeRange:{1}", engageRange, escapeRange));
-                escapeRange = engageRange; 
-            }
+            //if((escapeRange > 0 && escapeRange < engageRange) || (engageRange == 0 && escapeRange > 0))
+            //{
+            //    Debug.LogWarning(string.Format("Misconfiguration error: engageRange:{0}, escapeRange:{1}", engageRange, escapeRange));
+            //    escapeRange = engageRange; 
+            //}
          
             sqrRange = engageRange * engageRange;
         }
@@ -70,11 +71,13 @@ namespace OMTB.AI
             targetSetter = GetComponent<TargetSetter>();
             target = targetSetter.Target;
             targetSetter.OnTargetChanged += delegate (Transform t) { target = t; };
+
         }
 
         // Update is called once per frame
         void Update()
         {
+   
             if ((DateTime.UtcNow - lastCheck).TotalSeconds < reactionTime)
                 return;
 
@@ -90,7 +93,7 @@ namespace OMTB.AI
                     if(!engageOnSightOnly || AIUtil.IsOnSight(transform, target))
                     {
                         engaged = true;
-                        sqrRange = escapeRange * escapeRange;
+                        //sqrRange = escapeRange * escapeRange;
                         OnTargetEngaged?.Invoke();
                     }
                     
@@ -108,8 +111,20 @@ namespace OMTB.AI
             //}
         }
 
-       
+        public void Activate()
+        {
+            enabled = true;
+        }
 
+        public void Deactivate()
+        {
+            enabled = false;
+        }
+
+        public bool IsActive()
+        {
+            return enabled;
+        }
     }
 }
 

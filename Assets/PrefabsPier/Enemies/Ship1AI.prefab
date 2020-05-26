@@ -5343,6 +5343,7 @@ GameObject:
   - component: {fileID: 5686741892875810865}
   - component: {fileID: 5686741892875810864}
   - component: {fileID: 1789564011}
+  - component: {fileID: 2896521986384798762}
   m_Layer: 0
   m_Name: Ship1AI
   m_TagString: Enemy
@@ -5513,3 +5514,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 4
+--- !u!114 &2896521986384798762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701970935194964475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5

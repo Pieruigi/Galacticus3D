@@ -11,7 +11,7 @@ namespace OMTB.AI
      * Simply moves towards the target and then starts fighting.
      * */
      [RequireComponent(typeof(TargetSetter))]
-    public class SimpleEnemyAI : MonoBehaviour
+    public class SimpleEnemyAI : MonoBehaviour, IActivable
     {
         [SerializeField]
         GameObject idleMover;
@@ -35,7 +35,8 @@ namespace OMTB.AI
         bool isFighting = false;
         bool isSeeking = false;
         Vector3 startingPoint;
-
+                
+  
         private void Awake()
         {
             sqrFightingDistance = fightingDistance * fightingDistance;
@@ -51,13 +52,14 @@ namespace OMTB.AI
             aiTrigger.OnTargetDisengaged += HandleOnTargetDisengaged;
             if(idleMover)
                 idleMover.GetComponent<IActivable>().Activate();
+
+
         }
 
         // Update is called once per frame
         void Update()
         {
-            
-
+        
             if (!engaged)
                 return;
 
@@ -88,6 +90,7 @@ namespace OMTB.AI
             }
             
         }
+
 
         void HandleOnTargetEngaged()
         {
@@ -157,6 +160,24 @@ namespace OMTB.AI
         {
             if(idleMover)
                 idleMover.GetComponent<IActivable>().Deactivate();
+        }
+
+        public void Activate()
+        {
+            enabled = true;
+        }
+
+        public void Deactivate()
+        {
+            enabled = false;
+            StopFighting();
+            StopIdle();
+            StopSeeking();
+        }
+
+        public bool IsActive()
+        {
+            return enabled;
         }
     }
 

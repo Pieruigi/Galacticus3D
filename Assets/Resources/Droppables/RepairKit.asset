@@ -12,10 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafde975409ec854a8d327448483a6d1, type: 3}
   m_Name: RepairKit
   m_EditorClassIdentifier: 
-  pickerPrefab: {fileID: 0}
-  dropChance: 0
-  minLevel: 0
-  maxLevel: -1
-  byScene: 0
-  bySpaceStation: 0
-  specialEnemyGroup: 0
+  pickerPrefab: {fileID: 4152644377768347030, guid: e1aaa674f052f714d8f316cadc596e75,
+    type: 3}

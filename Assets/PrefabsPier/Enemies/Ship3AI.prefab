@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 3623509319386987851}
   - component: {fileID: 3623509319386987850}
   - component: {fileID: 1971681362989479614}
+  - component: {fileID: -3744470142633011713}
   m_Layer: 0
   m_Name: Ship3AI
   m_TagString: Enemy
@@ -465,6 +466,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 4
+--- !u!114 &-3744470142633011713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315686752620696705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
 --- !u!1 &315686753026586408
 GameObject:
   m_ObjectHideFlags: 0
