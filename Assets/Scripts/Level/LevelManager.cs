@@ -43,6 +43,8 @@ namespace OMTB.Level
 
         List<Room> rooms = new List<Room>(); // List of rooms
         List<Portal> portals = new List<Portal>(); // List of portals
+        List<GameObject> enemies = new List<GameObject>();
+
         public IList<Portal> Portals
         {
             get { return portals.AsReadOnly(); }
@@ -111,6 +113,8 @@ namespace OMTB.Level
             CreateRooms();
 
             AddEnemies();
+
+            AddDroppables();
 
             GameObject.FindObjectOfType<NavMeshBuilder>().BuildNavMesh(rooms);
 
@@ -280,7 +284,7 @@ namespace OMTB.Level
         #endregion
 
 
-        #region LEVEL_ALLOCATION
+        #region ROOM_ALLOCATION
         private void CreatePortals(Room room1, Room room2, bool isLocked)
         {
             int portalSize = 2;
@@ -311,14 +315,7 @@ namespace OMTB.Level
 
         }
 
-        List<GameObject> LoadPortalResources()
-        {
-            string res = "Portals/";
-
-            List<GameObject> ret = new List<GameObject>(Resources.LoadAll<GameObject>(res));
-
-            return ret;
-        }
+      
 
         private GameObject CreateRoom(RoomConfig config, System.Type roomType)
         {
@@ -388,6 +385,11 @@ namespace OMTB.Level
             return room;
         }
 
+
+        #endregion
+
+        #region OBJECTS_ALLOCATION
+
         void AddEnemies()
         {
             List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e=>e.Level <= level);
@@ -410,10 +412,14 @@ namespace OMTB.Level
                         GameObject eObj = GameObject.Instantiate(e.PrefabObject);
                         eObj.transform.position = pos;
 
- 
-                        // Add room setter
-                        eObj.AddComponent<RoomSetter>().Room = r;
-
+                        // Add room setter ( used to know which room each enemy belongs to )
+                        eObj.AddComponent<RoomReferer>().Reference = r;
+                        
+                        // Add reference to the collection resource
+                        eObj.AddComponent<EnemyReferer>().Reference = e;
+                        
+                        // Add to the enemy list
+                        this.enemies.Add(eObj);
                     }
                     
 
@@ -421,9 +427,43 @@ namespace OMTB.Level
             }
         }
 
+        void AddDroppables()
+        {
+            List<Droppable> all = LoadDroppableResources();
+
+            // Add dropper to each enemy
+            foreach(GameObject enemy in enemies)
+            {
+                EnemyReferer er = enemy.GetComponent<EnemyReferer>();
+                DropperSetter ds = enemy.AddComponent<DropperSetter>();
+                ds.Set(er.Reference.DroppingRate, all);
+            }
+
+            // Rooms
+
+        }
+
         #endregion
 
-        #region FUNCTIONS
+        #region RESOURCES_LOADING
+        List<GameObject> LoadPortalResources()
+        {
+            string res = "Portals/";
+
+            List<GameObject> ret = new List<GameObject>(Resources.LoadAll<GameObject>(res));
+
+            return ret;
+        }
+
+        List<Droppable> LoadDroppableResources()
+        {
+            List<Droppable> ret = new List<Droppable>(Resources.LoadAll<Droppable>(Droppable.ResourceFolder));
+            return ret;
+        }
+
+        #endregion
+
+        #region MISC
         void HandleOnTeleport(Portal portal)
         {
             Debug.Log("Teleporting:" + portal);
@@ -438,8 +478,8 @@ namespace OMTB.Level
 
         void ActivateRoomObjects(Room room, bool value)
         {
-            List<RoomSetter> l = RoomSetter.GetObjects(room);
-            foreach (RoomSetter rs in l)
+            List<Referer<Room>> l = Referer<Room>.GetReferers(room) as List<Referer<Room>>;
+            foreach (Referer<Room> rs in l)
                 rs.gameObject.SetActive(value);
         }
 

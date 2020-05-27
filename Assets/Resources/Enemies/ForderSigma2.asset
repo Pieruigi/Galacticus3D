@@ -17,5 +17,4 @@ MonoBehaviour:
   displayName: Forder Sigma II
   level: 1
   size: {x: 1, y: 1}
-  droppables:
-  - {fileID: 4152644377768347030, guid: e1aaa674f052f714d8f316cadc596e75, type: 3}
+  droppingRate: 1

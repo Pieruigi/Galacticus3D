@@ -33,10 +33,14 @@ namespace OMTB.Collections
             get { return size; }
         }
 
-
-
         [SerializeField]
-        List<GameObject> droppables;
+        [Range(0f,1f)]
+        float droppingRate;
+        public float DroppingRate
+        {
+            get { return droppingRate; }
+        }
+
 
     }
 

@@ -7,9 +7,13 @@ namespace OMTB.Gameplay
 {
     public class Coin : MonoBehaviour, IPickable
     {
+        [SerializeField]
+        int amount;
+
         public bool TryPickUp(GameObject player)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("You got " + amount + " coin(s).");
+            return true;
         }
 
 

@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRange: 30
-  fireRate: 4
+  fireRate: 1.3
   damageAmount: 20
   damageMinRange: 0
   damageMaxRange: 0
@@ -464,7 +464,6 @@ MonoBehaviour:
   engageTriggerPoint: {fileID: 0}
   engageRange: 38
   engageOnSightOnly: 1
-  escapeRange: 60
 --- !u!114 &4881424545478234062
 MonoBehaviour:
   m_ObjectHideFlags: 0

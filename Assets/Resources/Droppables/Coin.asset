@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2751df4d2b704c419991def6a317a00, type: 3}
-  m_Name: GliderXenh8
+  m_Script: {fileID: 11500000, guid: bafde975409ec854a8d327448483a6d1, type: 3}
+  m_Name: Coin
   m_EditorClassIdentifier: 
-  prefabObject: {fileID: 4881424545478233910, guid: 6556a2b38ec292f4cacc3eb0f15f56b6,
-    type: 3}
-  displayName: Glider Xenh 8
-  level: 1
-  size: {x: 1, y: 1}
-  droppingRate: 1
+  prefab: {fileID: 4152644377768347030, guid: b878295263ccdf649b204b2dc3236079, type: 3}
+  rarity: 1000

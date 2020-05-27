@@ -16,3 +16,5 @@ MonoBehaviour:
     type: 3}
   displayName: Racno
   level: 1
+  size: {x: 1, y: 1}
+  droppingRate: 1
