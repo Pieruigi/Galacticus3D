@@ -51,7 +51,7 @@ namespace OMTB.Gameplay
             picker.transform.rotation = Quaternion.identity;
 
             // Set droppable
-            picker.GetComponent<Picker>().StartDelay = 5; // A bit of delay
+            //picker.GetComponent<Picker>().StartDelay = 5; // A bit of delay
             picker.GetComponent<Picker>().SetContent(droppablePrefab);
                
             

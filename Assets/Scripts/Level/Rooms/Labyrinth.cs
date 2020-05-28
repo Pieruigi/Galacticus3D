@@ -36,7 +36,7 @@ namespace OMTB.Level
             int h = Width / c;
             int v = Height / c;
 
-            // Create a tiles array to keep trace of the walls
+            // Create a tiles array to keep trace of the walls ( how they rotates )
             int[] rots = new int[Width * Height];
             for (int i = 0; i < rots.Length; i++)
             {
@@ -50,7 +50,7 @@ namespace OMTB.Level
                 {
                     if (Random.Range(0f, 1f) <= fillRate)
                     {
-                        // Set the base wall tile
+                        // Set the base wall tile ( the rotation pivot )
                         int idx = (corridorWidth + j * c) + (corridorWidth + i * c) * Width;
                         
                         // Compute coordinates
@@ -72,6 +72,8 @@ namespace OMTB.Level
                 }
             }
 
+#if UNITY_EDITOR
+            // Debug
             string s = "";
             for(int i=0; i<Height; i++)
             {
@@ -83,6 +85,7 @@ namespace OMTB.Level
                 s += "\n";
             }
             print(s);
+#endif
         }
 
 
@@ -91,7 +94,7 @@ namespace OMTB.Level
             int tot = Width * Height;
             List<int> dirs = new List<int>();
 
-            // Avoid overlapping
+            // Avoid walls to overlap one another ( ex. left wall rotates to east while right wall rotates to west )
             // Check north
             if (rots[tileIndex - Width] == -1)
                 dirs.Add(0);
@@ -107,10 +110,7 @@ namespace OMTB.Level
 
             if (!allowUnreachable)
             {
-                // Avoid unreacheable tiles
-                //int left = tileIndex - corridorWidth - 1;
-                //int upper = tileIndex - (Width * (corridorWidth + 1));
-                //int upperLeft = upper - corridorWidth - 1;
+                // Avoid unreacheable tiles ( avoid walls to block some tiles of the room )
                 int left = tileIndex - corridorWidth - 1;
                 int upper = tileIndex - (Width * (corridorWidth + 1));
                 int upperLeft = upper - corridorWidth - 1;
@@ -147,7 +147,7 @@ namespace OMTB.Level
                 }
 
                 rots[idx] = r;
-                SetTile(idx); // Tile is no longer free
+                SetTile(idx); // Tile is no longer free ( in the parent class )
             }
      
             wallObject.transform.localEulerAngles = Vector3.up * 90f * r;
