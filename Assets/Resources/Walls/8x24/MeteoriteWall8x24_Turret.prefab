@@ -5647,6 +5647,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: CornerTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8792599145144344189, guid: 1e16f222f3a352a4da7273bba2d346fb,
         type: 3}
       propertyPath: m_LocalPosition.y
