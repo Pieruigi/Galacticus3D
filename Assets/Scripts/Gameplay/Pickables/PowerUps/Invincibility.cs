@@ -7,19 +7,10 @@ namespace OMTB.Gameplay
 {
     public class Invincibility : PowerUp
     {
-        public override PowerUpData GetData()
+
+        public override void Activate()
         {
             throw new System.NotImplementedException();
-        }
-
-        public override void PickUpAndActivate()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool TryPickUp(GameObject player)
-        {
-            return base.TryPickUp(player);
         }
     }
 

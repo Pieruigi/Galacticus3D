@@ -15,7 +15,7 @@ namespace OMTB
         {
             IDamageable idam = GetComponent<IDamageable>();
             if (idam != null)
-                idam.OnDestroy += HandleOnDestroy;
+                idam.OnDie += HandleOnDie;
         }
 
         // Update is called once per frame
@@ -24,7 +24,7 @@ namespace OMTB
 
         }
 
-        void HandleOnDestroy(IDamageable damageable)
+        void HandleOnDie(IDamageable damageable)
         {
             IActivable[] activables = GetComponentsInChildren<IActivable>();
             foreach (IActivable activable in activables)

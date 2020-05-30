@@ -22,7 +22,7 @@ namespace OMTB.Gameplay
 
         private void Awake()
         {
-            GetComponent<IDamageable>().OnDestroy += HandleOnDestroy;    
+            GetComponent<IDamageable>().OnDie += HandleOnDie;    
         }
 
         // Start is called before the first frame update
@@ -57,7 +57,7 @@ namespace OMTB.Gameplay
             
         }
 
-        void HandleOnDestroy(IDamageable damageable)
+        void HandleOnDie(IDamageable damageable)
         {
             Drop();
         }

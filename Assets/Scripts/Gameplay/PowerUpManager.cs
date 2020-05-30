@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Collections;
 
 
 namespace OMTB.Gameplay
@@ -12,7 +13,7 @@ namespace OMTB.Gameplay
 
         GameObject player;
 
-        System.Type current;
+        PowerUp current;
 
         [SerializeField]
         PowerUp test;
@@ -36,8 +37,7 @@ namespace OMTB.Gameplay
         {
             player = GameObject.FindGameObjectWithTag("Player");
 
-            PowerUpData data = test.GetData();
-            Debug.Log("PUType:" + data.PowerUpType);
+            Debug.Log("PP:" + player.GetComponent<Health>());
         }
 
         // Update is called once per frame
@@ -48,9 +48,25 @@ namespace OMTB.Gameplay
 
         public bool TryActivate(PowerUp powerUp)
         {
-            current = powerUp.GetType();
-            powerUp.PickUpAndActivate();
+            
+            if(current != null)
+                ReleaseCurrentPowerUp();
+
+            current = powerUp;
+
+            // Avoid the power up to get destroyed with the picker
+            current.transform.parent = transform;
+
+            powerUp.Activate();
+
             return true;
+        }
+
+        void ReleaseCurrentPowerUp()
+        {
+            Debug.Log("TO-DO: releasing power up");
+
+
         }
     }
 

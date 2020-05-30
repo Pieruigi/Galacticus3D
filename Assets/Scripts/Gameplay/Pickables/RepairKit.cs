@@ -10,7 +10,14 @@ namespace OMTB.Gameplay
         [SerializeField]
         float amount;
 
-        public bool TryPickUp(GameObject player)
+        GameObject player;
+
+        private void Start()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
+        public bool TryPickUp()
         {
             //return true;
             Health health = player.GetComponent<Health>();

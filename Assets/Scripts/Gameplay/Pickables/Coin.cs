@@ -10,7 +10,7 @@ namespace OMTB.Gameplay
         [SerializeField]
         int amount;
 
-        public bool TryPickUp(GameObject player)
+        public bool TryPickUp()
         {
             Debug.Log("You got " + amount + " coin(s).");
             return true;

@@ -7,10 +7,16 @@ namespace OMTB.Gameplay
 {
     public class Picker : MonoBehaviour
     {
-    
+
+#if UNITY_EDITOR
+        [SerializeField]
+        GameObject testContentPrefab;
+#endif
+
         bool noPicking = false;
 
         GameObject content;
+
 
         float startDelay = 0;
         public float StartDelay
@@ -18,8 +24,6 @@ namespace OMTB.Gameplay
             get { return startDelay; }
             set { startDelay = value; }
         }
-
-        bool starting = false;
 
         private void Awake()
         {
@@ -29,26 +33,20 @@ namespace OMTB.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            
+#if UNITY_EDITOR
+            SetContent(testContentPrefab);
+#endif
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (starting)
-            {
-                startDelay -= Time.deltaTime;
-                if(startDelay < 0)
-                {
-                    LeanTween.scale(content, Vector3.one, 1f).setEaseInOutElastic();
-                    noPicking = false;
-                    starting = false;
-                }
-            }
+          
         }
 
         public void SetContent(GameObject contentPrefab)
         {
+            
             GameObject g = GameObject.Instantiate(contentPrefab);
             g.transform.parent = transform;
             g.transform.localPosition = Vector3.zero;
@@ -56,28 +54,21 @@ namespace OMTB.Gameplay
             g.transform.localScale = Vector3.zero;
             content = g;
 
-            if(startDelay == 0)
-            {
-                LeanTween.scale(content, Vector3.one, 1f).setEaseInOutElastic();
-                noPicking = false;
-            }
-            else
-            {
-                starting = true;
-            }
+            LeanTween.scale(content, Vector3.one, 1f).setEaseInOutElastic();
+            noPicking = false;
 
             
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (noPicking || starting)
+            if (noPicking)
                 return;
 
-            if("Player".Equals(other.tag))
+            if ("Player".Equals(other.tag))
             {
                 Debug.Log("Picked");
-                if (content.GetComponent<IPickable>().TryPickUp(other.gameObject))
+                if (content.GetComponentInChildren<IPickable>().TryPickUp())
                 {
                     noPicking = true;
                     LeanTween.scale(content, Vector3.zero, 1f).setEaseInOutElastic();

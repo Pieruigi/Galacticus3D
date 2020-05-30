@@ -42,7 +42,20 @@ namespace OMTB
 
         void OnCollisionEnter(Collision collision)
         {
-            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+
+            IDamageable damageable = null;
+            List<Component> components = new List<Component>(collision.gameObject.GetComponents(typeof(IDamageable)));
+            foreach (Component c in components)
+            {
+                if ((c as MonoBehaviour).enabled)
+                {
+                    damageable = c as IDamageable;
+                    break;
+                }
+            }
+
+
+            //IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
             if (damageable != null)
             {
                 damageable.ApplyDamage(Amount);

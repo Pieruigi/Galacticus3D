@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace OMTB.Interfaces
 {
-    public delegate void Destroy(IDamageable damageable);
+    public delegate void Die(IDamageable damageable);
 
     public interface IDamageable
     {
-        event Destroy OnDestroy;
+        event Die OnDie;
 
         void ApplyDamage(float amount);
 

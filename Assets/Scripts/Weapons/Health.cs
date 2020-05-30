@@ -21,7 +21,7 @@ namespace OMTB
         [SerializeField]
         float health;
 
-        public event Destroy OnDestroy;
+        public event Die OnDie;
 
         public float CurrentHealth
         {
@@ -59,7 +59,7 @@ namespace OMTB
             if(health == 0)
             {
                 //OnDestroyed?.Invoke();
-                OnDestroy?.Invoke(this);
+                OnDie?.Invoke(this);
                 
                 //Destroy(gameObject, 1);
             }

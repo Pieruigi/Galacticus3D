@@ -59,8 +59,20 @@ namespace OMTB
 
                 for(int i=0; i<colls.Length; i++)
                 {
-                 
-                    IDamageable damageable = colls[i].GetComponent<IDamageable>();
+
+                    //IDamageable damageable = colls[i].GetComponent(typeof(IDamageable))  as IDamageable;
+                    IDamageable damageable = null;
+                    List<Component> components = new List<Component>(colls[i].GetComponents(typeof(IDamageable)));
+                    foreach(Component c in components)
+                    {
+                        if((c as MonoBehaviour).enabled)
+                        {
+                            damageable = c as IDamageable;
+                            break;
+                        }
+                    }
+
+
                     if (damageable == null)
                         continue;
 
@@ -73,6 +85,8 @@ namespace OMTB
 
             GameObject.Destroy(gameObject);
         }
+
+        
     }
 
 }

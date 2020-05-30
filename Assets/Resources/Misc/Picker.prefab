@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6855d177ff03a9d4385b237bc35c09b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testContentPrefab: {fileID: 4152644377768347030, guid: 26c6c25ec68eecd43ad363c5e1626ca2,
+    type: 3}
 --- !u!135 &123568794769703215
 SphereCollider:
   m_ObjectHideFlags: 0

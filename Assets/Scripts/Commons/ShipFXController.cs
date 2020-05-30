@@ -18,7 +18,7 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-            GetComponent<OMTB.Interfaces.IDamageable>().OnDestroy += HandleOnDestroy;
+            GetComponent<OMTB.Interfaces.IDamageable>().OnDie += HandleOnDie;
         }
 
         // Update is called once per frame
@@ -42,7 +42,7 @@ namespace OMTB
             }
         }
 
-        void HandleOnDestroy(OMTB.Interfaces.IDamageable damageable)
+        void HandleOnDie(OMTB.Interfaces.IDamageable damageable)
         {
             ParticleSystem ps = GameObject.Instantiate(diePS);
             ps.transform.position = point.position;
