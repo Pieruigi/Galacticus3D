@@ -10,6 +10,10 @@ namespace OMTB.Level
         public static LevelManager Instance { get; private set; }
 
         float tileSize = 8;
+        public float TileSize
+        {
+            get { return tileSize; }
+        }
 
         int minCommonRooms = 5;
         int maxCommonRooms = 7;
@@ -51,6 +55,11 @@ namespace OMTB.Level
         }
 
         Room startingRoom;
+        Room currentRoom;
+        public Room CurrentRoom
+        {
+            get { return currentRoom; }
+        }
 
         float lastRoomPosZ = 0;
 
@@ -64,7 +73,7 @@ namespace OMTB.Level
 
         Transform portalGroup;
 
-        private void Awake()
+        void Awake()
         {
             if (Instance == null)
             {
@@ -172,7 +181,7 @@ namespace OMTB.Level
 
             // Get the starting room
             startingRoom = commonRooms[Random.Range(0, commonRooms.Count)];
-
+            currentRoom = startingRoom;
 
             // Create the boss room
             Room bossRoom = CreateBossRoom().GetComponent<Room>();
@@ -473,7 +482,8 @@ namespace OMTB.Level
 
             // Enable of the object of the new room
             ActivateRoomObjects(portal.TargetPortal.Room, true);
-            Debug.Log("Activating objects on room:" + portal.Room);
+            currentRoom = portal.TargetPortal.Room;
+            Debug.Log("Activating objects on room:" + portal.TargetPortal.Room);
         }
 
         void ActivateRoomObjects(Room room, bool value)

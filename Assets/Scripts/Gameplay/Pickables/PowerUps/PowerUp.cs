@@ -10,13 +10,19 @@ namespace OMTB.Gameplay
     {
         [SerializeField]
         Droppable droppable;
+        public Droppable Droppable
+        {
+            get { return droppable; }
+        }
 
         public abstract void Activate();
+
+        public abstract void Deactivate();
 
         
         protected virtual void Awake()
         {
-
+            
         }
 
         // Start is called before the first frame update

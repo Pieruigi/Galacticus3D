@@ -8,10 +8,10 @@ namespace OMTB.Gameplay
     public class Picker : MonoBehaviour
     {
 
-#if UNITY_EDITOR
+
         [SerializeField]
-        GameObject testContentPrefab;
-#endif
+        GameObject contentPrefab;
+
 
         bool noPicking = false;
 
@@ -33,9 +33,9 @@ namespace OMTB.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-#if UNITY_EDITOR
-            SetContent(testContentPrefab);
-#endif
+
+            Init();
+
         }
 
         // Update is called once per frame
@@ -45,6 +45,11 @@ namespace OMTB.Gameplay
         }
 
         public void SetContent(GameObject contentPrefab)
+        {
+            this.contentPrefab = contentPrefab; 
+        }
+
+        private void Init()
         {
             
             GameObject g = GameObject.Instantiate(contentPrefab);

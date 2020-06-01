@@ -12,6 +12,11 @@ namespace OMTB.Gameplay
         {
             throw new System.NotImplementedException();
         }
+
+        public override void Deactivate()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }

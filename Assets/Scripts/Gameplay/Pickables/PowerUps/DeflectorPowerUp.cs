@@ -7,34 +7,32 @@ namespace OMTB.Gameplay
 {
 
 
-    public class ShieldPowerUp : PowerUp
+    public class DeflectorPowerUp : PowerUp
     {
         [SerializeField]
-        float damage;
-        public float Damage
+        [Tooltip("Percentage (%) of deflected damage.")]
+        float deflectedDamage;
+        public float DeflectedDamage
         {
-            get { return damage; }
+            get { return deflectedDamage; }
         }
 
         [SerializeField]
         GameObject prefab;
 
-
-    
-        Shield shield;
+        Deflector shield;
 
         
 
         public override void Activate()
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-
+             
             // Get the player health
-            //playerHealth = player.GetComponent<Health>();
+            //playerHealth = GameManager.Instance.Player.GetComponent<Health>();
             //playerHealth.enabled = false;
 
-            shield = player.AddComponent<Shield>();
-            shield.Init(damage, prefab);
+            shield = GameManager.Instance.Player.AddComponent<Deflector>();
+            shield.Init(deflectedDamage, prefab);
 
             
         }

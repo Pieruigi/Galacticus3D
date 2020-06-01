@@ -5,12 +5,9 @@ using OMTB.Interfaces;
 
 namespace OMTB.Gameplay
 {
-    public class Shield : MonoBehaviour, IDamageable
+    public class Deflector : MonoBehaviour, IDamageable
     {
-        [SerializeField]
-        float health;
-
-
+        float deflectedDamage;
 
         public event Die OnDie;
 
@@ -19,21 +16,19 @@ namespace OMTB.Gameplay
 
         public void ApplyDamage(float amount)
         {
-            health -= amount;
-            if (health <= 0)
-            {
-                playerHealth.enabled = true;
-                if (health < 0)
-                    playerHealth.ApplyDamage(-health);
+            // Compute damage
+            amount -= amount * deflectedDamage;
 
-                Destroy(this);
-            }
+            playerHealth.ApplyDamage(amount);
+
         }
 
         void Awake()
         {
             playerHealth = GetComponent<Health>();
             playerHealth.enabled = false;
+
+            
         }
 
         // Start is called before the first frame update
@@ -56,9 +51,9 @@ namespace OMTB.Gameplay
             Destroy(graphics);
         }
 
-        public void Init(float health, GameObject prefab)
+        public void Init(float deflectedDamage, GameObject prefab)
         {
-            this.health = health;
+            this.deflectedDamage = deflectedDamage;
 
             // Create graphic shield
             graphics = GameObject.Instantiate(prefab);
