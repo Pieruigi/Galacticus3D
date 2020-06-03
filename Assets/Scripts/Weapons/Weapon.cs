@@ -77,6 +77,11 @@ namespace OMTB
 
             return true;
         }
+
+        public void SetDelay(float delay)
+        {
+            lastFire = DateTime.UtcNow.AddSeconds(-delay);
+        }
     }
 
 }

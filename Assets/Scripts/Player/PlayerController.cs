@@ -77,6 +77,8 @@ namespace OMTB
 
         Rigidbody rb;
 
+        bool isFiring = false;
+
         //Shooter shooter;
         Vector3 currentVelocity;
         public Vector3 CurrentVelocity
@@ -209,6 +211,12 @@ namespace OMTB
                     targetDirection.x = aimAxis.x;
                     targetDirection.z = aimAxis.y;
 
+                    if (!isFiring)
+                    {
+                        isFiring = true;
+                        weapon.SetDelay(0.5f);
+                    }
+
                     weapon.Fire();
                     //if ((System.DateTime.UtcNow - lastShootTime).TotalSeconds > 1 / fireRate)
                     //{
@@ -217,6 +225,10 @@ namespace OMTB
                     //}
 
 
+                }
+                else
+                {
+                    isFiring = false;
                 }
 
             }
