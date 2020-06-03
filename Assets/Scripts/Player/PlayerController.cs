@@ -22,7 +22,10 @@ namespace OMTB
         public float MaxSpeed
         {
             get { return maxSpeed; }
+            set { maxSpeed = value; }
         }
+
+        float maxSpeedDefault;
 
         public float SqrMaxSpeed
         {
@@ -90,6 +93,11 @@ namespace OMTB
         bool isAiming = false;
         public bool IsAiming { get { return isAiming; } }
 
+
+        void Awake()
+        {
+            maxSpeedDefault = maxSpeed;
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -244,6 +252,11 @@ namespace OMTB
             rb.MovePosition(rb.position + currentVelocity * Time.deltaTime);
         }
 
+        public void ResetMaxSpeed()
+        {
+            maxSpeed = maxSpeedDefault;
+        }
+
         bool CheckAimingInput()
         {
             
@@ -336,6 +349,8 @@ namespace OMTB
 
             }
         }
+
+       
 
         public float GetMaxAngularSpeed()
         {
