@@ -15,10 +15,11 @@ namespace OMTB.AI
         bool isActive = false;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             startingPosition = transform.position;
             agent = GetComponentInParent<NavMeshAgent>();
+            Deactivate();
         }
 
         // Update is called once per frame

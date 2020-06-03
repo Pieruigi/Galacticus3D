@@ -50,7 +50,8 @@ namespace OMTB.AI
             aiTrigger = GetComponent<IEngageTrigger>();
             aiTrigger.OnTargetEngaged += HandleOnTargetEngaged;
             aiTrigger.OnTargetDisengaged += HandleOnTargetDisengaged;
-            if(idleMover)
+
+            if (idleMover)
                 idleMover.GetComponent<IActivable>().Activate();
 
 

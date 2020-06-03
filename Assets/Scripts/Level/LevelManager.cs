@@ -143,9 +143,8 @@ namespace OMTB.Level
             }
 
             // Set player position
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Vector3 pos = startingRoom.GetRandomSpawnPosition(1, 1);
-            player.transform.position = pos;
+            CreatePlayer();
+            
         }
 
 
@@ -300,6 +299,7 @@ namespace OMTB.Level
 
 
         #region ROOM_ALLOCATION
+
         private void CreatePortals(Room room1, Room room2, bool isLocked)
         {
             int portalSize = 2;
@@ -404,6 +404,27 @@ namespace OMTB.Level
         #endregion
 
         #region OBJECTS_ALLOCATION
+
+        void CreatePlayer()
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Vector3 pos = startingRoom.GetRandomSpawnPosition(1, 1);
+            player.transform.position = pos;
+          
+            // Physics is not active until you start the game so use tile info from room
+            Vector3 dir = Vector3.forward;
+            for (int i = 0; i < 4; i++)
+            {
+
+                Debug.Log("Dir:" + dir);
+                LayerMask mask = LayerMask.NameToLayer("Obstacle");
+                if (!Physics.Raycast(pos, dir, 100))
+                    break;
+
+                dir = Quaternion.Euler(0, 90f, 0) * dir;
+            }
+            player.transform.forward = dir;
+        }
 
         void AddEnemies()
         {

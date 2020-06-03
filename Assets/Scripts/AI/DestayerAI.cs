@@ -10,22 +10,41 @@ namespace OMTB.AI
         
         List<Weapon> cannons;
 
-        
+        int cannonCount;
+           
 
         // Start is called before the first frame update
         void Start()
         {
             cannons = new List<Weapon>(GetComponentsInChildren<Weapon>());
+            cannonCount = cannons.Count;
 
             IActivable[] activables = GetComponentsInChildren<IActivable>();
+           
             foreach (IActivable activable in activables)
                 activable.Activate();
+
+            IDamageable[] damageables = GetComponentsInChildren<IDamageable>();
+            foreach(IDamageable damageable in damageables)
+            {
+                damageable.OnDie += HandleOnDie;
+            }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
 
+        void ShipDestroy()
+        {
+            Destroy(gameObject);
+        }
+
+        void HandleOnDie(IDamageable damageable)
+        {
+            cannonCount--;
+            if (cannonCount == 0)
+                ShipDestroy(); 
+            
+            
+            
         }
     }
 }

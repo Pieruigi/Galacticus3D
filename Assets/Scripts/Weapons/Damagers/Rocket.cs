@@ -77,6 +77,7 @@ namespace OMTB
                     List<Component> components = new List<Component>(colls[i].GetComponents(typeof(IDamageable)));
                     foreach (Component c in components)
                     {
+                        Debug.Log("Dam-Comp:" + c);
                         if ((c as MonoBehaviour).enabled)
                         {
                             damageable = c as IDamageable;
@@ -84,7 +85,7 @@ namespace OMTB
                         }
                     }
 
-
+                    Debug.Log("Dam:" + damageable);
                     //IDamageable damageable = colls[i].GetComponent<IDamageable>();
                     if (damageable == null)
                         continue;

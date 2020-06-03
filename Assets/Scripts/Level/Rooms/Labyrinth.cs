@@ -84,7 +84,7 @@ namespace OMTB.Level
                 }
                 s += "\n";
             }
-            print(s);
+            //print(s);
 #endif
         }
 

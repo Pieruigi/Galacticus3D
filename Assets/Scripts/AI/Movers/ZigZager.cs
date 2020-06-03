@@ -63,6 +63,7 @@ namespace OMTB.AI
             decelerationDefault = deceleration;
             angularSpeedDefault = angularSpeed;
             changeDirectionRateDefault = changeDirectionRate;
+            Deactivate();
         }
 
         // Start is called before the first frame update
@@ -260,13 +261,13 @@ namespace OMTB.AI
 
         public float GetMaxAngularSpeed()
         {
-            Debug.Log("AngularSpeed:" + angularSpeed);
+          
             return angularSpeed;
         }
 
         public float GetMaxSideSpeed()
         {
-            Debug.Log("MaxSideSpeed:" + maxSpeed);
+
             return maxSpeed;
         }
 

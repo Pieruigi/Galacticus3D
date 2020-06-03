@@ -21,9 +21,7 @@ namespace OMTB.Level
             w = h * Screen.width / Screen.height;
             w = w / 2f;
             h = h / 2f;
-            Debug.Log("W:" + w);
-            Debug.Log("H:" + h);
-
+            
             player = GameObject.FindGameObjectWithTag("Player");
             walls = new Transform[transform.childCount];
             

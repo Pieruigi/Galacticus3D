@@ -14362,6 +14362,7 @@ GameObject:
   - component: {fileID: 1999740970}
   - component: {fileID: 1999740971}
   - component: {fileID: 1401382331173599498}
+  - component: {fileID: 3259347332502362293}
   m_Layer: 0
   m_Name: EnterprizerPlayer
   m_TagString: Player
@@ -14551,6 +14552,19 @@ CapsuleCollider:
   m_Height: 6.8
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: -0.37}
+--- !u!114 &3259347332502362293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828393623601388251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
 --- !u!1 &4431441406028521328
 GameObject:
   m_ObjectHideFlags: 0

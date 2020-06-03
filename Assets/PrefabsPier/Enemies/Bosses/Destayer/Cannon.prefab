@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5525034299324862598}
-  bulletPrefab: {fileID: 6683447071312092115, guid: 5b7ca725f0fb2d348bd50b386f96465c,
+  bulletPrefab: {fileID: 6683447071312092115, guid: 3e580b5ad02aa144c8a4c4c07aaac14d,
     type: 3}
   firePoint: {fileID: 424969598}
 --- !u!1 &2080593872
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5525034299324862598}
-  bulletPrefab: {fileID: 6683447071312092115, guid: 5b7ca725f0fb2d348bd50b386f96465c,
+  bulletPrefab: {fileID: 6683447071312092115, guid: 3e580b5ad02aa144c8a4c4c07aaac14d,
     type: 3}
   firePoint: {fileID: 2080593873}
 --- !u!1 &1509414723220839759
@@ -211,8 +211,8 @@ MonoBehaviour:
   fireRange: 35
   fireRate: 0.5
   damageAmount: 20
-  damageMinRange: 0
-  damageMaxRange: 0
+  damageMinRange: 4
+  damageMaxRange: 8
   shooter: {fileID: 3707347062373679733}
 --- !u!114 &3707347062373679733
 MonoBehaviour:

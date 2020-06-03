@@ -107,10 +107,14 @@ namespace OMTB
             //maxSpeedSqr = maxSpeed * maxSpeed;
             rb = GetComponent<Rigidbody>();
             //shooter = GetComponent<Shooter>();
+
         }
 
         void Update()
         {
+            
+
+
             if (notSteering)
             {
                 if ((DateTime.UtcNow - notSteeringLastTime).TotalSeconds > notSteeringTime)

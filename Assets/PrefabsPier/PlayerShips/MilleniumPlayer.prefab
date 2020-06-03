@@ -4832,6 +4832,7 @@ GameObject:
   - component: {fileID: 2122499744}
   - component: {fileID: 1999740970}
   - component: {fileID: 1999740971}
+  - component: {fileID: -2063471909290788313}
   m_Layer: 0
   m_Name: MilleniumPlayer
   m_TagString: Player
@@ -5020,6 +5021,19 @@ MonoBehaviour:
   - {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 1322638741995851443}
+--- !u!114 &-2063471909290788313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828393623601388251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
 --- !u!1 &4431441406028521328
 GameObject:
   m_ObjectHideFlags: 0

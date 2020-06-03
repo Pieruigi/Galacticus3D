@@ -30,7 +30,7 @@ namespace OMTB.AI
         float sqrWeaponRange;
         
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             targetSetter = GetComponent<TargetSetter>();
             sqrWeaponRange = weapon.FireRange * weapon.FireRange;

@@ -75,12 +75,12 @@ namespace OMTB.Level
         {
             CreateBorders();
             CreateWalls();
-            Debug.Log("Room created");
+         
         }
 
         public virtual void Init(RoomConfig config)
         {
-            Debug.Log("Init");
+            
             width = config.Width;
             height = config.Height;
             tileSize = config.TileSize;
@@ -105,7 +105,7 @@ namespace OMTB.Level
                 {
                     int index = rootTile + j + (i * width);
                     tiles[index] = 1;
-                    Debug.Log("PortalTile:" + index);
+
                 }
             }
 
@@ -113,8 +113,7 @@ namespace OMTB.Level
             x *= TileSize;
             float z = (rootTile/width + heightInTiles - (float)heightInTiles / 2f);
             z *= -TileSize;
-            Debug.Log("RandomSpawnPoint:" + new Vector3(x, 0, z));
-
+        
             return  (transform.position + new Vector3(x, 0, z));
 
         }

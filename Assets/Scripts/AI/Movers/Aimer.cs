@@ -28,6 +28,7 @@ namespace OMTB.AI
         private void Awake()
         {
             angularSpeedDefault = angularSpeed;
+            Deactivate();
         }
 
         // Start is called before the first frame update
