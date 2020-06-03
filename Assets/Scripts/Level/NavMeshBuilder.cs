@@ -56,6 +56,10 @@ namespace OMTB.Level
             foreach (GameObject g in groundPlanes)
                 Destroy(g);
 
+            // Destroy all the navmesh colliders only
+            GameObject[] gList = GameObject.FindGameObjectsWithTag("NavMeshCollider");
+            for (int i = 0; i < gList.Length; i++)
+                Destroy(gList[i].gameObject);
 
         }
 
@@ -64,7 +68,7 @@ namespace OMTB.Level
             GameObject plane = GameObject.Instantiate(groundPrefab);
             plane.transform.localScale = new Vector3(room.Width * room.TileSize / 10f, 1, room.Height * room.TileSize / 10f);
             plane.transform.position = room.transform.position + Vector3.right * (float)room.Width / 2f * room.TileSize + Vector3.back * (float)room.Height / 2f * room.TileSize;
-
+            
             return plane;
         }
     }

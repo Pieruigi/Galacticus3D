@@ -26,12 +26,17 @@ namespace OMTB.Gameplay
 
         public override void Activate()
         {
-             
+
             // Get the player health
             //playerHealth = GameManager.Instance.Player.GetComponent<Health>();
             //playerHealth.enabled = false;
 
-            shield = GameManager.Instance.Player.AddComponent<Deflector>();
+            if (Level.LevelManager.Instance == null)
+                shield = GameObject.FindGameObjectWithTag("Player").AddComponent<Deflector>();
+            else
+                shield = Level.LevelManager.Instance.Player.AddComponent<Deflector>();
+
+            
             shield.Init(deflectedDamage, prefab);
 
             
@@ -39,7 +44,8 @@ namespace OMTB.Gameplay
 
         public override void Deactivate()
         {
-            Destroy(shield);
+
+            shield.Deactivate();
         }
     }
 

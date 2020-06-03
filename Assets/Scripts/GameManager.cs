@@ -8,11 +8,7 @@ namespace OMTB
     {
         public static GameManager Instance { get; private set; }
 
-        private GameObject player;
-        public GameObject Player
-        {
-            get { return player; }
-        }
+       
 
         private void Awake()
         {
@@ -30,7 +26,7 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+           
         }
 
         // Update is called once per frame

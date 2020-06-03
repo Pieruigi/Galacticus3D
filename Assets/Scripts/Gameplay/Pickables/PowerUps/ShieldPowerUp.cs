@@ -27,13 +27,17 @@ namespace OMTB.Gameplay
 
         public override void Activate()
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
 
             // Get the player health
             //playerHealth = player.GetComponent<Health>();
             //playerHealth.enabled = false;
 
-            shield = player.AddComponent<Shield>();
+            if (Level.LevelManager.Instance == null)
+                shield = GameObject.FindGameObjectWithTag("Player").AddComponent<Shield>();
+            else
+                shield = Level.LevelManager.Instance.Player.AddComponent<Shield>();
+
             shield.Init(damage, prefab);
 
             
@@ -41,7 +45,7 @@ namespace OMTB.Gameplay
 
         public override void Deactivate()
         {
-            Destroy(shield);
+            shield.Deactivate();
         }
     }
 

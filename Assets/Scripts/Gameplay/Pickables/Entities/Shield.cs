@@ -32,6 +32,7 @@ namespace OMTB.Gameplay
 
         void Awake()
         {
+            Debug.Log("Creating");
             playerHealth = GetComponent<Health>();
             playerHealth.enabled = false;
         }
@@ -48,12 +49,14 @@ namespace OMTB.Gameplay
 
         }
 
-        private void OnDestroy()
+        public void Deactivate()
         {
             if (!playerHealth.enabled)
                 playerHealth.enabled = true;
 
             Destroy(graphics);
+
+            Destroy(this);
         }
 
         public void Init(float health, GameObject prefab)

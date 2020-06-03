@@ -43,13 +43,7 @@ namespace OMTB.Gameplay
 
         }
 
-        private void OnDestroy()
-        {
-            if (!playerHealth.enabled)
-                playerHealth.enabled = true;
-
-            Destroy(graphics);
-        }
+        
 
         public void Init(float deflectedDamage, GameObject prefab)
         {
@@ -60,6 +54,16 @@ namespace OMTB.Gameplay
             graphics.transform.parent = transform;
             graphics.transform.localPosition = Vector3.zero;
             graphics.transform.localRotation = Quaternion.identity;
+        }
+
+        public void Deactivate()
+        {
+            if (!playerHealth.enabled)
+                playerHealth.enabled = true;
+
+            Destroy(graphics);
+
+            Destroy(this);
         }
     }
 

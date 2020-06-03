@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Enemy
   - Bullet
+  - NavMeshCollider
   layers:
   - Default
   - TransparentFX

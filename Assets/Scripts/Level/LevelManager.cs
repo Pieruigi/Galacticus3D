@@ -73,6 +73,12 @@ namespace OMTB.Level
 
         Transform portalGroup;
 
+        private GameObject player;
+        public GameObject Player
+        {
+            get { return player; }
+        }
+
         void Awake()
         {
             if (Instance == null)
@@ -97,7 +103,7 @@ namespace OMTB.Level
         void Start()
         {
             Debug.Log("Levelmanager - Starting game...");
-
+            player = GameObject.FindGameObjectWithTag("Player");
         }
 
         // Update is called once per frame

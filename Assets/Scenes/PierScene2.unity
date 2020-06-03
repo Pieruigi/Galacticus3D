@@ -6009,6 +6009,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Picker
       objectReference: {fileID: 0}
+    - target: {fileID: 8626261772476345615, guid: fb42470ad6bb38e48af854a427a4b073,
+        type: 3}
+      propertyPath: contentPrefab
+      value: 
+      objectReference: {fileID: 4152644377768347030, guid: 26c6c25ec68eecd43ad363c5e1626ca2,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb42470ad6bb38e48af854a427a4b073, type: 3}
 --- !u!1001 &1013000988
@@ -6621,6 +6627,12 @@ PrefabInstance:
     - target: {fileID: 8626261772476345615, guid: fb42470ad6bb38e48af854a427a4b073,
         type: 3}
       propertyPath: testContentPrefab
+      value: 
+      objectReference: {fileID: 4152644377768347030, guid: ae87f0a521df1a44689f8ad524849762,
+        type: 3}
+    - target: {fileID: 8626261772476345615, guid: fb42470ad6bb38e48af854a427a4b073,
+        type: 3}
+      propertyPath: contentPrefab
       value: 
       objectReference: {fileID: 4152644377768347030, guid: ae87f0a521df1a44689f8ad524849762,
         type: 3}
