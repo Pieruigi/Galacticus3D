@@ -467,6 +467,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MilleniumPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388255, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -655,6 +660,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 93985058, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1485840291, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902827979, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 675489644334102901, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb,
         type: 3}
       propertyPath: m_Name

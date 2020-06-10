@@ -5699,6 +5699,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CornerTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 59071172702564378, guid: 1e16f222f3a352a4da7273bba2d346fb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7448199682787552496, guid: 1e16f222f3a352a4da7273bba2d346fb,
         type: 3}
       propertyPath: m_LocalRotation.x

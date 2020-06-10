@@ -26,7 +26,8 @@ namespace OMTB.Gameplay
                 if (health < 0)
                     playerHealth.ApplyDamage(-health);
 
-                Destroy(this);
+                //Destroy(this);
+                Deactivate();
             }
         }
 

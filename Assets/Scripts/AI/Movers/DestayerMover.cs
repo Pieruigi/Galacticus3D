@@ -18,13 +18,14 @@ namespace OMTB.AI
         void Start()
         {
             targetSetter = GetComponent<TargetSetter>();
+            
         }
 
         // Update is called once per frame
         void Update()
         {
             // Move slowly
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.forward * speed * Time.deltaTime, speed);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward * speed * Time.deltaTime, speed);
 
             // Get player position 
             Vector3 dir = targetSetter.Target.position - transform.position;
