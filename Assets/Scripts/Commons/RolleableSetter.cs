@@ -22,7 +22,7 @@ namespace OMTB
             rolleables = new List<Transform>(root.GetComponentsInChildren<Transform>()).FindAll(r=>r.GetComponent<IActivable>()!=null && r.GetComponent<IRolleable>() != null);
             currentRolleable = rolleables.Find(r => r.GetComponent<IActivable>().IsActive());
             roller = GetComponent<Roller>();
-            if(currentRolleable)
+            if (currentRolleable)
                 roller.Rolleable = currentRolleable.GetComponent<IRolleable>();
         }
 

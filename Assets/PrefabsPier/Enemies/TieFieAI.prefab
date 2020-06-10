@@ -5203,6 +5203,7 @@ MonoBehaviour:
   aimError: 7
   alwaysShoot: 1
   weapon: {fileID: 8701970933539673513}
+  friendlyFire: 0
   combatMover: {fileID: 8701970934793450066}
 --- !u!1 &8701970934547059064
 GameObject:
@@ -5274,7 +5275,7 @@ GameObject:
   - component: {fileID: 8701970934793450067}
   - component: {fileID: 8701970934793450069}
   m_Layer: 0
-  m_Name: ZigZager
+  m_Name: FlybyMover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5345,7 +5346,7 @@ GameObject:
   - component: {fileID: 1789564011}
   - component: {fileID: 2896521986384798762}
   m_Layer: 0
-  m_Name: Ship6AI
+  m_Name: TieFieAI
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5525,4 +5526,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.5

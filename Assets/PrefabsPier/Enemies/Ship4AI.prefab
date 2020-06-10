@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxRoll: 60
   rollSpeed: 90
-  target: {fileID: 315686751695967234}
+  target: {fileID: 315686752620696705}
   useRigidbody: 0
 --- !u!114 &3623509318905532252
 MonoBehaviour:
@@ -226,6 +226,7 @@ MonoBehaviour:
   aimError: 8
   alwaysShoot: 1
   weapon: {fileID: 315686752032985299}
+  friendlyFire: 0
   combatMover: {fileID: 315686753026586408}
 --- !u!1 &315686752032985308
 GameObject:
@@ -494,7 +495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.5
 --- !u!1 &315686753026586408
 GameObject:
   m_ObjectHideFlags: 0

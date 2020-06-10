@@ -456,11 +456,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1999740970, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 1999740970, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
       propertyPath: health
-      value: 100
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -530,7 +530,7 @@ PrefabInstance:
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: isGamepadConnected
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -737,6 +737,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1254272252639162496, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb,
+        type: 3}
+      propertyPath: tieFiePrefab
+      value: 
+      objectReference: {fileID: 8701970935194964475, guid: ddbb80124e63a78488e1931e4d94d487,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb, type: 3}
 --- !u!1001 &1609570399137722805

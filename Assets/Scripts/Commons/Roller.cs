@@ -38,10 +38,8 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-            rolleable = target.GetComponent<IRolleable>();
-            //maxAngularSpeed = rolleable.GetMaxAngularSpeed();
-            //maxSideSpeed = rolleable.GetMaxSideSpeed();
-            //Debug.Log("maxSideSpeed:" + maxSideSpeed);
+            rolleable = target.GetComponent<IRolleable>(); // Used by player ( not by enemies )
+            
 
             if (useRigidbody)
                 rb = target.GetComponent<Rigidbody>();
