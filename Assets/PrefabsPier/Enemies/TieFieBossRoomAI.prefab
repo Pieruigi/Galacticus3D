@@ -5219,8 +5219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2d13d31b5765a4a942e322ea5abcf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  angularSpeed: 10
+  speed: 15
+  angularSpeed: 60
   useRigidbody: 1
 --- !u!1 &8701970935194964475
 GameObject:
@@ -5341,8 +5341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  health: 30
+  maxHealth: 10
+  health: 10
 --- !u!114 &5686741892875810864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5373,7 +5373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc075604fa780944bafdc0747bd70af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 4
+  timer: 2
 --- !u!114 &2896521986384798762
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5525034299324862598}
-  bulletPrefab: {fileID: 6683447071312092115, guid: 3e580b5ad02aa144c8a4c4c07aaac14d,
+  bulletPrefab: {fileID: 6683447071312092115, guid: 5b7ca725f0fb2d348bd50b386f96465c,
     type: 3}
   firePoint: {fileID: 424969598}
 --- !u!1 &2080593872
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 5525034299324862598}
-  bulletPrefab: {fileID: 6683447071312092115, guid: 3e580b5ad02aa144c8a4c4c07aaac14d,
+  bulletPrefab: {fileID: 6683447071312092115, guid: 5b7ca725f0fb2d348bd50b386f96465c,
     type: 3}
   firePoint: {fileID: 2080593873}
 --- !u!1 &1509414723220839759
@@ -195,6 +195,7 @@ MonoBehaviour:
   aimError: 3
   alwaysShoot: 0
   weapon: {fileID: 2521912441524783383}
+  friendlyFire: 0
   combatMover: {fileID: 0}
 --- !u!114 &2521912441524783383
 MonoBehaviour:
@@ -301,7 +302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.5
 --- !u!114 &38516454227561338
 MonoBehaviour:
   m_ObjectHideFlags: 0

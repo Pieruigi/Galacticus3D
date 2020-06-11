@@ -5200,7 +5200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b686f2139d3718a4dafccfb1b2437c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aimError: 7
+  aimError: 20
   alwaysShoot: 1
   weapon: {fileID: 8701970933539673513}
   friendlyFire: 0

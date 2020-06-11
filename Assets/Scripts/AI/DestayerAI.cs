@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using OMTB.Interfaces;
 using System;
+using OMTB.Collections;
+using OMTB.Level;
 
 namespace OMTB.AI
 {
     public class DestayerAI : MonoBehaviour
     {
         [SerializeField]
-        GameObject tieFiePrefab;
+        Enemy tieFieResource;
 
         float tieFieMinRate = 12;
         float tieFieMaxRate = 24;
@@ -22,11 +24,12 @@ namespace OMTB.AI
 
         TargetSetter targetSetter;
 
-           
+        List<Droppable> droppables;   
 
         // Start is called before the first frame update
         void Start()
         {
+            droppables = new List<Droppable>(Resources.LoadAll<Droppable>(Droppable.ResourceFolder));
             targetSetter = GetComponent<TargetSetter>();
 
             cannons = new List<Weapon>(GetComponentsInChildren<Weapon>());
@@ -75,8 +78,13 @@ namespace OMTB.AI
 
         void SpawnTieFie()
         {
-            // Spawn
-            GameObject g = GameObject.Instantiate(tieFiePrefab);
+            // Create TieFie
+            GameObject g = GameObject.Instantiate(tieFieResource.PrefabObject);
+
+            // Add dropper
+            //DropperSetter dropperSetter = g.AddComponent<DropperSetter>();
+            //dropperSetter.Set(tieFieResource.DroppingRate, droppables);
+
             IActivable[] activables = g.GetComponentsInChildren<IActivable>();
             foreach(IActivable activable in activables)
                 activable.Activate();
