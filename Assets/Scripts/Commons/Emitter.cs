@@ -31,15 +31,22 @@ namespace OMTB
                 c = Color.red;
                 isEnemy = true;
             }
-                
+
+            Renderer rend = GetComponent<MeshRenderer>();
+            if (rend == null)
+                rend = GetComponent<SkinnedMeshRenderer>();
 
             if (isEnemy)
             {
-                GetComponent<MeshRenderer>().sharedMaterial.SetColor("_EmissionColor", c * 2);
+                //Renderer rend = GetComponent<MeshRenderer>();
+                //if (rend == null)
+                //    rend = GetComponent<SkinnedMeshRenderer>();
+                rend.sharedMaterial.SetColor("_EmissionColor", c * 2);
             }
             else
             {
-                GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", c * 2);
+
+                rend.material.SetColor("_EmissionColor", c * 2);
             }
         }
 
