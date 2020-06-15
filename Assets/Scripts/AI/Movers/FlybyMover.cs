@@ -10,16 +10,17 @@ namespace OMTB.AI
         [SerializeField]
         float speed = 15f;
 
-        float speedAcc = 5;
+        [SerializeField]
+        float acceleration = 5;
+
         float flyingAwaySpeedMul = 2f;
         float flyingAwaySpeed;
         float currSpeed;
 
         [SerializeField]
-        float angularSpeed = 60f;
+        float angularSpeed = 120f;
         float angularSpeedRadians;
-
-        
+                
 
         [SerializeField]
         bool useRigidbody;
@@ -35,7 +36,10 @@ namespace OMTB.AI
         float sqrTargetMinDist;
         float sqrTargetMaxDist;
 
+        [SerializeField]
         float targetMinDistance = 20f;
+
+        [SerializeField]
         float targetMaxDistance = 40;
         
         Vector3 targetDir;
@@ -65,10 +69,15 @@ namespace OMTB.AI
         // Update is called once per frame
         void Update()
         {
+            if (!isActive)
+                return;
+
+            ReachMinimumSpeed();
+
             if (!flyAway) 
             {
                 Targeting();
-                Debug.Log("Targeting...");
+               
             }
             else
             {
@@ -77,11 +86,12 @@ namespace OMTB.AI
 
             // Calculate current direction from target
             targetDir.Normalize();
-            if(!flyAway)
-                currentDir = Vector3.RotateTowards(currentDir, targetDir, angularSpeedRadians * Time.deltaTime, 0.0f).normalized;
-            else
-                currentDir = Vector3.RotateTowards(currentDir, -targetDir, angularSpeedRadians * Time.deltaTime * 1.2f, 0.0f).normalized;
-
+            float angSpeed = angularSpeedRadians;
+            if (flyAway)
+                angSpeed *= 1.2f;
+            
+            currentDir = Vector3.RotateTowards(currentDir, targetDir, angSpeed * Time.deltaTime, 0.0f).normalized;
+            
             root.forward = currentDir.normalized;
 
             if (!useRigidbody)
@@ -106,6 +116,7 @@ namespace OMTB.AI
         public void Deactivate()
         {
             isActive = false;
+            Reset();
         }
 
         public bool IsActive()
@@ -133,7 +144,7 @@ namespace OMTB.AI
             // Decelerate
             if (currSpeed > speed)
             {
-                currSpeed -= speedAcc * Time.deltaTime;
+                currSpeed -= acceleration * Time.deltaTime;
                 if (currSpeed < speed)
                     currSpeed = speed;
             }
@@ -145,6 +156,7 @@ namespace OMTB.AI
             if ((root.position - targetSetter.Target.position).sqrMagnitude < sqrTargetMinDist)
             {
                 flyAway = true;
+                targetDir = -currentDir;
             }
         }
 
@@ -153,7 +165,7 @@ namespace OMTB.AI
             // Accelerate 
             if(currSpeed < flyingAwaySpeed)
             {
-                currSpeed += speedAcc * Time.deltaTime;
+                currSpeed += acceleration * Time.deltaTime;
                 if (currSpeed > flyingAwaySpeed)
                     currSpeed = flyingAwaySpeed;
             }
@@ -163,16 +175,49 @@ namespace OMTB.AI
             {
                 flyAway = false;
             }
-
-            // Check if there is something in front of the ship
-            float dist = speed * 3f;
-
             
+            // Check if there is something in front of the ship
+            float dist = speed*1.5f;
+            RaycastHit hit;
+            if(Utils.AIUtil.HitObstacle(transform.position, targetDir, dist, out hit))
+            {
+                Debug.Log("hit an obstacle:" + hit.transform.gameObject);
+                Debug.Log("hit.normal:" + hit.normal);
+                targetDir = hit.normal;
+            }
+                
+
+            //if (Physics.Raycast(transform.position + Vector3.down*0.5f, targetDir, out hit, dist, LayerMask.GetMask(new string[] { "Obstacle" })))
+            //{
+            //    Debug.Log("hit an obstacle:"+hit.transform.gameObject );
+            //    Debug.Log("hit.normal:" + hit.normal);
+            //    //targetDir = Quaternion.Euler(0, Random.Range(-10f, 10f), 0) * hit.normal;
+            //    targetDir = hit.normal;
+            //}
+
         }
 
         public void Freeze(bool value)
         {
             gameObject.SetActive(!value);
+            Reset();
+        }
+
+        void Reset()
+        {
+            flyAway = false;
+            currSpeed = speed;
+        }
+
+        void ReachMinimumSpeed()
+        {
+            if(currSpeed < speed)
+            {
+                currSpeed += Time.deltaTime * acceleration;
+
+                if (!flyAway && currSpeed > speed)
+                    currSpeed = speed;
+            }
         }
 
         //void FlyingAway()
