@@ -1,21 +1,20 @@
 fileFormatVersion: 2
-guid: a9d370dbf80c8f74a92fe7feaf612b44
+guid: b0cba30af71b91b40997a69129dab5aa
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: 460060343368398699
-    second: Attack
+    second: Idle_Corkscrew
   - first:
-      74: 460060343368398699
-    second: Attack
+      74: 7031987903787171378
+    second: Attack_Corkscrew
+  externalObjects:
   - first:
-      74: -8091766882996739255
-    second: Idle
-  - first:
-      74: 460060343368398699
-    second: Idle
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MATEnemy10
+    second: {fileID: 2100000, guid: 02f01ffde75471f4b9e04a29e8efd67f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -44,11 +43,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Idle_Corkscrew
       takeName: ArmatureEnemy10|ArmatureEnemy10Action
       internalID: 0
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 9
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -73,11 +72,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Attack
+      name: Attack_Corkscrew
       takeName: ArmatureEnemy10|ArmatureEnemy10Action
       internalID: 0
-      firstFrame: 3
-      lastFrame: 4
+      firstFrame: 19
+      lastFrame: 79
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
