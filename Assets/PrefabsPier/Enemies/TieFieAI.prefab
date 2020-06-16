@@ -124,49 +124,6 @@ Transform:
   m_Father: {fileID: 8701970935194964478}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7793433090195546291
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1728441122403948445}
-  - component: {fileID: 5305739128501118722}
-  m_Layer: 0
-  m_Name: IdleMover
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1728441122403948445
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7793433090195546291}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8701970935194964478}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5305739128501118722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7793433090195546291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1236a13bdd28bcf4888f704a69f86848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8258710550122145771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5015,7 +4972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRange: 30
-  fireRate: 2
+  fireRate: 3
   damageAmount: 10
   damageMinRange: 0
   damageMaxRange: 0
@@ -5203,7 +5160,6 @@ MonoBehaviour:
   aimError: 20
   alwaysShoot: 1
   weapon: {fileID: 8701970933539673513}
-  friendlyFire: 0
   combatMover: {fileID: 8701970934793450066}
 --- !u!1 &8701970934547059064
 GameObject:
@@ -5321,8 +5277,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  angularSpeed: 60
-  useRigidbody: 0
+  acceleration: 5
+  angularSpeed: 100
+  useRigidbody: 1
+  targetMinDistance: 20
+  targetMaxDistance: 40
 --- !u!1 &8701970935194964475
 GameObject:
   m_ObjectHideFlags: 0
@@ -5366,7 +5325,6 @@ Transform:
   - {fileID: 8701970934313746668}
   - {fileID: 8701970934793450068}
   - {fileID: 5686741892960617267}
-  - {fileID: 1728441122403948445}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5462,10 +5420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca656ef7fd51a5b438b81ec96dbd801c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleMover: {fileID: 7793433090195546291}
+  idleMover: {fileID: 0}
   seeker: {fileID: 8701970934547059064}
   figther: {fileID: 8701970934313746665}
-  fightingDistance: 20
+  fightingDistance: 100
 --- !u!114 &5686741892875810865
 MonoBehaviour:
   m_ObjectHideFlags: 0

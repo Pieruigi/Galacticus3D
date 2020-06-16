@@ -22,7 +22,7 @@ TagManager:
   - Obstacle
   - Bullet
   - NoBulletCollision
-  - 
+  - AIAvoidance
   - 
   - 
   - 

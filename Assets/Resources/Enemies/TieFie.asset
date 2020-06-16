@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2751df4d2b704c419991def6a317a00, type: 3}
   m_Name: TieFie
   m_EditorClassIdentifier: 
-  prefabObject: {fileID: 8701970935194964475, guid: ddbb80124e63a78488e1931e4d94d487,
+  prefabObject: {fileID: 8701970935194964475, guid: b857664680b02784bb12eea7efbdf31a,
     type: 3}
   displayName: TieFie
   level: 2

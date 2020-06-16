@@ -42,6 +42,9 @@ namespace OMTB.AI
         public void Freeze()
         {
             currentTimer += timer;
+            if (currentTimer > timer)
+                currentTimer = timer;
+
             if (!isFrozen)
             {
                 isFrozen = true;

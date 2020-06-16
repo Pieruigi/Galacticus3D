@@ -13,10 +13,17 @@ namespace OMTB.AI
         [SerializeField]
         Enemy tieFieResource;
 
-        float tieFieMinRate = 12;
-        float tieFieMaxRate = 24;
+        [SerializeField]
+        Transform leftHangar;
+
+        [SerializeField]
+        Transform rightHangar;
+
+        float tieFieMinRate = 30;
+        float tieFieMaxRate = 60;
         float tieFieCurrRate;
         DateTime lastTieFie;
+        float tieFieMaxNumber = 3;
 
         List<Weapon> cannons;
 
@@ -24,11 +31,15 @@ namespace OMTB.AI
 
         TargetSetter targetSetter;
 
-        List<Droppable> droppables;   
+        List<Droppable> droppables;
+
+        List<GameObject> tieFies = new List<GameObject>();
 
         // Start is called before the first frame update
         void Start()
         {
+            
+
             droppables = new List<Droppable>(Resources.LoadAll<Droppable>(Droppable.ResourceFolder));
             targetSetter = GetComponent<TargetSetter>();
 
@@ -72,22 +83,25 @@ namespace OMTB.AI
         {
             if( (DateTime.UtcNow - lastTieFie).TotalSeconds > tieFieCurrRate)
             {
-                SpawnTieFie();
+                if(tieFies.Count < tieFieMaxNumber)
+                    SpawnTieFie();
             }
         }
 
         void SpawnTieFie()
         {
+            // Update timer
+            lastTieFie = DateTime.UtcNow;
+            tieFieCurrRate = UnityEngine.Random.Range(tieFieMinRate, tieFieMaxRate);
+
             // Create TieFie
             GameObject g = GameObject.Instantiate(tieFieResource.PrefabObject);
-
+            g.SetActive(false);
             // Add dropper
             //DropperSetter dropperSetter = g.AddComponent<DropperSetter>();
             //dropperSetter.Set(tieFieResource.DroppingRate, droppables);
 
-            IActivable[] activables = g.GetComponentsInChildren<IActivable>();
-            foreach(IActivable activable in activables)
-                activable.Activate();
+            
            
             // Set spawn position
             Vector3 dir = targetSetter.Target.position - transform.position;
@@ -99,12 +113,37 @@ namespace OMTB.AI
             pos.y = 0;
             pos.z = targetSetter.Target.position.z;
             pos.z += (UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1) * 50f;
-            g.transform.position = pos;
 
-            // Update timer
-            lastTieFie = DateTime.UtcNow;
-            tieFieCurrRate = UnityEngine.Random.Range(tieFieMinRate, tieFieMaxRate);
+            Transform t;
+            RaycastHit hit;
+            if (OMTB.Utils.AIUtil.HitObstacle(leftHangar.transform.position, -transform.right, 100f, out hit, true))
+                t = rightHangar;
+            else
+                if (OMTB.Utils.AIUtil.HitObstacle(rightHangar.transform.position, transform.right, 100f, out hit, true))
+                    t = leftHangar;
+            else
+                t = UnityEngine.Random.Range(0, 2) == 0 ? leftHangar : rightHangar;
+
+            g.transform.position = t.position;
+            g.transform.forward = t.forward;
+            
+            Gameplay.ShipLauncher sm = g.AddComponent<Gameplay.ShipLauncher>();
+            sm.TargetPosition = pos;
+
+            g.GetComponent<IDamageable>().OnDie += HandleOnTieFieDie;
+            tieFies.Add(g);
+
+            g.SetActive(true);
+
+
         }
+
+        void HandleOnTieFieDie(IDamageable damageable)
+        {
+            tieFies.RemoveAll(t => t.GetComponent<IDamageable>() == damageable);
+        }
+
+        
     }
 }
 

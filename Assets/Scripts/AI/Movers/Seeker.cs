@@ -33,7 +33,13 @@ namespace OMTB.AI
         {
             targetSetter = GetComponent<TargetSetter>();
             agent = GetComponentInParent<NavMeshAgent>();
+            
             Deactivate();
+        }
+
+        void Start()
+        {
+            
         }
 
         // Update is called once per frame
@@ -95,7 +101,9 @@ namespace OMTB.AI
 
         public bool IsActive()
         {
-            return !agent.isStopped;
+
+            //return !agent.isStopped;
+            return isActive;
         }
 
         public void Freeze(bool value)

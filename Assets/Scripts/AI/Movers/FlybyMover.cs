@@ -102,6 +102,9 @@ namespace OMTB.AI
 
         void FixedUpdate()
         {
+            if (!isActive)
+                return;
+
             if (useRigidbody)
             {
                 rb.MovePosition(rb.position + currentDir * currSpeed * Time.fixedDeltaTime);

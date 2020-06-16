@@ -6910,26 +6910,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8342638265564242186, guid: b857664680b02784bb12eea7efbdf31a,
-        type: 3}
-      propertyPath: angularSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8342638265564242186, guid: b857664680b02784bb12eea7efbdf31a,
-        type: 3}
-      propertyPath: useRigidbody
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701970933539673513, guid: b857664680b02784bb12eea7efbdf31a,
-        type: 3}
-      propertyPath: fireRate
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8701970935194964227, guid: b857664680b02784bb12eea7efbdf31a,
-        type: 3}
-      propertyPath: fightingDistance
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 8701970935194964475, guid: b857664680b02784bb12eea7efbdf31a,
         type: 3}
       propertyPath: m_Name

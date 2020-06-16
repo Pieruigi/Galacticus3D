@@ -25,9 +25,13 @@ namespace OMTB.Utils
             return onSight;
         }
 
-        public static bool HitObstacle(Vector3 position, Vector3 direction, float distance, out RaycastHit hit)
+        public static bool HitObstacle(Vector3 position, Vector3 direction, float distance, out RaycastHit hit, bool excludeAvoidance = false)
         {
-            int mask = LayerMask.GetMask(new string[] { "Obstacle" });
+            int mask = 0;
+            if(excludeAvoidance)
+                mask = LayerMask.GetMask(new string[] { "Obstacle" });
+            else
+                mask = LayerMask.GetMask(new string[] { "Obstacle", "AIAvoidance" });
 
             if (Physics.Raycast(position, direction, out hit, distance, mask, QueryTriggerInteraction.Ignore))
                 return true;
