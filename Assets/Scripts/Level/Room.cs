@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace OMTB.Level
 {
+
+    public enum RoomType { Exploration, Fighting, Boss, Bank }
     
     public class RoomConfig
     {
+        public RoomType RoomType { get; set; }
         
         public int Width { get; set; }
 
@@ -17,6 +20,15 @@ namespace OMTB.Level
 
     public abstract class Room : MonoBehaviour
     {
+        [SerializeField]
+        RoomType roomType;
+        public RoomType RoomType
+        {
+            get { return roomType; }
+            set { roomType = value; }
+        }
+
+        [SerializeField]
         int width, height;
         public int Width
         {
@@ -27,12 +39,14 @@ namespace OMTB.Level
             get { return height; }
         }
 
+        [SerializeField]
         float tileSize;
         public float TileSize
         {
             get { return tileSize; }
         }
        
+
         GameObject wallRoot;
         public GameObject WallRoot
         {
@@ -80,7 +94,7 @@ namespace OMTB.Level
 
         public virtual void Init(RoomConfig config)
         {
-            
+            roomType = config.RoomType;
             width = config.Width;
             height = config.Height;
             tileSize = config.TileSize;

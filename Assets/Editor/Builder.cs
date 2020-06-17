@@ -82,6 +82,36 @@ namespace OMTB.Editor
                 return null;
             }
         }
+
+        [MenuItem("Assets/Create/OMTB/Boss")]
+        public static Boss BuildBoss()
+        {
+            try
+            {
+                string path = basePath + Boss.ResourceFolder;
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+
+                Boss asset = ScriptableObject.CreateInstance<Boss>();
+
+                AssetDatabase.CreateAsset(asset, path + "/boss.asset");
+                AssetDatabase.SaveAssets();
+
+                EditorUtility.FocusProjectWindow();
+
+                Selection.activeObject = asset;
+
+                return asset;
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("ERROR!", e.Message, "OK");
+                Debug.LogError(e);
+                return null;
+            }
+        }
     }
 
 }

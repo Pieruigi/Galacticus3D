@@ -75,7 +75,8 @@ namespace OMTB
         {
             //Quaternion targetRot2 = Quaternion.Euler(0,0,30);
             //transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRot2, 20 * Time.deltaTime);
-            
+            if (rolleable == null)
+                return;
             
             float angle = 0;
             float angularSpeed = 0;

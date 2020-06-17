@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace OMTB.Level
 {
-    public class BankRoom : Room
+    public class EmptyRoom : Room
     {
         protected override void CreateWalls()
         {
-            
-        }
 
-     
+        }
     }
 
 }

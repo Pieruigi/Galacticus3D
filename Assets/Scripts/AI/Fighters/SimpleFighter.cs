@@ -88,6 +88,7 @@ namespace OMTB.AI
         {
             Vector3 dir = (targetSetter.Target.position - weapon.transform.position).normalized;
 
+            Debug.Log("TryShoot");
             // Check collision
             RaycastHit hit;
             int mask;
@@ -96,8 +97,12 @@ namespace OMTB.AI
             else
                 mask = LayerMask.GetMask(new string[] { "Obstacle", "AIAvoidance", "NoFriendlyFire" });
 
+            
+
             if (Physics.SphereCast(weapon.transform.position, 1f, dir, out hit, weapon.FireRange * 1.5f, mask))
                 return;
+
+            Debug.Log("TryShoot 1");
 
             if (Vector3.Angle(weapon.transform.forward, dir) < aimError)
                 weapon.Fire();

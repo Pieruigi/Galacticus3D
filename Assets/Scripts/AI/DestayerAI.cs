@@ -58,7 +58,7 @@ namespace OMTB.AI
             }
 
             // Set the first tie fie spawn time
-            lastTieFie = DateTime.UtcNow;
+            //lastTieFie = DateTime.UtcNow;
             tieFieCurrRate = UnityEngine.Random.Range(tieFieMinRate, tieFieMaxRate);
             
         }
