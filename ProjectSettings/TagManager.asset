@@ -23,7 +23,7 @@ TagManager:
   - Bullet
   - NoBulletCollision
   - AIAvoidance
-  - 
+  - NoFriendlyFire
   - 
   - 
   - 

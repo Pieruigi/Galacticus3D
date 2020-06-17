@@ -20,8 +20,8 @@ namespace OMTB.AI
         [SerializeField]
         Weapon weapon;
 
-        //[SerializeField]
-        //bool friendlyFire = false;
+        [SerializeField]
+        bool useNoFriendlyFireLayer = false;
 
         [SerializeField]
         GameObject combatMover;
@@ -90,15 +90,14 @@ namespace OMTB.AI
 
             // Check collision
             RaycastHit hit;
-            int mask = 0;
-            //if (friendlyFire)
+            int mask;
+            if(!useNoFriendlyFireLayer)
                 mask = LayerMask.GetMask(new string[] { "Obstacle", "AIAvoidance" });
-            //else
-            //    mask = LayerMask.GetMask(new string[] { "Obstacle", "AIAvoider", tag });
+            else
+                mask = LayerMask.GetMask(new string[] { "Obstacle", "AIAvoidance", "NoFriendlyFire" });
 
-            if (Physics.SphereCast(weapon.transform.position, 1f, dir, out hit, weapon.FireRange*1.5f, mask))
+            if (Physics.SphereCast(weapon.transform.position, 1f, dir, out hit, weapon.FireRange * 1.5f, mask))
                 return;
-
 
             if (Vector3.Angle(weapon.transform.forward, dir) < aimError)
                 weapon.Fire();

@@ -48,7 +48,7 @@ namespace OMTB.AI
 
         void Awake()
         {
-            currSpeed = speed;
+            currSpeed = 0;
             flyingAwaySpeed = speed * flyingAwaySpeedMul;
             sqrTargetMinDist = targetMinDistance * targetMinDistance;
             sqrTargetMaxDist = targetMaxDistance * targetMaxDistance;

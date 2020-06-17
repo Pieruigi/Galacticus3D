@@ -27,6 +27,7 @@ namespace OMTB.Utils
 
         public static bool HitObstacle(Vector3 position, Vector3 direction, float distance, out RaycastHit hit, bool excludeAvoidance = false)
         {
+       
             int mask = 0;
             if(excludeAvoidance)
                 mask = LayerMask.GetMask(new string[] { "Obstacle" });

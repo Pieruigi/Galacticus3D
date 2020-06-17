@@ -33,13 +33,11 @@ namespace OMTB.AI
         void Update()
         {
             // Move slowly
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward * speed * Time.deltaTime, speed);
-
-            
+            //transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward * speed * Time.deltaTime, speed);
             
             RaycastHit hit;
-            // Check whether enemy ship is going against borders or not
-            if (Utils.AIUtil.HitObstacle(transform.position, transform.forward, speed * 10f, out hit, /* excludeAvoidance */true))
+            // Check whether the destayer ship is run into a wall or not
+            if (Utils.AIUtil.HitObstacle(transform.position, transform.forward, speed * 20f, out hit, /* excludeAvoidance */true))
             {
                 // Compute target direction
                 Vector3 targetDir = hit.normal;
@@ -61,22 +59,24 @@ namespace OMTB.AI
                     //else
                     //    transform.forward = Vector3.RotateTowards(transform.forward, -dir, rotSpeedRadians * Time.deltaTime, 0f);
                 }
-                else
-                {
-                    // Get player position 
-                    Vector3 dir = targetSetter.Target.position - transform.position;
-                    dir.y = 0;
-                    dir.Normalize();
-                    if (Vector3.Dot(dir, transform.right) > 0)
-                        transform.right = Vector3.RotateTowards(transform.right, dir, rotSpeedRadians * Time.deltaTime, 0f);
-                    else
-                        transform.right = Vector3.RotateTowards(transform.right, -dir, rotSpeedRadians * Time.deltaTime, 0f);
-                }
+                //else
+                //{
+                //    // Get player position 
+                //    Vector3 dir = targetSetter.Target.position - transform.position;
+                //    dir.y = 0;
+                //    dir.Normalize();
+                //    if (Vector3.Dot(dir, transform.right) > 0)
+                //        transform.right = Vector3.RotateTowards(transform.right, dir, rotSpeedRadians * Time.deltaTime, 0f);
+                //    else
+                //        transform.right = Vector3.RotateTowards(transform.right, -dir, rotSpeedRadians * Time.deltaTime, 0f);
+                //}
                 
             }
             
 
         }
+
+       
 
     }
 

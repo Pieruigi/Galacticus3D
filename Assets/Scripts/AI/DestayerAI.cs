@@ -19,8 +19,8 @@ namespace OMTB.AI
         [SerializeField]
         Transform rightHangar;
 
-        float tieFieMinRate = 30;
-        float tieFieMaxRate = 60;
+        float tieFieMinRate = 15;
+        float tieFieMaxRate = 40;
         float tieFieCurrRate;
         DateTime lastTieFie;
         float tieFieMaxNumber = 3;
@@ -58,7 +58,7 @@ namespace OMTB.AI
             }
 
             // Set the first tie fie spawn time
-            //lastTieFie = DateTime.UtcNow;
+            lastTieFie = DateTime.UtcNow;
             tieFieCurrRate = UnityEngine.Random.Range(tieFieMinRate, tieFieMaxRate);
             
         }
@@ -96,45 +96,39 @@ namespace OMTB.AI
 
             // Create TieFie
             GameObject g = GameObject.Instantiate(tieFieResource.PrefabObject);
+
+            // deactivate to prevent 'agent is not on navhmesh' error
             g.SetActive(false);
+
             // Add dropper
-            //DropperSetter dropperSetter = g.AddComponent<DropperSetter>();
-            //dropperSetter.Set(tieFieResource.DroppingRate, droppables);
+            if (g.GetComponent<RoomReferer>())
+            {
+                DropperSetter dropperSetter = g.AddComponent<DropperSetter>();
+                dropperSetter.Set(tieFieResource.DroppingRate, droppables);
+            }
 
-            
-           
-            // Set spawn position
-            Vector3 dir = targetSetter.Target.position - transform.position;
-            dir.Normalize();
-            Debug.Log("Dir:" + dir);
-
-            float x = UnityEngine.Random.Range(12f, 42f);
-            Vector3 pos = transform.position + dir * x;
-            pos.y = 0;
-            pos.z = targetSetter.Target.position.z;
-            pos.z += (UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1) * 50f;
-
+            // Get the hangar depending on the player position 
+            Vector3 v = targetSetter.Target.position - transform.position;
             Transform t;
-            RaycastHit hit;
-            if (OMTB.Utils.AIUtil.HitObstacle(leftHangar.transform.position, -transform.right, 100f, out hit, true))
+            if (Vector3.Dot(v, transform.right) > 0) // Right hangar
                 t = rightHangar;
             else
-                if (OMTB.Utils.AIUtil.HitObstacle(rightHangar.transform.position, transform.right, 100f, out hit, true))
-                    t = leftHangar;
-            else
-                t = UnityEngine.Random.Range(0, 2) == 0 ? leftHangar : rightHangar;
+                t = leftHangar;
 
+            // Set position and rotation
             g.transform.position = t.position;
+            Debug.Log("GPos:" + g.transform.position);
             g.transform.forward = t.forward;
+            g.GetComponentInChildren<OMTB.Utils.HeightAlligner>().SetHeight(-3f);
             
-            Gameplay.ShipLauncher sm = g.AddComponent<Gameplay.ShipLauncher>();
-            sm.TargetPosition = pos;
-
+            // handle tiefie destruction event
             g.GetComponent<IDamageable>().OnDie += HandleOnTieFieDie;
+
+            // add tiefie to the list
             tieFies.Add(g);
 
+            // activate the tiefie
             g.SetActive(true);
-
 
         }
 
