@@ -5,9 +5,9 @@ using OMTB.Interfaces;
 
 namespace OMTB.Gameplay
 {
-    public class Deflector : MonoBehaviour, IDamageable
+    public class DeflectorController : PowerUpController, IDamageable
     {
-        float deflectedDamage;
+        Deflector deflector;
 
         public event Die OnDie;
 
@@ -17,54 +17,37 @@ namespace OMTB.Gameplay
         public void ApplyDamage(float amount)
         {
             // Compute damage
-            amount -= amount * deflectedDamage;
+            amount -= amount * deflector.DeflectedDamage;
 
             playerHealth.ApplyDamage(amount);
 
         }
 
-        void Awake()
+        protected override void Awake()
         {
             playerHealth = GetComponent<Health>();
             playerHealth.enabled = false;
-
-            
         }
 
-        // Start is called before the first frame update
-        void Start()
+
+
+        public override void Init(PowerUp powerUp)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-        
-
-        public void Init(float deflectedDamage, GameObject prefab)
-        {
-            this.deflectedDamage = deflectedDamage;
-
-            // Create graphic shield
-            graphics = GameObject.Instantiate(prefab);
+            this.deflector = powerUp as Deflector;
+            graphics = GameObject.Instantiate(this.deflector.Prefab);
             graphics.transform.parent = transform;
             graphics.transform.localPosition = Vector3.zero;
             graphics.transform.localRotation = Quaternion.identity;
         }
 
-        public void Deactivate()
+        private void OnDestroy()
         {
             if (!playerHealth.enabled)
                 playerHealth.enabled = true;
 
             Destroy(graphics);
-
-            Destroy(this);
         }
+
     }
 
 }

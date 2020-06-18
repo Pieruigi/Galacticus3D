@@ -119,7 +119,7 @@ namespace OMTB.AI
             g.transform.position = t.position;
             Debug.Log("GPos:" + g.transform.position);
             g.transform.forward = t.forward;
-            g.GetComponentInChildren<OMTB.Utils.HeightAlligner>().SetHeight(-3f);
+            g.GetComponentInChildren<HeightAlligner>().SetHeight(-3f);
             
             // handle tiefie destruction event
             g.GetComponent<IDamageable>().OnDie += HandleOnTieFieDie;

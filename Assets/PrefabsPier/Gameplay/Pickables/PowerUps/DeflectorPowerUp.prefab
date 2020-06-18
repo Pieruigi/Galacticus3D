@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droppable: {fileID: 11400000, guid: 1763cead47df8a24dbfbebc01da6a186, type: 2}
-  deflectedDamage: 10
+  deflectedDamage: 0.1
   prefab: {fileID: 8126647987759023783, guid: 13194b0b1fb783a4bbdba57c0749b8b0, type: 3}
 --- !u!1001 &2579341691696663383
 PrefabInstance:

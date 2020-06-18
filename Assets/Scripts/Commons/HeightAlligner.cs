@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace OMTB.Utils
+namespace OMTB
 {
     public class HeightAlligner : MonoBehaviour
     {

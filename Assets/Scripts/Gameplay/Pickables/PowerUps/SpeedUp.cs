@@ -7,7 +7,7 @@ namespace OMTB.Gameplay
 {
 
 
-    public class SpeedPowerUp : PowerUp
+    public class SpeedUp : PowerUp
     {
         [SerializeField]
         float speedMultiplier;

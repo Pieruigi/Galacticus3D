@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using OMTB.Interfaces;
+using UnityEngine.Events;
 
 namespace OMTB.Gameplay
 {
     public class Picker : MonoBehaviour
     {
-
+        public UnityAction<Picker> OnInitialized;
 
         [SerializeField]
         GameObject contentPrefab;
@@ -34,7 +35,7 @@ namespace OMTB.Gameplay
         void Start()
         {
 
-            Init();
+           // Init();
 
         }
 
@@ -44,12 +45,13 @@ namespace OMTB.Gameplay
           
         }
 
-        public void SetContent(GameObject contentPrefab)
+        public void Init(GameObject contentPrefab)
         {
-            this.contentPrefab = contentPrefab; 
+            this.contentPrefab = contentPrefab;
+            CreateContent();
         }
 
-        private void Init()
+        private void CreateContent()
         {
             
             GameObject g = GameObject.Instantiate(contentPrefab);

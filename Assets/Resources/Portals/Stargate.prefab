@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 3667588120285265040}
   - component: {fileID: 2472009035422410468}
   - component: {fileID: 8937059504935957863}
+  - component: {fileID: 5759889120287360534}
   m_Layer: 0
   m_Name: Stargate
   m_TagString: Untagged
@@ -85,6 +86,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8705eb80f3147c74e80baa2abd655ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5759889120287360534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798412553031759497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283128fc8c6026646b92a254e8ce6ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5079784279934789899

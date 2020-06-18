@@ -52,7 +52,7 @@ namespace OMTB.Gameplay
 
             // Set droppable
             //picker.GetComponent<Picker>().StartDelay = 5; // A bit of delay
-            picker.GetComponent<Picker>().SetContent(droppablePrefab);
+            picker.GetComponent<Picker>().Init(droppablePrefab);
                
             
         }

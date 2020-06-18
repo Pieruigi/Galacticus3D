@@ -21,8 +21,6 @@ namespace OMTB.Gameplay
         [SerializeField]
         PowerUp test;
 
-
-
         private void Awake()
         {
             if(Instance == null)
@@ -75,16 +73,20 @@ namespace OMTB.Gameplay
             // Get position to release
 
             Ray ray = new Ray(player.transform.position, Vector3.right);
-            //float distance = Level.LevelManager.Instance.TileSize;
-            float distance = 8;
+
+#if UNITY_EDITOR
+            float distance;
+            if (Level.LevelManager.Instance)
+                distance = Level.LevelManager.Instance.TileSize;
+            else
+                distance = 8;
+#else
+            float distance = Level.LevelManager.Instance.TileSize;
+#endif
+
+
             Vector3 dropPos = player.transform.position;
 
-            //RaycastHit[] hits = Physics.RaycastAll(ray, distance);
-            //if (hits.Length > 0 )
-            //{
-            //    for(int i=0; i<hits.Length; i++)
-            //        Debug.Log("Hits:" + hits[i].transform);
-            //}
 
             int mask = ~LayerMask.NameToLayer("Obstacle");
 
@@ -133,15 +135,28 @@ namespace OMTB.Gameplay
             GameObject picker = GameObject.Instantiate(pickerPrefab.gameObject);
 
             // Dropper is used on AI, so I'm sure RoomReference component exists
-            //picker.AddComponent<RoomReferer>().Reference = LevelManager.Instance.CurrentRoom;
+#if UNITY_EDITOR
+            if (LevelManager.Instance)
+            {
+                picker.AddComponent<RoomReferer>().Reference = LevelManager.Instance.CurrentRoom;
+            }
+#else
+            picker.AddComponent<RoomReferer>().Reference = LevelManager.Instance.CurrentRoom;
+#endif
+
 
             picker.transform.position = position;
             picker.transform.rotation = Quaternion.identity;
 
             // Set droppable
             //picker.GetComponent<Picker>().StartDelay = 5; // A bit of delay
-            picker.GetComponent<Picker>().SetContent(current.Droppable.Prefab);
-            
+            picker.GetComponent<Picker>().Init(current.Droppable.Prefab);
+
+            // Since I'm dropping a power up player was using i need to set current data
+            picker.GetComponentInChildren<PowerUp>().SetData(current.GetData());
+
+            // Destroy the current power up
+            Destroy(current.gameObject);
         }
     }
 
