@@ -45,6 +45,8 @@ namespace OMTB.Level
         int galacticusMinLevel = 3;
         float galacticusRate = 0.1f;
 
+        int portalSize = 2;
+
         List<Room> rooms = new List<Room>(); // List of rooms
         List<Portal> portals = new List<Portal>(); // List of portals
         List<GameObject> enemies = new List<GameObject>();
@@ -195,8 +197,8 @@ namespace OMTB.Level
 
             // Check for special rooms
             List<Room> specialRooms = new List<Room>();
-            if (Random.Range(0f, 1f) <= bankRate)
-                specialRooms.Add(CreateBankRoom().GetComponent<Room>());
+            //if (Random.Range(0f, 1f) <= bankRate)
+            //    specialRooms.Add(CreateBankRoom().GetComponent<Room>());
 
             //
             // Start creating tree
@@ -302,7 +304,7 @@ namespace OMTB.Level
 
         private void CreatePortals(Room room1, Room room2, bool isLocked)
         {
-            int portalSize = 2;
+            
 
             // Create object
             List<GameObject> res = LoadPortalResources();
@@ -313,8 +315,9 @@ namespace OMTB.Level
             g2.GetComponent<Portal>().Init(room2, g.GetComponent<Portal>(), isLocked);
 
             // Set position
-            g.transform.position = room1.GetRandomSpawnPosition(portalSize, portalSize);
-            g2.transform.position = room2.GetRandomSpawnPosition(portalSize, portalSize);
+            //g.transform.position = room1.GetRandomSpawnPosition(portalSize, portalSize);
+            g.transform.position = room1.GetPortalPosition(portalSize, portalSize);
+            g2.transform.position = room2.GetPortalPosition(portalSize, portalSize);
 
             portals.Add(g.GetComponent<Portal>());
             portals.Add(g2.GetComponent<Portal>());
@@ -416,7 +419,20 @@ namespace OMTB.Level
             
             //GameObject room = CreateRoom(new RoomConfig() {RoomType = RoomType.Boss, Width = 80, Height = 80, TileSize = 8 }, typeof(EmptyRoom));
             room.name += "_Boss";
-            
+
+            // Create boss object
+            GameObject bossObj = GameObject.Instantiate(boss.PrefabObject);
+
+            // Set boss in room
+            BossPlacer bossPlacer = room.GetComponent<BossPlacer>();
+            bossPlacer.Place(bossObj);
+
+            // Add room setter ( used to know which room each enemy belongs to )
+            bossObj.AddComponent<RoomReferer>().Reference = room.GetComponent<Room>();
+
+            // Add reference to the collection resource
+            bossObj.AddComponent<BossReferer>().Reference = boss;
+
             return room;
         }
 

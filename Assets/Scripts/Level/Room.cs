@@ -132,6 +132,11 @@ namespace OMTB.Level
 
         }
 
+        public virtual Vector3 GetPortalPosition(int widthInTiles, int heightInTiles)
+        {
+            return GetRandomSpawnPosition(widthInTiles, heightInTiles);
+        } 
+
         protected void SetTile(int index)
         {
             tiles[index] = 1;

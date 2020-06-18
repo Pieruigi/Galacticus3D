@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8419152530521720845}
   - component: {fileID: 3281640109859037026}
+  - component: {fileID: 6740782911927261546}
   m_Layer: 0
   m_Name: DestayerRoom
   m_TagString: Untagged
@@ -49,6 +50,22 @@ MonoBehaviour:
   width: 40
   height: 40
   tileSize: 8
+  portalSpawns:
+  - {fileID: 5810144878790787047}
+--- !u!114 &6740782911927261546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549801725648554393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee5acf8afd9f8184391c39a97b79f7cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossSpawns:
+  - {fileID: 3046178056352436416}
 --- !u!1 &6963281469123550040
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +90,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6963281469123550040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -56.1}
+  m_LocalPosition: {x: 160, y: 0, z: -157.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8419152530521720845}
@@ -102,10 +119,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8811507739598040824}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 160, y: 0, z: -140}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8419152530521720845}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
