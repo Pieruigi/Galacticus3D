@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 315686751411257444}
   - component: {fileID: 315686751411257445}
   - component: {fileID: 3623509318905532252}
+  - component: {fileID: 1396710173428225478}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -91,6 +92,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237298db485ec214f8621fcfa76816ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1396710173428225478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315686751411257447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04694095d4825164f92736f8df96000a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2.5
 --- !u!1 &315686751695967234
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +223,7 @@ MonoBehaviour:
   aimError: 8
   alwaysShoot: 1
   weapon: {fileID: 315686752032985299}
-  friendlyFire: 0
+  useNoFriendlyFireLayer: 0
   combatMover: {fileID: 315686753026586408}
 --- !u!1 &315686752032985308
 GameObject:
@@ -453,6 +467,8 @@ MonoBehaviour:
   - {fileID: 4066232596815223833, guid: 15b04b5643613124fa46fdce8bef4a9a, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 3623509319197197897}
+  stopOnDieList:
+  - {fileID: 3633611000920306009}
 --- !u!114 &1971681362989479614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4e62424ef022a49882821edbf7ddb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 2.5
 --- !u!1 &315686753026586408
 GameObject:
   m_ObjectHideFlags: 0

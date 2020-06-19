@@ -15,6 +15,9 @@ namespace OMTB
         [SerializeField]
         Transform point;
 
+        [SerializeField]
+        List<ParticleSystem> stopOnDieList;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -44,6 +47,9 @@ namespace OMTB
 
         void HandleOnDie(OMTB.Interfaces.IDamageable damageable)
         {
+            foreach (ParticleSystem p in stopOnDieList)
+                p.Stop();
+
             ParticleSystem ps = GameObject.Instantiate(diePS);
             ps.transform.position = point.position;
             //ps.transform.rotation = Quaternion.identity;

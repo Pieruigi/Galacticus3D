@@ -58,7 +58,6 @@ namespace OMTB
 
             if(health == 0)
             {
-                //OnDestroyed?.Invoke();
                 OnDie?.Invoke(this);
                 
                 //Destroy(gameObject, 1);

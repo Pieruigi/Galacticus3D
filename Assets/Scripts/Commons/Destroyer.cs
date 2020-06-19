@@ -7,8 +7,11 @@ namespace OMTB
 {
     public class Destroyer : MonoBehaviour
     {
-        //[SerializeField]
+
+        [SerializeField]
         float delay = 0.1f;
+
+        
 
         // Start is called before the first frame update
         void Start()
@@ -21,15 +24,22 @@ namespace OMTB
         // Update is called once per frame
         void Update()
         {
-
+           
         }
 
         void HandleOnDie(IDamageable damageable)
         {
+            // Disable collider
+            Collider coll = GetComponent<Collider>();
+            if (coll)
+                coll.enabled = false;
+
+            // Disable behaviours
             IActivable[] activables = GetComponentsInChildren<IActivable>();
             foreach (IActivable activable in activables)
                 activable.Deactivate();
-
+    
+            
             Destroy(gameObject, delay);
         }
     }

@@ -205,6 +205,8 @@ namespace OMTB.AI
             isChangingDirection = false;
             isDecelerating = false;
 
+            if (useRigidbody && rb!=null)
+                rb.velocity = Vector3.zero;
         }
 
         void ChangeDirection()

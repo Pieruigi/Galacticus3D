@@ -33,6 +33,8 @@ namespace OMTB.AI
         TargetSetter targetSetter;
 
         float sqrWeaponRange;
+
+        bool isDead = false;
         
         // Start is called before the first frame update
         void Awake()
@@ -42,10 +44,17 @@ namespace OMTB.AI
             Deactivate();
         }
 
+        void Start()
+        {
+            GetComponent<IDamageable>().OnDie += HandleOnDie;
+        }
+
         // Update is called once per frame
         void Update()
         {
-         
+            if (isDead)
+                return;
+
             if (!isActive)
             {
                 if (alwaysShoot) // Shoot anyway
@@ -116,6 +125,11 @@ namespace OMTB.AI
         public void Freeze(bool value)
         {
             gameObject.SetActive(!value);
+        }
+
+        void HandleOnDie(IDamageable damageable)
+        {
+            isDead = true; 
         }
     }
 
