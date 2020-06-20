@@ -29,8 +29,8 @@ namespace OMTB.Collections
         }
 
         [SerializeField]
-        List<GameObject> rooms;
-        public IList<GameObject> Rooms
+        List<Room> rooms;
+        public IList<Room> Rooms
         {
             get { return rooms.AsReadOnly(); }
         }

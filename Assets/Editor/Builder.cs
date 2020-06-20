@@ -112,6 +112,36 @@ namespace OMTB.Editor
                 return null;
             }
         }
+
+        [MenuItem("Assets/Create/OMTB/Room")]
+        public static Room BuildRoom()
+        {
+            try
+            {
+                string path = basePath + Room.ResourceFolder;
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+
+                Room asset = ScriptableObject.CreateInstance<Room>();
+
+                AssetDatabase.CreateAsset(asset, path + "/room.asset");
+                AssetDatabase.SaveAssets();
+
+                EditorUtility.FocusProjectWindow();
+
+                Selection.activeObject = asset;
+
+                return asset;
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("ERROR!", e.Message, "OK");
+                Debug.LogError(e);
+                return null;
+            }
+        }
     }
 
 }
