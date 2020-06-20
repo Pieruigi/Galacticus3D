@@ -37,7 +37,7 @@ namespace OMTB.Level
             Vector3 retPos = ret.position;
 
             // Destroy empty object
-            Destroy(ret);
+            //Destroy(ret);
 
             // Return position
             return retPos;

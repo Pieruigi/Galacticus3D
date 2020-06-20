@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Collections;
 
 namespace OMTB.Level
 {
 
-    public enum RoomType { Exploration, Fighting, Boss, Bank }
+    
     
     public class RoomConfig
     {
@@ -20,7 +21,7 @@ namespace OMTB.Level
 
     public abstract class Room : MonoBehaviour
     {
-        [SerializeField]
+        //[SerializeField]
         RoomType roomType;
         public RoomType RoomType
         {

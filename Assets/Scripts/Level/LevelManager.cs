@@ -51,6 +51,8 @@ namespace OMTB.Level
         List<Portal> portals = new List<Portal>(); // List of portals
         List<GameObject> enemies = new List<GameObject>();
 
+        List<OMTB.Collections.Room> roomResources;
+
         public IList<Portal> Portals
         {
             get { return portals.AsReadOnly(); }
@@ -154,17 +156,20 @@ namespace OMTB.Level
         {
             ClearAll();
 
+            // Load all room resources
+            roomResources = new List<OMTB.Collections.Room>(Resources.LoadAll<OMTB.Collections.Room>(OMTB.Collections.Room.ResourceFolder));
+
             List<Room> commonRooms = new List<Room>();
 
-            // How many rooms in the current level?
+            // Set room total number for the current level
             int totalRooms = Random.Range(minCommonRooms, maxCommonRooms + 1);
 
             // At least one room of each type of common room
             for (int i = 0; i < minExplorationRooms; i++)
-                commonRooms.Add(CreateExplorationRoom().GetComponent<Room>());
+                commonRooms.Add(CreateRoom(RoomType.Exploration).GetComponent<Room>()); //commonRooms.Add(CreateExplorationRoom().GetComponent<Room>());
 
             for (int i = 0; i < minFightingRoom; i++)
-                commonRooms.Add(CreateFightingRoom().GetComponent<Room>());
+                commonRooms.Add(CreateRoom(RoomType.Fighting).GetComponent<Room>()); //commonRooms.Add(CreateFightingRoom().GetComponent<Room>());
         
 
             //for (int i = 0; i < minCustomRooms; i++)
@@ -178,20 +183,21 @@ namespace OMTB.Level
 
                 int r = Random.Range(0, commonRoomTypesNum);
                 if (r == 0)
-                    commonRooms.Add(CreateExplorationRoom().GetComponent<Room>());
+                    commonRooms.Add(CreateRoom(RoomType.Exploration).GetComponent<Room>()); //commonRooms.Add(CreateExplorationRoom().GetComponent<Room>());
                 else if (r == 1)
-                    commonRooms.Add(CreateFightingRoom().GetComponent<Room>());
-                
+                    commonRooms.Add(CreateRoom(RoomType.Fighting).GetComponent<Room>());//commonRooms.Add(CreateFightingRoom().GetComponent<Room>());
+
                 //else
                 //    commonRooms.Add(new CustomRoom(new CustomRoomConfig() { Width = 12, Height = 9, TileSize = tileSize }));
             }
 
-            // Get the starting room
-            startingRoom = commonRooms[Random.Range(0, commonRooms.Count)];
+
+            // Create the starting room
+            startingRoom = CreateRoom(RoomType.Starting).GetComponent<Room>();//CreateStartingRoom().GetComponent<Room>();
             currentRoom = startingRoom;
 
             // Create the boss room
-            Room bossRoom = CreateBossRoom().GetComponent<Room>();
+            Room bossRoom = CreateRoom(RoomType.Boss).GetComponent<Room>();//CreateBossRoom().GetComponent<Room>();
             int bossDepth = Random.Range(minBossRoomDepth, totalRooms - 2);
 
 
@@ -201,16 +207,15 @@ namespace OMTB.Level
             //    specialRooms.Add(CreateBankRoom().GetComponent<Room>());
 
             //
-            // Start creating tree
+            // Start creating tree 
             //
+
+            // Put into the following list only rooms that can have more than one portal ( normally the common rooms )
             List<Room> used = new List<Room>();
 
             // Add the starting room to the used list
             Room prevRoom = startingRoom;
-            used.Add(startingRoom);
-            // Remove the starting room from the to use list
-            commonRooms.Remove(startingRoom);
-
+            
             // Create the tree up to the boss room
             for (int i = 0; i < bossDepth; i++)
             {
@@ -262,18 +267,6 @@ namespace OMTB.Level
              
             }
 
-            // Store all rooms
-            foreach (Room r in used)
-                rooms.Add(r);
-
-            foreach (Room r in specialRooms)
-                rooms.Add(r);
-
-            rooms.Add(bossRoom);
-
-
-
-
             //
             // Debug
             //
@@ -304,8 +297,6 @@ namespace OMTB.Level
 
         private void CreatePortals(Room room1, Room room2, bool isLocked)
         {
-            
-
             // Create object
             List<GameObject> res = LoadPortalResources();
             GameObject g = GameObject.Instantiate(res[Random.Range(0, res.Count)]);
@@ -315,7 +306,6 @@ namespace OMTB.Level
             g2.GetComponent<Portal>().Init(room2, g.GetComponent<Portal>(), isLocked);
 
             // Set position
-            //g.transform.position = room1.GetRandomSpawnPosition(portalSize, portalSize);
             g.transform.position = room1.GetPortalPosition(portalSize, portalSize);
             g2.transform.position = room2.GetPortalPosition(portalSize, portalSize);
 
@@ -333,115 +323,40 @@ namespace OMTB.Level
 
         }
 
-
-
-        private GameObject CreateRoom(RoomConfig config, System.Type roomType)
+        /**
+         * Create a room of some kind ( create room hub )
+         * */
+        GameObject CreateRoom(RoomType roomType)
         {
-            GameObject ret = new GameObject("Room_" + count);
-            if (count > 1)
+            GameObject ret = null;
+            switch (roomType)
             {
-                ret.transform.position = Vector3.forward * (lastRoomPosZ + config.Width * config.TileSize + 3 * config.TileSize);
+                case RoomType.Exploration:
+                    ret = CreateExplorationRoom();
+                    break;
+                case RoomType.Fighting:
+                    ret = CreateFightingRoom();
+                    break;
+                case RoomType.Starting:
+                    ret = CreateStartingRoom();
+                    break;
+                case RoomType.Boss:
+                    ret = CreateBossRoom();
+                    break;
             }
 
-            lastRoomPosZ = ret.transform.position.z;
-
-            Room comp = ret.AddComponent(roomType) as Room;
-            //if (roomType == typeof(Labyrinth))
-            //    comp = ret.AddComponent<Labyrinth>();
-            //else if (roomType == typeof(EmptyRoom))
-            //    comp = ret.AddComponent<EmptyRoom>();
-
-            comp.Init(config);
-            comp.Create();
-            count++;
-            return ret;
-        }
-
-        private GameObject CreateRoom(GameObject roomPrefab)
-        {
-            GameObject ret = GameObject.Instantiate(roomPrefab);
-            Room r = ret.GetComponent<Room>();
             if (count > 1)
             {
+                Room r = ret.GetComponent<Room>();
                 ret.transform.position = Vector3.forward * (lastRoomPosZ + r.Width * r.TileSize + 3 * r.TileSize);
             }
 
-            lastRoomPosZ = ret.transform.position.z;
-            r.Create();
             count++;
+            rooms.Add(ret.GetComponent<Room>());
+            lastRoomPosZ = ret.transform.position.z;
             return ret;
         }
 
-        private GameObject CreateExplorationRoom()
-        {
-            int w = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsH, maxExplorationRoomWallsH + 1);// /*num of horizontal walls*/2;
-
-            int h = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsV, maxExplorationRoomWallsV + 1);// */*num of vertical walls*/2;
-
-            // Create Room object
-            GameObject r = CreateRoom(new LabyrinthConfig() {RoomType = RoomType.Exploration, CorridorWidth = explorationRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
-            RoomEnemyData red = r.AddComponent<RoomEnemyData>();
-            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 0, MaxEnemyCount = 3 });
-            return r;
-        }
-
-        private GameObject CreateFightingRoom()
-        {
-            int w = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFigthingRoomWallsH, maxFightingRoomWallsH + 1);// * 2;
-            int h = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFightingRoomWallsV, maxFightingRoomWallsV + 1);//*1;
-
-            GameObject r = CreateRoom(new LabyrinthConfig() { RoomType = RoomType.Fighting, CorridorWidth = fightingRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
-            RoomEnemyData red = r.AddComponent<RoomEnemyData>();
-            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 9, MaxEnemyCount = 13 });
-
-            return r;
-        }
-
-        private GameObject CreateCustomRoom()
-        {
-            throw new System.Exception("Not implemented");
-        }
-
-        private GameObject CreateBossRoom()
-        {
-            // Load allowed bosses
-            List<Boss> bosses = new List<Boss>(Resources.LoadAll<Boss>(Boss.ResourceFolder)).FindAll(b => b.Level == level || b.Level + 1 == level || b.Level - 1 == level);
-
-            // Get a boss
-            Boss boss = bosses[Random.Range(0, bosses.Count)];
-
-            // Get one of the available rooms for the current boss
-            GameObject roomPrefab = boss.Rooms[Random.Range(0, boss.Rooms.Count)];
-
-            
-            // Instanziate room
-            GameObject room = CreateRoom(roomPrefab);
-            
-            //GameObject room = CreateRoom(new RoomConfig() {RoomType = RoomType.Boss, Width = 80, Height = 80, TileSize = 8 }, typeof(EmptyRoom));
-            room.name += "_Boss";
-
-            // Create boss object
-            GameObject bossObj = GameObject.Instantiate(boss.PrefabObject);
-
-            // Set boss in room
-            BossPlacer bossPlacer = room.GetComponent<BossPlacer>();
-            bossPlacer.Place(bossObj);
-
-            // Add room setter ( used to know which room each enemy belongs to )
-            bossObj.AddComponent<RoomReferer>().Reference = room.GetComponent<Room>();
-
-            // Add reference to the collection resource
-            bossObj.AddComponent<BossReferer>().Reference = boss;
-
-            return room;
-        }
-
-        private GameObject CreateBankRoom()
-        {
-            GameObject room = CreateRoom(new RoomConfig() {RoomType = RoomType.Bank, Width = 30, Height = 30, TileSize = 8 }, typeof(EmptyRoom));
-            room.name += "_Bank";
-            return room;
-        }
 
 
         #endregion
@@ -451,22 +366,10 @@ namespace OMTB.Level
         void CreatePlayer()
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Vector3 pos = startingRoom.GetRandomSpawnPosition(1, 1);
-            player.transform.position = pos;
-          
-            // Physics is not active until you start the game so use tile info from room
-            Vector3 dir = Vector3.forward;
-            for (int i = 0; i < 4; i++)
-            {
+            PlayerSpawner ps = startingRoom.GetComponent<PlayerSpawner>();
+            player.transform.position = ps.SpawnPoint.position;
+            player.transform.rotation = ps.SpawnPoint.rotation;
 
-                Debug.Log("Dir:" + dir);
-                LayerMask mask = LayerMask.NameToLayer("Obstacle");
-                if (!Physics.Raycast(pos, dir, 100))
-                    break;
-
-                dir = Quaternion.Euler(0, 90f, 0) * dir;
-            }
-            player.transform.forward = dir;
         }
 
         void AddEnemies()
@@ -562,6 +465,136 @@ namespace OMTB.Level
             foreach (Referer<Room> rs in l)
                 rs.gameObject.SetActive(value);
         }
+
+        #endregion
+
+        #region INTERNAL_USE
+        /**
+         * Creates a room with no template ( ex. for labyrinth )
+         * */
+        private GameObject CreateRoom(RoomConfig config, System.Type roomType)
+        {
+            GameObject ret = new GameObject("Room_" + count);
+            Room comp = ret.AddComponent(roomType) as Room;
+            comp.Init(config);
+            comp.Create();
+            return ret;
+        }
+
+        /**
+         * Creates a room from a given template ( ex. boss rooms )
+         * */
+        private GameObject CreateRoom(GameObject roomPrefab)
+        {
+            GameObject ret = GameObject.Instantiate(roomPrefab);
+            Room r = ret.GetComponent<Room>();
+            r.Create();
+            return ret;
+        }
+
+        private GameObject CreateExplorationRoom()
+        {
+            int w = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsH, maxExplorationRoomWallsH + 1);// /*num of horizontal walls*/2;
+
+            int h = explorationRoomWallDistance + (explorationRoomWallDistance + 1) * Random.Range(minExplorationRoomWallsV, maxExplorationRoomWallsV + 1);// */*num of vertical walls*/2;
+
+            // Create Room object
+            GameObject r = CreateRoom(new LabyrinthConfig() { RoomType = RoomType.Exploration, CorridorWidth = explorationRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
+            RoomEnemyData red = r.AddComponent<RoomEnemyData>();
+            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 0, MaxEnemyCount = 3 });
+            return r;
+        }
+
+        private GameObject CreateFightingRoom()
+        {
+            int w = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFigthingRoomWallsH, maxFightingRoomWallsH + 1);// * 2;
+            int h = fightingRoomWallDistance + (fightingRoomWallDistance + 1) * Random.Range(minFightingRoomWallsV, maxFightingRoomWallsV + 1);//*1;
+
+            GameObject r = CreateRoom(new LabyrinthConfig() { RoomType = RoomType.Fighting, CorridorWidth = fightingRoomWallDistance, Width = w, Height = h, TileSize = tileSize }, typeof(Labyrinth));
+            RoomEnemyData red = r.AddComponent<RoomEnemyData>();
+            red.Init(new RoomEnemyDataConfig() { MinEnemyCount = 9, MaxEnemyCount = 13 });
+
+            return r;
+        }
+
+        private GameObject CreateCustomRoom()
+        {
+            throw new System.Exception("Not implemented");
+        }
+
+
+        private GameObject CreateBossRoom()
+        {
+            // Load allowed bosses
+            List<Boss> bosses = new List<Boss>(Resources.LoadAll<Boss>(Boss.ResourceFolder)).FindAll(b => b.Level == level || b.Level + 1 == level || b.Level - 1 == level);
+
+            // Get a boss
+            Boss boss = bosses[Random.Range(0, bosses.Count)];
+
+            // Get one of the available rooms for the current boss
+            OMTB.Collections.Room roomRes = boss.Rooms[Random.Range(0, boss.Rooms.Count)];
+
+            // Instanziate room
+            GameObject room = CreateRoom(roomRes);
+
+            room.name += "_Boss";
+
+            // Create boss object
+            GameObject bossObj = GameObject.Instantiate(boss.PrefabObject);
+
+            // Set boss in room
+            BossPlacer bossPlacer = room.GetComponent<BossPlacer>();
+            bossPlacer.Place(bossObj);
+
+            // Add room setter ( used to know which room each enemy belongs to )
+            bossObj.AddComponent<RoomReferer>().Reference = room.GetComponent<Room>();
+
+            // Add reference to the collection resource
+            bossObj.AddComponent<BossReferer>().Reference = boss;
+
+            return room;
+        }
+
+        private GameObject CreateStartingRoom()
+        {
+            // Get an available starting room ( we might even put the available list directly in the player settings )
+            OMTB.Collections.Room roomRes = roomResources.Find(r => r.RoomType == RoomType.Starting);
+
+            // Get the room prefab
+            GameObject roomPrefab = roomRes.PrefabObject;
+
+            // Instanziate the room
+            GameObject room = CreateRoom(roomRes);
+
+            //GameObject room = CreateRoom(new RoomConfig() {RoomType = RoomType.Boss, Width = 80, Height = 80, TileSize = 8 }, typeof(EmptyRoom));
+            room.name += "_Starting";
+
+
+
+            return room;
+        }
+
+        /** 
+         * Creates a room given a room resource
+         * */
+        GameObject CreateRoom(OMTB.Collections.Room roomResource)
+        {
+            // Create the room
+            GameObject room = CreateRoom(roomResource.PrefabObject);
+
+            // Set the room type
+            room.GetComponent<Room>().RoomType = roomResource.RoomType;
+
+            return room;
+        }
+
+        private GameObject CreateBankRoom()
+        {
+            GameObject room = CreateRoom(new RoomConfig() { RoomType = RoomType.Bank, Width = 30, Height = 30, TileSize = 8 }, typeof(EmptyRoom));
+            room.name += "_Bank";
+            return room;
+        }
+
 
         #endregion
 

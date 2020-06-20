@@ -46,7 +46,7 @@ namespace OMTB.AI
 
         void Start()
         {
-            GetComponent<IDamageable>().OnDie += HandleOnDie;
+            GetComponentInParent<IDamageable>().OnDie += HandleOnDie;
         }
 
         // Update is called once per frame

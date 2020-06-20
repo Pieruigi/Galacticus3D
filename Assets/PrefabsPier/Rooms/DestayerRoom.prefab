@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab0fa04030d5b247a2b3219c5a8cbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomType: 2
+  roomType: 3
   width: 40
   height: 40
   tileSize: 8
