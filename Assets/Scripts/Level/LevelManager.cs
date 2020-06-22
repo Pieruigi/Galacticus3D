@@ -146,6 +146,7 @@ namespace OMTB.Level
             // Disable all the objects of each room except for the starting one
             foreach(Room r in rooms)
             {
+                Debug.Log("Check room" + r);
                 if (startingRoom == r)
                     ActivateRoomObjects(r, true);
                 else
@@ -492,8 +493,13 @@ namespace OMTB.Level
         void ActivateRoomObjects(Room room, bool value)
         {
             List<Referer<Room>> l = Referer<Room>.GetReferers(room) as List<Referer<Room>>;
+            
             foreach (Referer<Room> rs in l)
-                rs.gameObject.SetActive(value);
+            {
+                Debug.Log("RoomReferer:"+rs.gameObject);
+                    rs.gameObject.SetActive(value);
+            }
+                
         }
 
         #endregion

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OMTB.Interfaces;
 
 namespace OMTB.AI
 {
-    public class DestayerMover : MonoBehaviour
+    public class DestayerMover : MonoBehaviour, IActivable
     {
         [SerializeField]
         float speed;
@@ -21,6 +22,28 @@ namespace OMTB.AI
 
         TargetSetter targetSetter;
 
+        bool isActive = false;
+
+        public void Activate()
+        {
+            isActive = true;
+        }
+
+        public void Deactivate()
+        {
+            isActive = false;
+        }
+
+        public bool IsActive()
+        {
+            return isActive;
+        }
+
+        void Awake()
+        {
+            Deactivate();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -32,6 +55,9 @@ namespace OMTB.AI
         // Update is called once per frame
         void Update()
         {
+            if (!isActive)
+                return;
+
             // Move slowly
             //transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward * speed * Time.deltaTime, speed);
             

@@ -19,6 +19,7 @@ namespace OMTB.AI
         [SerializeField]
         Transform rightHangar;
 
+        
         float tieFieMinRate = 15;
         float tieFieMaxRate = 40;
         float tieFieCurrRate;
@@ -34,12 +35,11 @@ namespace OMTB.AI
         List<Droppable> droppables;
 
         List<GameObject> tieFies = new List<GameObject>();
-
+    
         // Start is called before the first frame update
         void Start()
         {
-            
-
+           
             droppables = new List<Droppable>(Resources.LoadAll<Droppable>(Droppable.ResourceFolder));
             targetSetter = GetComponent<TargetSetter>();
 
@@ -58,7 +58,7 @@ namespace OMTB.AI
             }
 
             // Set the first tie fie spawn time
-            //lastTieFie = DateTime.UtcNow;
+            lastTieFie = DateTime.UtcNow;
             tieFieCurrRate = UnityEngine.Random.Range(tieFieMinRate, tieFieMaxRate);
             
         }
@@ -81,6 +81,7 @@ namespace OMTB.AI
 
         private void Update()
         {
+           
             if( (DateTime.UtcNow - lastTieFie).TotalSeconds > tieFieCurrRate)
             {
                 if(tieFies.Count < tieFieMaxNumber)
@@ -137,7 +138,7 @@ namespace OMTB.AI
             tieFies.RemoveAll(t => t.GetComponent<IDamageable>() == damageable);
         }
 
-        
+       
     }
 }
 
