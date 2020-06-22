@@ -50,6 +50,8 @@ namespace OMTB.Level
         List<Room> rooms = new List<Room>(); // List of rooms
         List<Portal> portals = new List<Portal>(); // List of portals
         List<GameObject> enemies = new List<GameObject>();
+        Room bossRoom;
+        Boss boss;
 
         List<OMTB.Collections.Room> roomResources;
 
@@ -129,7 +131,11 @@ namespace OMTB.Level
         #region LEVEL_CREATION
         void CreateLevel()
         {
+            ChooseBoss();
+
             CreateRooms();
+
+            AddBoss();
 
             AddEnemies();
 
@@ -151,6 +157,14 @@ namespace OMTB.Level
             
         }
 
+        void ChooseBoss()
+        {
+            // Load allowed bosses
+            List<Boss> bosses = new List<Boss>(Resources.LoadAll<Boss>(Boss.ResourceFolder)).FindAll(b => b.Level == level || b.Level + 1 == level || b.Level - 1 == level);
+
+            // Get a boss
+            boss = bosses[Random.Range(0, bosses.Count)];
+        }
 
         void CreateRooms()
         {
@@ -197,7 +211,7 @@ namespace OMTB.Level
             currentRoom = startingRoom;
 
             // Create the boss room
-            Room bossRoom = CreateRoom(RoomType.Boss).GetComponent<Room>();//CreateBossRoom().GetComponent<Room>();
+            bossRoom = CreateRoom(RoomType.Boss).GetComponent<Room>();//CreateBossRoom().GetComponent<Room>();
             int bossDepth = Random.Range(minBossRoomDepth, totalRooms - 2);
 
 
@@ -409,6 +423,22 @@ namespace OMTB.Level
             }
         }
 
+        void AddBoss()
+        {
+            // Create boss object
+            GameObject bossObj = GameObject.Instantiate(boss.PrefabObject);
+
+            // Set boss in room
+            BossPlacer bossPlacer = bossRoom.GetComponent<BossPlacer>();
+            bossPlacer.Place(bossObj);
+
+            // Add room setter ( used to know which room each enemy belongs to )
+            bossObj.AddComponent<RoomReferer>().Reference = bossRoom.GetComponent<Room>();
+
+            // Add reference to the collection resource
+            bossObj.AddComponent<BossReferer>().Reference = boss;
+        }
+
         void AddDroppables()
         {
             List<Droppable> all = LoadDroppableResources();
@@ -525,11 +555,6 @@ namespace OMTB.Level
 
         private GameObject CreateBossRoom()
         {
-            // Load allowed bosses
-            List<Boss> bosses = new List<Boss>(Resources.LoadAll<Boss>(Boss.ResourceFolder)).FindAll(b => b.Level == level || b.Level + 1 == level || b.Level - 1 == level);
-
-            // Get a boss
-            Boss boss = bosses[Random.Range(0, bosses.Count)];
 
             // Get one of the available rooms for the current boss
             OMTB.Collections.Room roomRes = boss.Rooms[Random.Range(0, boss.Rooms.Count)];
@@ -538,19 +563,6 @@ namespace OMTB.Level
             GameObject room = CreateRoom(roomRes);
 
             room.name += "_Boss";
-
-            // Create boss object
-            GameObject bossObj = GameObject.Instantiate(boss.PrefabObject);
-
-            // Set boss in room
-            BossPlacer bossPlacer = room.GetComponent<BossPlacer>();
-            bossPlacer.Place(bossObj);
-
-            // Add room setter ( used to know which room each enemy belongs to )
-            bossObj.AddComponent<RoomReferer>().Reference = room.GetComponent<Room>();
-
-            // Add reference to the collection resource
-            bossObj.AddComponent<BossReferer>().Reference = boss;
 
             return room;
         }

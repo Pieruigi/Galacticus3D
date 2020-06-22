@@ -9,6 +9,7 @@ namespace OMTB.Level
     {
         public UnityAction<Portal> OnTeleport;
 
+        // The room this portal belongs to
         Room room;
         public Room Room
         {
@@ -21,6 +22,14 @@ namespace OMTB.Level
 
         bool inside = false;
 
+        bool alreadyUsed = false;
+        public bool AlreadyUsed
+        {
+            get { return alreadyUsed; }
+            set { alreadyUsed = value; }
+        }
+
+        // The target portal 
         Portal targetPortal;
         public Portal TargetPortal
         {
@@ -31,10 +40,13 @@ namespace OMTB.Level
 
         GameObject player;
 
+        CameraFadeController cameraFade;
+
         // Start is called before the first frame update
         void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
+            cameraFade = GameObject.FindObjectOfType<CameraFadeController>();
         }
 
         void Update()
@@ -48,11 +60,12 @@ namespace OMTB.Level
             if (isTeleporting)
                 return;
 
-            //if (Input.GetAxis("Action") > 0)
             if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Action"))
             {
                 StartCoroutine(TeleportPlayer());
             }
+
+
         }
 
         public void Init(Room room, Portal targetPortal, bool isLocked)
@@ -82,17 +95,29 @@ namespace OMTB.Level
         IEnumerator TeleportPlayer()
         {
             isTeleporting = true;
-            yield return new WaitForSeconds(0.25f); // Do some fade ???
 
+            //yield return new WaitForSeconds(0.25f); // Do some fade ???
+            yield return cameraFade.FadeOutCoroutine();
+            
             player.transform.position = targetPortal.transform.position;
 
-            // Disable enemies belonging to the current room
+            // Set this portal as already used
+            alreadyUsed = true;
+
+            // Set the target portal as already used too
+            targetPortal.AlreadyUsed = true;
+
+            yield return cameraFade.FadeInCoroutine();
+
+            // Teleport completed
             isTeleporting = false;
+            
             OnTeleport?.Invoke(this);
 
             
 
         }
+
     }
 
 }

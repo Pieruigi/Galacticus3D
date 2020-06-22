@@ -8,7 +8,7 @@ namespace OMTB
     {
         public static GameManager Instance { get; private set; }
 
-       
+        bool inGame = false;
 
         private void Awake()
         {
@@ -26,7 +26,9 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-           
+            inGame = true;
+            if (inGame)
+                GameObject.FindObjectOfType<CameraFadeController>().FadeIn();
         }
 
         // Update is called once per frame
