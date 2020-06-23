@@ -8,7 +8,8 @@ namespace OMTB.Level
     public class Portal : MonoBehaviour
     {
         public UnityAction<Portal> OnTeleport;
-
+        public UnityAction OnDestroy;
+        
         // The room this portal belongs to
         Room room;
         public Room Room
@@ -42,6 +43,13 @@ namespace OMTB.Level
 
         CameraFadeController cameraFade;
 
+        bool destroying = false;
+        public bool Destroying
+        {
+            get { return destroying; }
+            set { destroying = value; }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -51,6 +59,9 @@ namespace OMTB.Level
 
         void Update()
         {
+            if (destroying)
+                return;
+
             if (!inside)
                 return;
 
@@ -73,6 +84,7 @@ namespace OMTB.Level
             this.room = room;
             this.targetPortal = targetPortal;
             this.isLocked = isLocked;
+ 
         }
 
 
@@ -114,9 +126,18 @@ namespace OMTB.Level
             
             OnTeleport?.Invoke(this);
 
-            
+            // Check if target portal must be destroyed
+            if (targetPortal.Room.RoomType == Collections.RoomType.Boss || Room.RoomType == Collections.RoomType.Starting)
+            {
+                targetPortal.destroying = true;
+                targetPortal.OnDestroy?.Invoke();
+                Destroy(targetPortal.gameObject, 5f);
+            }
+                
 
         }
+
+
 
     }
 

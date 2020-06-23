@@ -88,6 +88,8 @@ namespace OMTB.AI
             if (!isActive)
                 return;
 
+            Debug.Log("still active:" + transform.root.gameObject);
+
             // Check whether enough time has passed from the last time the ship's changed its direction
             if(!isChangingDirection && (System.DateTime.UtcNow - lastChange).TotalSeconds > changeTime)
             {
@@ -167,6 +169,9 @@ namespace OMTB.AI
 
         private void FixedUpdate()
         {
+            if (!isActive)
+                return;
+
             // Apply movement to rigidbody
             if (useRigidbody)
             {
@@ -205,8 +210,12 @@ namespace OMTB.AI
             isChangingDirection = false;
             isDecelerating = false;
 
-            if (useRigidbody && rb!=null)
+            if (useRigidbody && rb != null)
+            {
                 rb.velocity = Vector3.zero;
+                rb.isKinematic = true;
+            }
+                
         }
 
         void ChangeDirection()

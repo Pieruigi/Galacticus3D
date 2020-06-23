@@ -125,6 +125,8 @@ namespace OMTB.AI
         public void Freeze(bool value)
         {
             gameObject.SetActive(!value);
+            if (value) Deactivate();
+            else Activate();
         }
 
         void HandleOnDie(IDamageable damageable)

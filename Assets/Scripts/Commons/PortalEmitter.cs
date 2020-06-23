@@ -20,10 +20,15 @@ namespace OMTB
 
         GameObject graphics;
 
+        private void Awake()
+        {
+            portal = GetComponent<Portal>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            portal = GetComponent<Portal>();
+            
             graphics = portal.transform.GetChild(0).gameObject;
             SetColor(portal.TargetPortal.Room.RoomType, maxEmitPower);
         }
@@ -50,7 +55,14 @@ namespace OMTB
                 }
 
             }
+            else
+            {
+                SetColor(portal.TargetPortal.Room.RoomType, maxEmitPower);
+                Destroy(this);
+            }
         }
+
+      
 
         void SetColor(RoomType roomType, float emitPower)
         {

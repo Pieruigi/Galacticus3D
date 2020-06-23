@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using OMTB.Interfaces;
+using UnityEngine.AI;
 
 namespace OMTB.AI
 {
@@ -46,6 +47,8 @@ namespace OMTB.AI
         Vector3 currentDir;
         Transform root;
 
+        NavMeshAgent agent;
+
         void Awake()
         {
             currSpeed = 0;
@@ -57,6 +60,7 @@ namespace OMTB.AI
             currentDir = root.forward;
             targetSetter = GetComponent<TargetSetter>();
             rb = root.GetComponent<Rigidbody>();
+            agent = root.GetComponent<NavMeshAgent>();
             Deactivate();
         }
 
@@ -113,6 +117,8 @@ namespace OMTB.AI
 
         public void Activate()
         {
+            if (agent)
+                agent.isStopped = true;
             isActive = true;
         }
 
