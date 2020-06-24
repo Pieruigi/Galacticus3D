@@ -9775,6 +9775,7 @@ MonoBehaviour:
   - {fileID: 8269883313808990472, guid: f04ddc304b7e9a54697b6e0e06c8290a, type: 3}
   diePS: {fileID: 4804521824452377972, guid: b9ce2e8a57e9a3d42ad739705a5f16e4, type: 3}
   point: {fileID: 1322638741995851443}
+  stopOnDieList: []
 --- !u!136 &449092325091475867
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9786,9 +9787,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.66
-  m_Height: 7.84
+  m_Height: 4.72493
   m_Direction: 2
-  m_Center: {x: 0, y: -0.1, z: -0.5}
+  m_Center: {x: 0, y: -0.100000024, z: -1.3373413}
 --- !u!114 &3403270223125590669
 MonoBehaviour:
   m_ObjectHideFlags: 0

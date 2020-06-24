@@ -42,7 +42,7 @@ namespace OMTB
 
         void OnCollisionEnter(Collision collision)
         {
-         
+            Debug.Log("coll:"+collision.gameObject);
             IDamageable damageable = null;
             List<Component> components = new List<Component>(collision.gameObject.GetComponents(typeof(IDamageable)));
             foreach (Component c in components)

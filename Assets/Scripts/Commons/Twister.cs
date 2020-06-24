@@ -18,6 +18,8 @@ namespace OMTB
         float time;
         float scaleDelay = 1.5f;
 
+        Rigidbody rb;
+
         private void Awake()
         {
             if (scaleDelay >= delay)
@@ -28,6 +30,7 @@ namespace OMTB
         void Start()
         {
             GetComponentInParent<IDamageable>().OnDie += HandleOnDie;
+            rb = GetComponentInParent<Rigidbody>();
         }
 
         // Update is called once per frame
@@ -54,6 +57,10 @@ namespace OMTB
         void HandleOnDie(IDamageable damageable)
         {
             isDestroying = true;
+
+            // Disable rigidbody
+            if (rb)
+                rb.isKinematic = true;
 
             // Ship destroying effect
             time = 0;

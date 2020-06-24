@@ -14355,7 +14355,7 @@ GameObject:
   - component: {fileID: 449092325091475867}
   - component: {fileID: 3403270223125590669}
   m_Layer: 0
-  m_Name: Salamander
+  m_Name: SalamanderPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14541,9 +14541,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.66
-  m_Height: 7.84
+  m_Height: 3.375534
   m_Direction: 2
-  m_Center: {x: 0, y: -0.1, z: -0.5}
+  m_Center: {x: 0, y: -0.100000024, z: -0.22393036}
 --- !u!114 &3403270223125590669
 MonoBehaviour:
   m_ObjectHideFlags: 0

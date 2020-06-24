@@ -16,6 +16,12 @@ namespace OMTB
         [SerializeField]
         bool useRigidbody = false;
 
+        [SerializeField]
+        float catchSpeed = 20;
+
+        [SerializeField]
+        float catchAngularSpeed = 60;
+
         bool isCatching = false;
         bool catched = false;
 
@@ -27,9 +33,10 @@ namespace OMTB
 
         Collider coll;
 
-        float catchDistance = 3.5f;
+        float catchDistance = 1.25f;
 
-        
+        Vector3 catchPos;
+        Vector3 catchRot;
 
         protected override void Start()
         {
@@ -53,26 +60,28 @@ namespace OMTB
             
             if (isCatching)
             {
+
                 Vector3 fwd = (targetSetter.Target.position - Owner.position).normalized;
-                Vector3 pos = targetSetter.Target.position - Owner.forward * catchDistance;
-                Owner.forward = Vector3.RotateTowards(Owner.forward, fwd, 720f * Time.deltaTime, 0.0f);
-                Owner.position = Vector3.MoveTowards(Owner.position, pos, 150 * Time.deltaTime);
+                Vector3 pos = targetSetter.Target.position + catchPos;
+                Owner.forward = Vector3.RotateTowards(Owner.forward, fwd, catchAngularSpeed * Time.deltaTime, 0.0f);
+                Owner.position = Vector3.MoveTowards(Owner.position, pos, catchSpeed * Time.deltaTime);
 
                 if (Owner.position == pos)
                 {
                     isCatching = false;
                     catched = true;
-                    Owner.parent = targetSetter.Target;
+                    Owner.parent = targetSetter.Target.GetComponentInChildren<Roller>().transform;
+                    Owner.GetComponentInChildren<Roller>().enabled = false;
+                    catchPos = Owner.localPosition;
+                    catchRot = Owner.localEulerAngles;
                 }
             }
 
-            //if (catched)
-            //{
-            //    Vector3 fwd = (targetSetter.Target.position - Owner.position).normalized;
-            //    Vector3 pos = targetSetter.Target.position - Owner.forward * catchDistance;
-            //    Owner.forward = fwd;
-            //    Owner.position = pos;
-            //}
+            if (catched)
+            {
+                Owner.localPosition = catchPos;
+                Owner.localEulerAngles = catchRot;
+            }
         }
 
         public override void Shoot()
@@ -105,7 +114,23 @@ namespace OMTB
                 
             }
 
-            
+            // Raycast to get position and rotation
+            RaycastHit[] hits;
+            Vector3 dir = targetSetter.Target.position - Owner.position;
+
+            hits = Physics.RaycastAll(Owner.position, dir.normalized, dir.magnitude);
+            if (hits.Length > 0)
+            {
+                foreach (RaycastHit hit in hits)
+                {
+                    if ("Player".Equals(hit.transform.gameObject.tag))
+                    {
+                        Vector3 disp = (hit.point - hit.transform.position).normalized * catchDistance;
+                        catchPos = hit.point + disp - hit.transform.position;
+                        catchPos.y = 0;
+                    }
+                }
+            }
         }
 
         void ResetPhysics()

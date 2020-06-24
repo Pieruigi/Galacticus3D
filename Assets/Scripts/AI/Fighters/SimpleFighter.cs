@@ -35,6 +35,9 @@ namespace OMTB.AI
         float sqrWeaponRange;
 
         bool isDead = false;
+
+        bool isFrozen = false;
+       
         
         // Start is called before the first frame update
         void Awake()
@@ -52,14 +55,14 @@ namespace OMTB.AI
         // Update is called once per frame
         void Update()
         {
-            if (isDead)
+            if (isDead || isFrozen)
                 return;
 
             if (!isActive)
             {
                 if (alwaysShoot) // Shoot anyway
                 {
-                    if((targetSetter.Target.position - transform.position).sqrMagnitude < sqrWeaponRange)
+                    if ((targetSetter.Target.position - transform.position).sqrMagnitude < sqrWeaponRange)
                     {
                         TryShoot();
                     }
@@ -69,8 +72,11 @@ namespace OMTB.AI
             }
             else
             {
-                // Shoot
-                TryShoot();
+                if ((targetSetter.Target.position - transform.position).sqrMagnitude < sqrWeaponRange) 
+                { 
+                    // Shoot
+                    TryShoot();
+                }
             }    
 
             
@@ -97,7 +103,7 @@ namespace OMTB.AI
         {
             Vector3 dir = (targetSetter.Target.position - weapon.transform.position).normalized;
 
-            Debug.Log("TryShoot");
+
             // Check collision
             RaycastHit hit;
             int mask;
@@ -111,7 +117,6 @@ namespace OMTB.AI
             if (Physics.SphereCast(weapon.transform.position, 1f, dir, out hit, weapon.FireRange * 1.5f, mask))
                 return;
 
-            Debug.Log("TryShoot 1");
 
             if (Vector3.Angle(weapon.transform.forward, dir) < aimError)
                 weapon.Fire();
@@ -124,9 +129,7 @@ namespace OMTB.AI
 
         public void Freeze(bool value)
         {
-            gameObject.SetActive(!value);
-            if (value) Deactivate();
-            else Activate();
+            isFrozen = value;
         }
 
         void HandleOnDie(IDamageable damageable)

@@ -74,6 +74,7 @@ namespace OMTB
             lastFire = DateTime.UtcNow;
             shooter.Shoot();
 
+            Debug.Log("Fire");
 
             return true;
         }

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace OMTB.AI
 {
-    public class FlybyMover : MonoBehaviour, IActivable, IRolleable, IFreezable
+    public class FlybyMover : MonoBehaviour, IActivable, IRolleable
     {
         [SerializeField]
         float speed = 15f;
@@ -206,11 +206,7 @@ namespace OMTB.AI
 
         }
 
-        public void Freeze(bool value)
-        {
-            gameObject.SetActive(!value);
-            Reset();
-        }
+
 
         void Reset()
         {

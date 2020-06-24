@@ -11,7 +11,7 @@ namespace OMTB.AI
      * Simply moves towards the target and then starts fighting.
      * */
      [RequireComponent(typeof(TargetSetter))]
-    public class SimpleEnemyAI : MonoBehaviour, IActivable
+    public class SimpleEnemyAI : MonoBehaviour, IActivable, IFreezable
     {
         [SerializeField]
         GameObject idleMover;
@@ -179,6 +179,14 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return enabled;
+        }
+
+        public void Freeze(bool value)
+        {
+            if (!value)
+                Activate();
+            else
+                Deactivate();
         }
     }
 

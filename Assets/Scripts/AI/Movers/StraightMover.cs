@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace OMTB.AI
 {
-    public class StraightMover : MonoBehaviour, IActivable
+    public class StraightMover : MonoBehaviour, IActivable, IRolleable 
     {
         [SerializeField]
         float speed = 3f;
@@ -89,6 +89,23 @@ namespace OMTB.AI
         public bool IsActive()
         {
             return isActive;
+        }
+
+
+
+        public float GetMaxAngularSpeed()
+        {
+            return speed;
+        }
+
+        public float GetMaxSideSpeed()
+        {
+            return 0;
+        }
+
+        public bool IsAiming()
+        {
+            return false;
         }
     }
 

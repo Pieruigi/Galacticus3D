@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace OMTB.AI
 {
     [RequireComponent(typeof(TargetSetter))]
-    public class ZigZager : MonoBehaviour, IActivable, IRolleable, IFreezable
+    public class ZigZager : MonoBehaviour, IActivable, IRolleable
     {
         [SerializeField]
         float maxSpeed = 3;
@@ -88,7 +88,7 @@ namespace OMTB.AI
             if (!isActive)
                 return;
 
-            Debug.Log("still active:" + transform.root.gameObject);
+
 
             // Check whether enough time has passed from the last time the ship's changed its direction
             if(!isChangingDirection && (System.DateTime.UtcNow - lastChange).TotalSeconds > changeTime)
@@ -209,12 +209,6 @@ namespace OMTB.AI
             currentSpeed = 0;
             isChangingDirection = false;
             isDecelerating = false;
-
-            if (useRigidbody && rb != null)
-            {
-                rb.velocity = Vector3.zero;
-                rb.isKinematic = true;
-            }
                 
         }
 
@@ -292,10 +286,7 @@ namespace OMTB.AI
             return isActive;
         }
 
-        public void Freeze(bool value)
-        {
-            gameObject.SetActive(!value);
-        }
+
     }
 
 }
