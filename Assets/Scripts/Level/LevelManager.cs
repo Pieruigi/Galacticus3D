@@ -97,6 +97,8 @@ namespace OMTB.Level
 
                 CreateLevel();
 
+                player = GameObject.FindGameObjectWithTag("Player");
+
                 Debug.Log("Levelmanager Awake completed");
             }
             else
@@ -109,7 +111,7 @@ namespace OMTB.Level
         void Start()
         {
             Debug.Log("Levelmanager - Starting game...");
-            player = GameObject.FindGameObjectWithTag("Player");
+            
         }
 
         // Update is called once per frame

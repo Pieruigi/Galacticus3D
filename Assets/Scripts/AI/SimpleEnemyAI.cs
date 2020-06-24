@@ -35,8 +35,9 @@ namespace OMTB.AI
         bool isFighting = false;
         bool isSeeking = false;
         Vector3 startingPoint;
-                
-  
+
+        bool isDead = false;
+
         private void Awake()
         {
             sqrFightingDistance = fightingDistance * fightingDistance;
@@ -51,6 +52,8 @@ namespace OMTB.AI
             aiTrigger.OnTargetEngaged += HandleOnTargetEngaged;
             aiTrigger.OnTargetDisengaged += HandleOnTargetDisengaged;
 
+            GetComponentInParent<IDamageable>().OnDie += HandleOnDie;
+
             if (idleMover)
                 idleMover.GetComponent<IActivable>().Activate();
 
@@ -61,7 +64,7 @@ namespace OMTB.AI
         void Update()
         {
         
-            if (!engaged)
+            if (!engaged || isDead)
                 return;
 
             // If target is inside the fighting distance then we stop pathfinding and start the fighting routines ( movement, aim, shooting, ecc ).
@@ -161,6 +164,22 @@ namespace OMTB.AI
         {
             if(idleMover)
                 idleMover.GetComponent<IActivable>().Deactivate();
+        }
+
+        void HandleOnDie(IDamageable damageable)
+        {
+            isDead = true;
+
+            StopSeeking();
+            StopFighting();
+            StopIdle();
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb)
+            {
+                rb.isKinematic = true;
+                rb.velocity = Vector3.zero;
+            }
         }
 
         public void Activate()

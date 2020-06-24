@@ -29,17 +29,19 @@ namespace OMTB
 
         void HandleOnDie(IDamageable damageable)
         {
+           
+
             // Disable collider
             Collider coll = GetComponent<Collider>();
             if (coll)
                 coll.enabled = false;
 
             // Disable behaviours
-            IActivable[] activables = GetComponentsInChildren<IActivable>();
-            foreach (IActivable activable in activables)
-                activable.Deactivate();
-    
-            
+            //IActivable[] activables = GetComponentsInChildren<IActivable>();
+            //foreach (IActivable activable in activables)
+            //    activable.Deactivate();
+
+           
             Destroy(gameObject, delay);
         }
     }

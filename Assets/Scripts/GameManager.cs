@@ -10,11 +10,14 @@ namespace OMTB
 
         bool inGame = false;
 
+        PlayerController playerController;
+
         private void Awake()
         {
             if(Instance == null)
             {
                 Instance = this;
+                
                 DontDestroyOnLoad(this);
             }
             else
@@ -28,13 +31,31 @@ namespace OMTB
         {
             inGame = true;
             if (inGame)
+            {
                 GameObject.FindObjectOfType<CameraFadeController>().FadeIn();
+                playerController = Level.LevelManager.Instance.Player.GetComponent<PlayerController>();
+            }
+                
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (playerController.IsGamepadConnected)
+                {
+                    playerController.IsGamepadConnected = false;
+                    playerController.MouseHasGamepadBehavior = true;
+                }
+                else
+                {
+                    if (playerController.MouseHasGamepadBehavior)
+                        playerController.MouseHasGamepadBehavior = false;
+                    else
+                        playerController.IsGamepadConnected = true;
+                }
+            }
         }
     }
 

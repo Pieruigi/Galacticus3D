@@ -68,8 +68,18 @@ namespace OMTB
         [Header("Controller Type")]
         [SerializeField]
         bool isGamepadConnected = false;
+        public bool IsGamepadConnected
+        {
+            get { return isGamepadConnected; }
+            set { isGamepadConnected = value; }
+        }
         [SerializeField]
         bool mouseHasGamepadBehavior = true;
+        public bool MouseHasGamepadBehavior
+        {
+            get { return mouseHasGamepadBehavior; }
+            set { mouseHasGamepadBehavior = value; }
+        }
 
         [Header("Combat")]
         [SerializeField]
