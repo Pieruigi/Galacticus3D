@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using OMTB.Interfaces;
+using UnityEngine.AI;
 
 namespace OMTB
 {
@@ -19,6 +20,7 @@ namespace OMTB
         float scaleDelay = 1.5f;
 
         Rigidbody rb;
+        NavMeshAgent agent;
 
         private void Awake()
         {
@@ -31,6 +33,7 @@ namespace OMTB
         {
             GetComponentInParent<IDamageable>().OnDie += HandleOnDie;
             rb = GetComponentInParent<Rigidbody>();
+            agent = GetComponentInParent<NavMeshAgent>();
         }
 
         // Update is called once per frame
@@ -52,6 +55,7 @@ namespace OMTB
             float scale = Mathf.SmoothStep(1, 0.1f, time-scaleDelay / delay-scaleDelay);
             transform.localScale = transform.localScale * scale;
           
+            
         }
 
         void HandleOnDie(IDamageable damageable)
@@ -62,6 +66,9 @@ namespace OMTB
             if (rb)
                 rb.isKinematic = true;
 
+            if (agent)
+                agent.isStopped = true;
+            
             // Ship destroying effect
             time = 0;
             rotAxis = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;

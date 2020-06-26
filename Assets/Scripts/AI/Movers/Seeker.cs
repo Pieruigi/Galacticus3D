@@ -69,7 +69,7 @@ namespace OMTB.AI
 
         public void Deactivate()
         {
-            //agent.isStopped = true;
+            agent.isStopped = true;
             isActive = false;
             
         }

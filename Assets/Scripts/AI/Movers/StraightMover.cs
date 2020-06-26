@@ -52,12 +52,12 @@ namespace OMTB.AI
             dir.y = 0;
 
             // Rotate towards target
-            transform.forward = Vector3.RotateTowards(transform.forward, dir.normalized, angularSpeedRad * Time.deltaTime, 0.0f);
+            root.transform.forward = Vector3.RotateTowards(root.transform.forward, dir.normalized, angularSpeedRad * Time.deltaTime, 0.0f);
 
             // Move with no rigidbody
             if (!useRigidbody)
             {
-                transform.position += transform.forward * speed * Time.deltaTime;
+                root.transform.position += root.transform.forward * speed * Time.deltaTime;
             }
         }
 

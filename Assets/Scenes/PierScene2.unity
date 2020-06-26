@@ -3500,7 +3500,7 @@ PrefabInstance:
     - target: {fileID: 315686752620696705, guid: de7d55ff670a1d247b196ab1597667bb,
         type: 3}
       propertyPath: m_Name
-      value: Ship10AI
+      value: Corkscrew
       objectReference: {fileID: 0}
     - target: {fileID: 315686752620696708, guid: de7d55ff670a1d247b196ab1597667bb,
         type: 3}
@@ -5417,6 +5417,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 913457302}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &916365718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 315686752620696705, guid: de7d55ff670a1d247b196ab1597667bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 580863080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &916365719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916365718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0c60f8949f1024898eae41020a751f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catcher: {fileID: 1410818524}
+  animator: {fileID: 1997014968}
 --- !u!1001 &918228735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7957,6 +7977,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1354979248}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1410818524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 557599109, guid: de7d55ff670a1d247b196ab1597667bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 580863080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a809b3c2015cd6d4fada48f2585fb0e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1427661420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10393,6 +10425,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1993163370}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1997014968 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3075442448183456025, guid: de7d55ff670a1d247b196ab1597667bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 580863080}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2009304921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10903,8 +10941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10000
-  health: 10000
+  maxHealth: 100
+  health: 100
 --- !u!1001 &1609570399137722805
 PrefabInstance:
   m_ObjectHideFlags: 0

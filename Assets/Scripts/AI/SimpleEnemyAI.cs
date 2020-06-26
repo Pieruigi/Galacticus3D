@@ -64,7 +64,7 @@ namespace OMTB.AI
         void Update()
         {
         
-            if (!engaged || isDead)
+            if (!engaged || isDead || !enabled)
                 return;
 
             // If target is inside the fighting distance then we stop pathfinding and start the fighting routines ( movement, aim, shooting, ecc ).
@@ -84,13 +84,12 @@ namespace OMTB.AI
             }
             else
             {
-                if (!isFighting)
-                    StartFighting();
-
                 if (isSeeking)
                     StopSeeking();
 
-                
+                if (!isFighting)
+                    StartFighting();
+
             }
             
         }

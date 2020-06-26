@@ -105,19 +105,19 @@ namespace OMTB.Gameplay
                 }
                 else
                 {
-                    ray = new Ray(player.transform.position, Vector3.up);
+                    ray = new Ray(player.transform.position, Vector3.forward);
                     if (!Physics.Raycast(ray, distance, mask))
                     {
                         Debug.Log("Drop up");
-                        dropPos = player.transform.position + Vector3.up * distance;
+                        dropPos = player.transform.position + Vector3.forward * distance;
                     }
                     else
                     {
-                        ray = new Ray(player.transform.position, Vector3.down);
+                        ray = new Ray(player.transform.position, Vector3.back);
                         if (!Physics.Raycast(ray, distance, mask))
                         {
                             Debug.Log("Drop down");
-                            dropPos = player.transform.position + Vector3.down * distance;
+                            dropPos = player.transform.position + Vector3.back * distance;
                         }
                     }
                 }
