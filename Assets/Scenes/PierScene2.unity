@@ -4998,7 +4998,7 @@ PrefabInstance:
     - target: {fileID: 3828393623601388251, guid: ca962a1ea956a254b9eeff7005612add,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388255, guid: ca962a1ea956a254b9eeff7005612add,
         type: 3}
@@ -5053,6 +5053,16 @@ PrefabInstance:
     - target: {fileID: 3828393623601388255, guid: ca962a1ea956a254b9eeff7005612add,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731764697925511216, guid: ca962a1ea956a254b9eeff7005612add,
+        type: 3}
+      propertyPath: isGamepadConnected
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731764697925511216, guid: ca962a1ea956a254b9eeff7005612add,
+        type: 3}
+      propertyPath: mouseHasGamepadBehavior
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11027,7 +11037,7 @@ PrefabInstance:
     - target: {fileID: 3828393623601388251, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3828393623601388255, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
@@ -11092,7 +11102,12 @@ PrefabInstance:
     - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
         type: 3}
       propertyPath: isGamepadConnected
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4731764697925511216, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e,
+        type: 3}
+      propertyPath: mouseHasGamepadBehavior
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1999740970, guid: 33d1eaf0bf1c04644a2c99fbfdae5c2e, type: 3}
