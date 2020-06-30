@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 2125583818}
   - component: {fileID: 2125583819}
   - component: {fileID: 8452812277293186566}
+  - component: {fileID: 8380626775368038826}
   m_Layer: 0
-  m_Name: Mine
+  m_Name: Mine1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,6 +93,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0.5
+--- !u!114 &8380626775368038826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558859684338301825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e312c3c0349374081d20289d6fb3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
 --- !u!1 &7399104301767810526
 GameObject:
   m_ObjectHideFlags: 0

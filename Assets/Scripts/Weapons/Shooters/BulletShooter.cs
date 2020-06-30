@@ -27,6 +27,8 @@ namespace OMTB
             GameObject bullet = GameObject.Instantiate(bulletPrefab);
             bullet.transform.position = firePoint.position;
             bullet.transform.eulerAngles = firePoint.eulerAngles;
+            Debug.Log("Bullet:" + bullet);
+            Debug.Log("Bullet.damager:" + bullet.GetComponent<Damager>());
             bullet.GetComponent<Damager>().Init(new BulletConfig()
             {
                 Range = Weapon.FireRange,

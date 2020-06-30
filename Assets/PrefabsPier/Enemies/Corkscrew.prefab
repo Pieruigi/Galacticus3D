@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 3623509319386987850}
   - component: {fileID: 1971681362989479614}
   - component: {fileID: -3744470142633011713}
+  - component: {fileID: 916365719}
   m_Layer: 0
   m_Name: Corkscrew
   m_TagString: Enemy
@@ -479,6 +480,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 2.5
+--- !u!114 &916365719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315686752620696705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0c60f8949f1024898eae41020a751f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catcher: {fileID: 557599109}
+  animator: {fileID: 3075442448183456025}
+  particles: []
 --- !u!1 &315686753026586408
 GameObject:
   m_ObjectHideFlags: 0

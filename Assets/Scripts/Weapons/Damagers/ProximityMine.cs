@@ -5,7 +5,7 @@ using OMTB.Interfaces;
 
 namespace OMTB
 {
-    public class Mine : Damager
+    public class ProximityMine : Damager
     {
 
         [SerializeField]
@@ -17,7 +17,13 @@ namespace OMTB
         [SerializeField]
         float maxRange;
 
+
+        [SerializeField]
+        Weapon weapon;
+
         Transform target;
+
+       
 
         // Start is called before the first frame update
         void Start()
@@ -46,7 +52,25 @@ namespace OMTB
         {
             
             Explode();
+            Fragment();
+
             
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("Trigger enter");
+            if (Tags.Player.Equals(other.tag))
+            {
+                //Collider[] colls = GetComponents<Collider>();
+                //foreach (Collider coll in colls)
+                //    coll.enabled = false;
+                Explode();
+                Fragment();
+
+                
+            }
+                
         }
 
         void Explode()
@@ -83,10 +107,15 @@ namespace OMTB
                 }
             }
 
-            //GameObject.Destroy(gameObject);
+            //GameObject.Destroy(gameObject, 1f);
         }
 
-        
+        void Fragment()
+        {
+            weapon.Fire();
+        }
+
+       
     }
 
 }
