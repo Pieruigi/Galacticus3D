@@ -15,6 +15,9 @@ MonoBehaviour:
   prefabObject: {fileID: 8701970935194964475, guid: b857664680b02784bb12eea7efbdf31a,
     type: 3}
   displayName: TieFie
-  level: 2
+  spawnData:
+    minLevel: 2
+    maxLevel: 8
+    rarity: 500
   size: {x: 1, y: 1}
   droppingRate: 1

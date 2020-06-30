@@ -7,6 +7,8 @@ namespace OMTB.Level
 {
     public class LevelManager : MonoBehaviour
     {
+        public const int NumberOfLevels = 8;
+
         public static LevelManager Instance { get; private set; }
 
         float tileSize = 8;
@@ -163,7 +165,8 @@ namespace OMTB.Level
         void ChooseBoss()
         {
             // Load allowed bosses
-            List<Boss> bosses = new List<Boss>(Resources.LoadAll<Boss>(Boss.ResourceFolder)).FindAll(b => b.Level == level || b.Level + 1 == level || b.Level - 1 == level);
+            //List<Boss> bosses = new List<Boss>(Resources.LoadAll<Boss>(Boss.ResourceFolder)).FindAll(b => b.Level == level || b.Level + 1 == level || b.Level - 1 == level);
+            List<Boss> bosses = Boss.GetResourcesForSpawning(level);
 
             // Get a boss
             boss = bosses[Random.Range(0, bosses.Count)];
@@ -389,10 +392,14 @@ namespace OMTB.Level
 
         }
 
+        
+
         void AddEnemies()
         {
-            List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e=>e.Level <= level);
+            //List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e=>e.MinLevel <= level && e.MaxLevel >= level);
 
+            //List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e => e.SpawnData.MinLevel <= level && e.SpawnData.MaxLevel >= level);
+            List<Enemy> enemies = Enemy.GetResourcesForSpawning(level);
             Debug.Log("Enemies:" + enemies.Count);
 
             foreach(Room r in rooms)

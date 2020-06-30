@@ -15,6 +15,9 @@ MonoBehaviour:
   prefabObject: {fileID: 4881424545478233910, guid: 6556a2b38ec292f4cacc3eb0f15f56b6,
     type: 3}
   displayName: Glider Xenh 8
-  level: 1
+  spawnData:
+    minLevel: 1
+    maxLevel: 8
+    rarity: 1000
   size: {x: 1, y: 1}
   droppingRate: 1

@@ -15,6 +15,9 @@ MonoBehaviour:
   prefabObject: {fileID: 675489644334102901, guid: 6e83959bdcd8a7c4da460a8aeb06d6fb,
     type: 3}
   displayName: Destayer
-  level: 1
+  spawnData:
+    minLevel: 1
+    maxLevel: 3
+    rarity: 1000
   rooms:
   - {fileID: 11400000, guid: df6ea90be0ef5ba4eaccd4295c6b9bb0, type: 2}

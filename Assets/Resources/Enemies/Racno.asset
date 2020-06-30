@@ -15,6 +15,9 @@ MonoBehaviour:
   prefabObject: {fileID: 8701970935194964475, guid: d3846063effc58e40a624471d98711d3,
     type: 3}
   displayName: Racno
-  level: 1
+  spawnData:
+    minLevel: 1
+    maxLevel: 8
+    rarity: 1000
   size: {x: 1, y: 1}
   droppingRate: 1
