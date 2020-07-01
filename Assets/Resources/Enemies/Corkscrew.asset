@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2751df4d2b704c419991def6a317a00, type: 3}
-  m_Name: Racno
+  m_Name: Corkscrew
   m_EditorClassIdentifier: 
-  prefabObject: {fileID: 8701970935194964475, guid: d3846063effc58e40a624471d98711d3,
+  prefabObject: {fileID: 315686752620696705, guid: de7d55ff670a1d247b196ab1597667bb,
     type: 3}
-  displayName: Racno
+  displayName: TieFie
   spawnData:
-    minLevel: 1
+    minLevel: 2
     maxLevel: 8
-    rarity: 1000
+    rarity: 500
   avoidExplorationRoom: 0
   avoidFightingRoom: 0
   size: {x: 1, y: 1}
-  droppingRate: 0.5
+  droppingRate: 1

@@ -71,7 +71,7 @@ namespace OMTB.Level
 
         float lastRoomPosZ = 0;
 
-        int level = 1;
+        int level = 2;
         public int Level
         {
             get { return level; }
@@ -399,15 +399,15 @@ namespace OMTB.Level
             //List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e=>e.MinLevel <= level && e.MaxLevel >= level);
 
             //List<Enemy> enemies = new List<Enemy>(Resources.LoadAll<Enemy>(Enemy.ResourceFolder)).FindAll(e => e.SpawnData.MinLevel <= level && e.SpawnData.MaxLevel >= level);
-            List<Enemy> enemies = Enemy.GetResourcesForSpawning(level);
-            Debug.Log("Enemies:" + enemies.Count);
-
+            
             foreach(Room r in rooms)
             {
                 Debug.Log("Enemies - Room:" + r.name);
                 RoomEnemyData red = r.GetComponent<RoomEnemyData>();
                 if (red)
                 {
+                    List<Enemy> enemies = Enemy.GetResourcesForSpawning(level, r.RoomType);
+
                     int count = Random.Range(red.MinEnemyCount, red.MaxEnemyCount + 1);
                     for(int i=0; i<count; i++)
                     {

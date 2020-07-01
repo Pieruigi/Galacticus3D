@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2751df4d2b704c419991def6a317a00, type: 3}
-  m_Name: Racno
+  m_Name: ProximityMine
   m_EditorClassIdentifier: 
-  prefabObject: {fileID: 8701970935194964475, guid: d3846063effc58e40a624471d98711d3,
+  prefabObject: {fileID: 558859684338301825, guid: 3ef3fefab0c240b41beb5618c9e85fdc,
     type: 3}
   displayName: Racno
   spawnData:
@@ -22,4 +22,4 @@ MonoBehaviour:
   avoidExplorationRoom: 0
   avoidFightingRoom: 0
   size: {x: 1, y: 1}
-  droppingRate: 0.5
+  droppingRate: 0

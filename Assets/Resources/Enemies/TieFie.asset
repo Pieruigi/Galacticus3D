@@ -19,5 +19,7 @@ MonoBehaviour:
     minLevel: 2
     maxLevel: 8
     rarity: 500
+  avoidExplorationRoom: 1
+  avoidFightingRoom: 0
   size: {x: 1, y: 1}
   droppingRate: 1
