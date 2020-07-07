@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd65051e6c297d644abf103696bbe288, type: 3}
+  m_Name: IntergalacticBank
+  m_EditorClassIdentifier: 
+  type: 0
+  prefabObject: {fileID: 524869201774043228, guid: 2d8a1c0a6d05be3488039e199e91aa97,
+    type: 3}
+  displayName: Intergalactic Bank
+  spawnData:
+    minLevel: 1
+    maxLevel: 8
+    rarity: 1000
+  spawnRate: 0.75
+  rooms:
+  - {fileID: 11400000, guid: c9d4d694c54d8144d9e9493422287c27, type: 2}

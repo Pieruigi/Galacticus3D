@@ -142,6 +142,36 @@ namespace OMTB.Editor
                 return null;
             }
         }
+
+        [MenuItem("Assets/Create/OMTB/SpecialShip")]
+        public static SpecialShip BuildSpecialShip()
+        {
+            try
+            {
+                string path = basePath + SpecialShip.ResourceFolder;
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
+
+                SpecialShip asset = ScriptableObject.CreateInstance<SpecialShip>();
+
+                AssetDatabase.CreateAsset(asset, path + "/specialShip.asset");
+                AssetDatabase.SaveAssets();
+
+                EditorUtility.FocusProjectWindow();
+
+                Selection.activeObject = asset;
+
+                return asset;
+            }
+            catch (Exception e)
+            {
+                EditorUtility.DisplayDialog("ERROR!", e.Message, "OK");
+                Debug.LogError(e);
+                return null;
+            }
+        }
     }
 
 }

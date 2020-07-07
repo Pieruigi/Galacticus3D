@@ -55,6 +55,7 @@ namespace OMTB.Level
         Room bossRoom;
         Boss boss;
         Room bankRoom;
+        SpecialShip bank;
 
         List<OMTB.Collections.Room> roomResources;
 
@@ -138,12 +139,15 @@ namespace OMTB.Level
         {
             ChooseBoss();
 
+            CheckSpecialShips();
+
             CreateRooms();
 
             AddBoss();
 
             AddEnemies();
 
+            AddSpecialShips();
         
             AddDroppables();
 
@@ -172,6 +176,19 @@ namespace OMTB.Level
 
             // Get a boss
             boss = bosses[Random.Range(0, bosses.Count)];
+        }
+
+        void CheckSpecialShips()
+        {
+            // Get all the available ships for the current level
+            List<SpecialShip> ships = SpecialShip.GetAvailableResources(level);
+
+            if (ships.Count == 0)
+                return;
+
+            // Check for bank
+            bank = ships.Find(s => s.Type == SpecialShipType.IntergalacticBank);
+            
         }
 
         void CreateRooms()
@@ -225,8 +242,9 @@ namespace OMTB.Level
 
             // Check for special rooms
             List<Room> specialRooms = new List<Room>();// Local variable only used to create tree
-            if (Random.Range(0f, 1f) <= bankRate)
+            if (bank)
             {
+                Debug.Log("Create BankRoom");
                 bankRoom = CreateRoom(RoomType.Bank).GetComponent<Room>();
                 specialRooms.Add(bankRoom); 
             }
@@ -458,6 +476,28 @@ namespace OMTB.Level
             bossObj.AddComponent<BossReferer>().Reference = boss;
         }
 
+        void AddSpecialShips()
+        {
+            if (bank)
+                AddBank();
+        }
+
+        void AddBank()
+        {
+            // Create bank object
+            GameObject bankObj = GameObject.Instantiate(bank.PrefabObject);
+
+            // Set bank in room ( the BossPlacer can be also used to place bank )
+            BossPlacer bossPlacer = bankRoom.GetComponent<BossPlacer>();
+            bossPlacer.Place(bankObj);
+
+            // Add room setter ( used to know which room each enemy belongs to )
+            bankObj.AddComponent<RoomReferer>().Reference = bossRoom.GetComponent<Room>();
+
+            // Add reference to the collection resource
+            bankObj.AddComponent<SpecialShipReferer>().Reference = bank;
+        }
+
         void AddDroppables()
         {
             List<Droppable> all = LoadDroppableResources();
@@ -627,7 +667,8 @@ namespace OMTB.Level
         private GameObject CreateBankRoom()
         {
             // Get room prefab
-            OMTB.Collections.Room roomRes = new List<OMTB.Collections.Room>(Resources.LoadAll<OMTB.Collections.Room>(OMTB.Collections.Room.ResourceFolder)).Find(r=>r.RoomType == RoomType.Bank);
+
+            OMTB.Collections.Room roomRes = bank.Rooms[Random.Range(0,bank.Rooms.Count)];
             
             // Instanziate room
             GameObject room = CreateRoom(roomRes);
