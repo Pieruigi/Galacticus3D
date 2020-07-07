@@ -33,8 +33,8 @@ namespace OMTB.AI
         {
             targetSetter = GetComponent<TargetSetter>();
             agent = GetComponentInParent<NavMeshAgent>();
+
             
-            Deactivate();
         }
 
         void Start()

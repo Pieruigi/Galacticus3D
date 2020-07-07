@@ -13,6 +13,7 @@ namespace OMTB.Gameplay
         public bool TryPickUp()
         {
             Debug.Log("You got " + amount + " coin(s).");
+            CoinManager.Instance.PickUpCoins(amount);
             return true;
         }
 

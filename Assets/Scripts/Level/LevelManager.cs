@@ -54,6 +54,7 @@ namespace OMTB.Level
         List<GameObject> enemies = new List<GameObject>();
         Room bossRoom;
         Boss boss;
+        Room bankRoom;
 
         List<OMTB.Collections.Room> roomResources;
 
@@ -143,6 +144,7 @@ namespace OMTB.Level
 
             AddEnemies();
 
+        
             AddDroppables();
 
             GameObject.FindObjectOfType<NavMeshBuilder>().BuildNavMesh(rooms);
@@ -222,9 +224,14 @@ namespace OMTB.Level
 
 
             // Check for special rooms
-            List<Room> specialRooms = new List<Room>();
-            //if (Random.Range(0f, 1f) <= bankRate)
-            //    specialRooms.Add(CreateBankRoom().GetComponent<Room>());
+            List<Room> specialRooms = new List<Room>();// Local variable only used to create tree
+            if (Random.Range(0f, 1f) <= bankRate)
+            {
+                bankRoom = CreateRoom(RoomType.Bank).GetComponent<Room>();
+                specialRooms.Add(bankRoom); 
+            }
+
+
 
             //
             // Start creating tree 
@@ -363,6 +370,9 @@ namespace OMTB.Level
                 case RoomType.Boss:
                     ret = CreateBossRoom();
                     break;
+                case RoomType.Bank:
+                    ret = CreateBankRoom();
+                    break;
             }
 
             if (count > 1)
@@ -392,7 +402,6 @@ namespace OMTB.Level
 
         }
 
-        
 
         void AddEnemies()
         {
@@ -617,8 +626,14 @@ namespace OMTB.Level
 
         private GameObject CreateBankRoom()
         {
-            GameObject room = CreateRoom(new RoomConfig() { RoomType = RoomType.Bank, Width = 30, Height = 30, TileSize = 8 }, typeof(EmptyRoom));
+            // Get room prefab
+            OMTB.Collections.Room roomRes = new List<OMTB.Collections.Room>(Resources.LoadAll<OMTB.Collections.Room>(OMTB.Collections.Room.ResourceFolder)).Find(r=>r.RoomType == RoomType.Bank);
+            
+            // Instanziate room
+            GameObject room = CreateRoom(roomRes);
+
             room.name += "_Bank";
+
             return room;
         }
 
