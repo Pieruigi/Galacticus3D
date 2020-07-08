@@ -492,7 +492,7 @@ namespace OMTB.Level
             bossPlacer.Place(bankObj);
 
             // Add room setter ( used to know which room each enemy belongs to )
-            bankObj.AddComponent<RoomReferer>().Reference = bossRoom.GetComponent<Room>();
+            bankObj.AddComponent<RoomReferer>().Reference = bankRoom.GetComponent<Room>();
 
             // Add reference to the collection resource
             bankObj.AddComponent<SpecialShipReferer>().Reference = bank;

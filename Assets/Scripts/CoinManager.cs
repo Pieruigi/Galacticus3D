@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using OMTB.Interfaces;
+using UnityEngine.Events;
 
 namespace OMTB
 {
     public class CoinManager : MonoBehaviour
     {
+        public UnityAction<int, int> OnChange;
+
         // Player bag balance ( not yet entrusted in bank )
         int bagBalance;
 
@@ -14,6 +17,8 @@ namespace OMTB
         int bankBalance;
 
         public static CoinManager Instance { get; private set; }
+
+        GameObject player;
 
         private void Awake()
         {
@@ -31,7 +36,7 @@ namespace OMTB
         // Start is called before the first frame update
         void Start()
         {
-
+            GameObject.FindGameObjectWithTag(Tags.Player).GetComponent<IDamageable>().OnDie += HandleOnDie;
         }
 
         // Update is called once per frame
@@ -47,6 +52,8 @@ namespace OMTB
         {
             bankBalance += bagBalance;
             bagBalance = 0;
+
+            OnChange?.Invoke(bagBalance, bankBalance);
         }
 
         /**
@@ -59,6 +66,9 @@ namespace OMTB
                 return false;
 
             bankBalance -= amount;
+
+            OnChange?.Invoke(bagBalance, bankBalance);
+
             return true;
         }
 
@@ -68,6 +78,15 @@ namespace OMTB
         public void PickUpCoins(int amount)
         {
             bagBalance += amount;
+
+            OnChange?.Invoke(bagBalance, bankBalance);
+        }
+
+        void HandleOnDie(IDamageable damageable)
+        {
+            bagBalance = 0;
+
+            OnChange?.Invoke(bagBalance, bankBalance);
         }
     }
 
